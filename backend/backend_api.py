@@ -57,6 +57,17 @@ class BackendOrchestrator:
         """
         print(f"🚀 Starting session with text: {user_text[:50]}...")
         
+        # Initialize history if not present
+        if "history" not in self.session_state:
+            self.session_state["history"] = []
+            
+        # Add user message to history
+        self.session_state["history"].append({
+            "role": "user",
+            "content": user_text,
+            "timestamp": int(time.time())
+        })
+        
         # 1. Agent 1: Extraction
         agent1_output = infer_requirements(user_text)
         
@@ -80,6 +91,13 @@ class BackendOrchestrator:
 
         print(f"🔄 Processing feedback: {feedback_text}")
         
+        # Add user feedback to history
+        self.session_state["history"].append({
+            "role": "user",
+            "content": feedback_text,
+            "timestamp": int(time.time())
+        })
+        
         # Agent 4: Negotiation
         current_top_names = [n['name'] for n in self.session_state["current_top_3"]]
         result = self.negotiator.process_feedback(
@@ -96,6 +114,13 @@ class BackendOrchestrator:
             self.session_state["excluded_neighborhoods"].extend(result["rejected_neighborhoods"])
             
         bridge_message = result.get("bridge_message", "Updating...")
+        
+        # Add agent response to history (bridge message)
+        self.session_state["history"].append({
+            "role": "assistant",
+            "content": bridge_message,
+            "timestamp": int(time.time())
+        })
         
         # Re-run analysis
         analysis_result = self._run_analysis_cycle()
@@ -138,24 +163,27 @@ class BackendOrchestrator:
                 "top_3": []
             }
 
-        # Select Top 2 for detailed response
-        top_2_results = top_3[:2]
+        # Select Top 2 for detailed response (or Top 3 if available)
+        top_results = top_3[:3]
         
-        # 3. Agent 3: Narrative (Generate for Top 1, but maybe mention Top 2)
-        narrative_data = {}
+        # 3. Agent 3: Narrative (Generate for ALL Top results)
+        narrative_list = []
         coords = {"lat": 0, "lon": 0}
         if self.recommender:
-            narrative_data, coords = self.recommender.generate_narrative(
+            narrative_list, coords = self.recommender.generate_narrative(
                 self.session_state["client_input"], 
-                top_3 # Pass all 3 for context
+                top_results # Pass all top results
             )
+            
+        # Create a map of narratives by neighborhood name for easy lookup
+        narrative_map = {item["neighborhood_name"]: item for item in narrative_list}
 
         # 4. POI Search (Map Data) for Top 1
         reqs = self.session_state["client_input"].get("requirements", [])
         custom_reqs = self.session_state["client_input"].get("osm_requirements", [])
         sorted_reqs = sorted([r for r in reqs if r.get('weight')], key=lambda x: x['weight'], reverse=True)[:3]
         
-        pois_top1 = get_important_locations(top_2_results[0]['name'], sorted_reqs, custom_osm_requirements=custom_reqs)
+        pois_top1 = get_important_locations(top_results[0]['name'], sorted_reqs, custom_osm_requirements=custom_reqs)
 
         # --- Construct Map Actions ---
         map_actions = [
@@ -175,10 +203,26 @@ class BackendOrchestrator:
              })
 
         # Construct Frontend-Friendly Response
+        top_1_name = top_results[0]['name'] if top_results else "N/A"
+        
+        # Dynamic chatbot text based on history length or state
+        if len(self.session_state.get("history", [])) <= 1:
+             chatbot_text = f"He analizado tu perfil y el mejor barrio para ti es **{top_1_name}**. También he encontrado otras opciones interesantes."
+        else:
+             chatbot_text = f"He actualizado la búsqueda. **{top_1_name}** sigue siendo una gran opción, pero revisa cómo se ajusta a tus nuevos comentarios."
+
+        process_log = [
+            "Leyendo input...",
+            "Computando posibilidades...",
+            "Explicando justificación...",
+            "Refinando selección..."
+        ]
+
         response_data = {
             "status": "success",
-            "overview": narrative_data.get("overview", ""),
-            "top_5_variables": narrative_data.get("top_5_variables", []),
+            "chatbot_text": chatbot_text,
+            "message_history": self.session_state.get("history", []),
+            "process_log": process_log,
             "map_actions": map_actions,
             "map_data": {
                 "center": coords,
@@ -187,7 +231,7 @@ class BackendOrchestrator:
             "recommendations": []
         }
 
-        for neighborhood in top_2_results:
+        for neighborhood in top_results:
             # Extract key factors (high weight & high score contribution)
             details = neighborhood.get("details", {})
             key_factors = []
@@ -208,12 +252,17 @@ class BackendOrchestrator:
                     "match_score": info.get("points_awarded"), # How well it matched
                     "max_score": info.get("max_points")
                 })
+            
+            # Get narrative data for this neighborhood
+            n_data = narrative_map.get(neighborhood["name"], {})
 
             response_data["recommendations"].append({
                 "name": neighborhood["name"],
                 "total_score": neighborhood["total_score_pct"],
                 "coords": neighborhood["coords"],
-                "key_factors": key_factors, # Explainability data
+                "overview": n_data.get("overview", "Sin descripción disponible."),
+                "top_5_variables": n_data.get("top_5_variables", []),
+                "key_factors": key_factors, # Explainability data (calculated)
                 "all_details": details # Full data if needed for deep dive
             })
 

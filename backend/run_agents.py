@@ -52,12 +52,16 @@ def main():
                 break
         
         # --- NEW DISPLAY LOGIC FOR FRONTEND-FRIENDLY JSON ---
+        print("\n>>> 🔄 PROCESO (CHATBOT) <<<")
+        for step in result.get("process_log", []):
+            print(f"   [✓] {step}")
+
         print("\n>>> 💬 RESPUESTA FINAL AL CLIENTE (CHATBOT) <<<\n")
-        print(result.get("overview", "No overview available."))
+        print(result.get("chatbot_text", "No response available."))
         
-        print("\n--- 🔝 TOP 5 VARIABLES (JUSTIFICADAS) ---")
-        for var in result.get("top_5_variables", []):
-            print(f"   - {var['variable_name']}: {var['justification']}")
+        print("\n--- 📜 HISTORIAL DE MENSAJES ---")
+        for msg in result.get("message_history", []):
+            print(f"   [{msg['role'].upper()}]: {msg['content']}")
 
         print("\n--- 🗺️  ACCIONES DEL MAPA ---")
         for action in result.get("map_actions", []):
@@ -66,6 +70,11 @@ def main():
         print("\n--- 📊 DATOS ESTRUCTURADOS PARA EL FRONTEND ---")
         for i, rec in enumerate(result["recommendations"]):
             print(f"\n🏆 Opción {i+1}: {rec['name']} (Score: {rec['total_score']}%)")
+            print(f"   📝 Overview: {rec.get('overview', 'N/A')}")
+            print("   🔝 Top 5 Variables:")
+            for var in rec.get("top_5_variables", []):
+                print(f"      - {var['variable_name']}: {var['justification']}")
+            
             print("   Factores Clave (Explicabilidad):")
             for factor in rec["key_factors"]:
                 print(f"   - {factor['variable']}: {factor['neighborhood_category']} (Valor: {factor['neighborhood_value']}) [Match: {factor['match_score']}/{factor['max_score']}]")
