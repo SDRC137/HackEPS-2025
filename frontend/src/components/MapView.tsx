@@ -59,26 +59,40 @@ const MapView = ({ polygonCoordinates }: MapViewProps) => {
         }
       });
 
-      // Add fill layer
+      // Add glow layer (under outline) for subtle glassy aura
+      map.current!.addLayer({
+        id: 'neighborhood-glow',
+        type: 'line',
+        source: 'neighborhood',
+        paint: {
+          'line-color': '#0b3d91',
+          'line-width': 8,
+          'line-opacity': 0.25,
+          'line-blur': 6
+        }
+      });
+
+      // Add fill layer (subtle blue tint inside perimeter)
       map.current!.addLayer({
         id: 'neighborhood-fill',
         type: 'fill',
         source: 'neighborhood',
         paint: {
-          'fill-color': '#ffffff',
-          'fill-opacity': 0.15
+          'fill-color': '#0b3d91',
+          'fill-opacity': 0.18
         }
       });
 
-      // Add outline layer
+      // Add outline layer (crisp edge on top)
       map.current!.addLayer({
         id: 'neighborhood-outline',
         type: 'line',
         source: 'neighborhood',
         paint: {
-          'line-color': '#ffffff',
-          'line-width': 2,
-          'line-opacity': 0.8
+          'line-color': '#0b3d91',
+          'line-width': 3,
+          'line-opacity': 0.9,
+          'line-blur': 0.7
         }
       });
 
