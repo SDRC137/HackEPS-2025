@@ -105,16 +105,37 @@ const Index = () => {
           </p>
           <div className="flex flex-wrap gap-2 justify-center">
             {[
-              "Busco un barri familiar amb parcs i escoles",
-              "M'agrada l'art i la cultura urbana",
-              "Necessito estar a prop del centre"
+              {
+                name: "Daenerys Targaryen",
+                text: "Daenerys Targaryen: L'Emprenedora Ètica Fundadora d'una startup sostenible, és nova a la ciutat amb els seus tres \"dracs\" (així li agrada referir-se als seus gossos) Busca un barri amb ànima, ple de negocis locals i amb un fort sentit de comunitat."
+              },
+              {
+                name: "Cersei Lannister",
+                text: "Cersei Lannister: La Reina Corporativa Una executiva d'alt nivell que viu pel poder, el prestigi i la privacitat. Per a ella i els seus fills, vol viure aïllada en una bombolla de màxima seguretat, escoles d'elit i botigues de luxe."
+              },
+              {
+                name: "Bran Stark",
+                text: "Bran Stark: L'Analista Total Un científic de dades que treballa 100% des de casa. Es mou en cadira de rodes, així que necessita zero barreres arquitectòniques. Busca un lloc tranquil, silenciós i amb la millor fibra òptica per poder treballar sense límits."
+              },
+              {
+                name: "Jon Snow",
+                text: "Jon Snow: El Guardià de la Comunitat Treballa als serveis d'emergència i té un sou públic. Busca un barri autèntic, on els veïns es coneguin. Valora allò pràctic, no el luxe, i necessita tenir la natura a prop per desconnectar."
+              },
+              {
+                name: "Arya Stark",
+                text: "Arya Stark: La Nòmada Urbana Una freelance independent que valora l'anonimat i la llibertat per sobre de tot. Necessita una \"base\" en una zona densa i moguda, on pugui barrejar-se amb la gent. Transport públic 24/7 per a qualsevol aventura."
+              },
+              {
+                name: "Tyrion Lannister",
+                text: "Tyrion Lannister: L'Estratega Urbà Un consultor brillant i molt social. El seu hàbitat és l'epicentre cultural i gastronòmic de la ciutat. Ho vol tot a peu: de la reunió al millor restaurant, i d'allà a un bar sense agafar cap taxi."
+              }
             ].map((example) => (
               <button
-                key={example}
-                onClick={() => setPrompt(example)}
+                key={example.name}
+                onClick={() => setPrompt(example.text)}
                 className="backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/20 text-white/90 text-xs px-4 py-2 rounded-full transition-all"
               >
-                {example}
+                {example.name}
               </button>
             ))}
           </div>
