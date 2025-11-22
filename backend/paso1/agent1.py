@@ -29,14 +29,17 @@ def call_gemini(text: str) -> Dict[str, Any]:
 	model = genai.GenerativeModel("gemini-2.0-flash")
 	instructions = (
 		"Eres un agente de extracción estructurada. Devuelve SOLO un objeto JSON: {\\n"
-		"  \"requirements\": [ {\"variable_name\":..., \"value\":..., \"weight\":...}, ... ]\\n}\\n"
-		"Variables (orden estricto): " + ", ".join(COLUMNS) + ". "
-		"Categorías permitidas cuantitativas: " + ", ".join(CATEGORY_SCALE) + ". "
-		"air_quality_index: " + ", ".join(AIR_QUALITY_VALUES) + " o null. "
-		"Peso: entero 1-5 (importancia) o null si no hay evidencia. "
-		"Regla estricta: si 'value' es null, entonces 'weight' DEBE ser null. Nunca asignes weight sin value. "
-		"Si el texto NO respalda una preferencia -> value=null, weight=null. No inventes. "
-		"No añadas comentarios ni texto fuera del JSON."
+		"  \"requirements\": [ {\"variable_name\":..., \"value\":..., \"weight\": (1-5)}, ... ],\\n"
+		"  \"osm_requirements\": [ {\"search_term\": \"...\", \"osm_tag\": \"key=value\"}, ... ]\\n"
+		"}\\n"
+		"1. Requirements (Variables CSV): " + ", ".join(COLUMNS) + ". "
+		"Categorías: " + ", ".join(CATEGORY_SCALE) + ". "
+		"Si el texto NO respalda una variable, value=null. Weight debe ser entero 1-5.\\n"
+		"2. OSM Requirements (Puntos de Interés Físicos): "
+		"Si el usuario menciona lugares físicos ESPECÍFICOS que no están cubiertos por las variables genéricas (ej: 'quiero un skatepark', 'escuela montessori', 'tienda de cómics', 'helipuerto'), "
+		"añádelos aquí. Genera la etiqueta OpenStreetMap (OSM) más probable para 'osm_tag' (ej: 'sport=skateboard', 'shop=comics'). "
+		"Si pide cosas genéricas como 'parques' o 'restaurantes' que YA están en las variables CSV (green_space, restaurant_density), NO los añadas aquí, úsalos en 'requirements'. "
+		"Solo añade cosas muy específicas o 'de nicho' que el cliente secreto podría pedir."
 	)
 	prompt = instructions + "\nPerfil:\n" + text + "\nJSON:"  # Sencillo, sin roles especiales
 	try:

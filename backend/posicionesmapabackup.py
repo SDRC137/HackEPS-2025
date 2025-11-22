@@ -3,11 +3,21 @@ import pandas as pd
 import os
 import requests
 import time
-import sys
 
-# Add backend to path to import shared_constants
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from shared_constants import VARIABLE_TO_OSM
+# Mapping variables to OSM tags (Key=Value or just Key)
+VARIABLE_TO_OSM = {
+    "green_space_percentage": ["leisure=park", "landuse=recreation_ground", "leisure=garden", "natural=wood"],
+    "gym_density": ["leisure=fitness_centre", "sport=fitness"],
+    "culture_density": ["tourism=museum", "amenity=arts_centre", "amenity=theatre"],
+    "local_businesses_density": ["shop=convenience", "shop=supermarket", "shop=bakery"],
+    "restaurant_density": ["amenity=restaurant", "amenity=cafe"],
+    "premium_stores_density": ["shop=department_store", "shop=clothes", "shop=jewelry"],
+    "nightlife_density": ["amenity=bar", "amenity=nightclub", "amenity=pub"],
+    "hospital_density": ["amenity=hospital", "amenity=clinic"],
+    "transit_score": ["amenity=bus_station", "public_transport=station", "railway=station"],
+    "proximity_to_sea": ["natural=beach"],
+    "education_level_percentage": ["amenity=university", "amenity=college", "amenity=library"]
+}
 
 def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
     """
@@ -60,10 +70,6 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
             tags = element.get('tags', {})
             name = tags.get('name', 'Unknown Location')
             
-            # Skip locations without a name
-            if name == 'Unknown Location':
-                continue
-            
             # Determine a friendly type name
             place_type = "poi"
             for tag in osm_tags:
@@ -85,105 +91,6 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
     except Exception as e:
         print(f"Error fetching Overpass data: {e}")
         return []
-
-def get_important_locations(neighborhood_name, requirements_list, custom_osm_requirements=None):
-    """
-    Genera lista de POIs importantes basados en requisitos del usuario.
-    requirements_list: lista de dicts {variable_name, value, weight}
-    custom_osm_requirements: lista de dicts {search_term, osm_tag} (NUEVO para el Cliente Secreto)
-    """
-    # Load neighborhood data
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    root_path = os.path.dirname(base_path)
-    neighborhoods_path = os.path.join(root_path, 'final_with_position.csv') # Usar final_with_position.csv que tiene centroides
-    
-    try:
-        neighborhoods = pd.read_csv(neighborhoods_path)
-    except FileNotFoundError:
-        # Fallback o error
-        print(f"Error: No se encuentra {neighborhoods_path}")
-        return {}
-
-    # Get neighborhood center
-    # Normalizar nombre para búsqueda
-    neighborhood_row = neighborhoods[neighborhoods['name'].str.lower() == neighborhood_name.lower()]
-    if neighborhood_row.empty:
-        print(f"Barrio {neighborhood_name} no encontrado en CSV de posiciones.")
-        return {}
-    
-    neighborhood = neighborhood_row.iloc[0]
-    center_lat = neighborhood.get('latitude_centroid', 0)
-    center_lon = neighborhood.get('longitude_centroid', 0)
-
-    important_positions = {}
-
-    # 1. Process Standard Requirements (CSV Columns)
-    for req in requirements_list:
-        weight = req.get('weight')
-        variable = req.get('variable_name')
-        value = req.get('value')
-        
-        # Consideramos variables con valor definido (no null) y que estén mapeadas a OSM
-        if value is not None and variable in VARIABLE_TO_OSM:
-            osm_tags = VARIABLE_TO_OSM.get(variable)
-            
-            if osm_tags:
-                # print(f"Fetching OSM data for {variable}...") # Verbose off
-                found_places = search_places_overpass(center_lat, center_lon, osm_tags, limit=5) # Limit 5 para no saturar
-                
-                if found_places:
-                    places_list = []
-                    for place in found_places:
-                        places_list.append({
-                            "name": place['name'],
-                            "lat": place['lat'],
-                            "lon": place['lon'],
-                            "type": place['type']
-                        })
-                    
-                    important_positions[variable] = {
-                        "count": len(found_places),
-                        "locations": places_list,
-                        "is_custom": False
-                    }
-
-    # 2. Process Custom/Secret Requirements (Dynamic OSM Tags)
-    if custom_osm_requirements:
-        print(f"🕵️  Buscando requisitos especiales del Cliente Secreto: {len(custom_osm_requirements)}")
-        for custom in custom_osm_requirements:
-            term = custom.get("search_term")
-            tag = custom.get("osm_tag")
-            
-            if tag:
-                print(f"   - Buscando '{term}' ({tag})...")
-                
-                # Try searching with the specific tag first
-                found_places = search_places_overpass(center_lat, center_lon, [tag], limit=5)
-                
-                # REMOVED FALLBACK: It was causing generic results (e.g. any shop for 'shop=gun')
-                # If specific tag fails, we accept 0 results rather than misleading ones.
-
-                if found_places:
-                    places_list = []
-                    for place in found_places:
-                        places_list.append({
-                            "name": place['name'],
-                            "lat": place['lat'],
-                            "lon": place['lon'],
-                            "type": term # Usamos el término del usuario como tipo
-                        })
-                    
-                    # Usamos el término de búsqueda como clave
-                    important_positions[f"custom_{term}"] = {
-                        "count": len(found_places),
-                        "locations": places_list,
-                        "is_custom": True,
-                        "label": f"📍 {term.title()} (Especial)"
-                    }
-                else:
-                    print(f"   - No se encontraron '{term}' cerca.")
-
-    return important_positions
 
 def generate_map_data(neighborhood_name, requirements_json_path):
     # Load neighborhood data

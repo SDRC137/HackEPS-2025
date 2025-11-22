@@ -1,0 +1,195 @@
+{
+  "client_name": "User",
+  "justification_summary": "Soy un \"prepper\" paranoico. Busco el lugar más aislado posible para cuando llegue el apocalipsis. Necesito silencio absoluto (odio el ruido de los coches y aviones).\nLo más importante es que haya tiendas de suministros de supervivencia o armerías cerca. También busco algún tipo de búnker o refugio subterráneo en la zona.\nAunque quiero estar aislado, necesito internet de ultra alta velocidad para monitorear las noticias globales. El dinero no es problema.\nAh, y odio a los vecinos, así que quiero la densidad de población más baja posible.",
+  "requirements": [
+    {
+      "variable_name": "median_household_income",
+      "value": "High",
+      "weight": 0.7
+    },
+    {
+      "variable_name": "surface_area",
+      "value": "High",
+      "weight": 0.8
+    },
+    {
+      "variable_name": "population_density",
+      "value": "Extremely_Low",
+      "weight": 1.0
+    },
+    {
+      "variable_name": "average_age",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "families_with_children_percentage",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "rent_vs_own_percentage",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "unemployment_rate",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "education_level_percentage",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "total_crimes",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "violent_ratio",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "property_ratio",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "violent_vs_property_ratio",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "crime_trend_slope",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "crimes_per_100_people",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "median_rent",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "median_home_price",
+      "value": "High",
+      "weight": 0.7
+    },
+    {
+      "variable_name": "average_housing_age",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "air_quality_index",
+      "value": "Extremely_High",
+      "weight": 0.6
+    },
+    {
+      "variable_name": "average_dB_level",
+      "value": "Extremely_Low",
+      "weight": 1.0
+    },
+    {
+      "variable_name": "maximum_dB_level",
+      "value": "Extremely_Low",
+      "weight": 1.0
+    },
+    {
+      "variable_name": "gym_density",
+      "value": "Low",
+      "weight": 0.2
+    },
+    {
+      "variable_name": "culture_density",
+      "value": "Low",
+      "weight": 0.2
+    },
+    {
+      "variable_name": "local_businesses_density",
+      "value": null,
+      "weight": 0.3
+    },
+    {
+      "variable_name": "restaurant_density",
+      "value": "Low",
+      "weight": 0.2
+    },
+    {
+      "variable_name": "premium_stores_density",
+      "value": "Low",
+      "weight": 0.2
+    },
+    {
+      "variable_name": "nightlife_density",
+      "value": "Extremely_Low",
+      "weight": 0.9
+    },
+    {
+      "variable_name": "hospital_density",
+      "value": "Low",
+      "weight": 0.5
+    },
+    {
+      "variable_name": "dist_downtown_km",
+      "value": "High",
+      "weight": 0.8
+    },
+    {
+      "variable_name": "proximity_to_sea",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "green_space_percentage",
+      "value": null,
+      "weight": 0.2
+    },
+    {
+      "variable_name": "charging_stations_number",
+      "value": null,
+      "weight": 0.1
+    },
+    {
+      "variable_name": "walk_score",
+      "value": "Low",
+      "weight": 0.3
+    },
+    {
+      "variable_name": "transit_score",
+      "value": "Extremely_Low",
+      "weight": 0.8
+    },
+    {
+      "variable_name": "bike_score",
+      "value": "Low",
+      "weight": 0.3
+    },
+    {
+      "variable_name": "accessibility_score",
+      "value": null,
+      "weight": 0.1
+    }
+  ],
+  "osm_requirements": [
+    {
+      "search_term": "tienda de suministros de supervivencia",
+      "osm_tag": "shop=survival"
+    },
+    {
+      "search_term": "armería",
+      "osm_tag": "shop=gun"
+    },
+    {
+      "search_term": "búnker o refugio subterráneo",
+      "osm_tag": "bunker=yes"
+    }
+  ]
+}
