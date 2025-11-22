@@ -23,7 +23,7 @@ class Agent3Recommender:
 
 	def generate_narrative(self, client_profile, top_neighborhoods):
 		if not top_neighborhoods:
-			return "No hay barrios para recomendar.", {"lat": 0, "lon": 0}
+			return {"overview": "No hay barrios para recomendar.", "top_5_variables": []}, {"lat": 0, "lon": 0}
 		top_1 = top_neighborhoods[0]
 		data_context = json.dumps(top_neighborhoods, indent=2)
 
@@ -37,27 +37,47 @@ Entre todos los barrios analizados, el mejor encaje es: {top_1['name']}.
 Datos del Top 3 (JSON para tu referencia):
 {data_context}
 
-Cómo debes responder (en lenguaje natural y fácil de entender):
-1) Empieza con la recomendación del barrio ganador en 1 frase.
-2) Justifica con 3-5 ideas clave que ayuden a la persona a decidirse.
-   - Usa descriptores humanos basados en categorías (bajo, moderado, alto), no hables de "x puntos de y".
-   - Explica con frases como: "el alquiler está en un nivel bajo respecto a la ciudad", "la densidad de comercios locales es alta, favorece la vida de barrio", etc.
-3) Trade-offs honestos: si alguna métrica no está en el nivel deseado, coméntalo con suavidad y contrapesa con otras fortalezas.
-4) Cierra con una frase corta sobre por qué los otros dos barrios quedaron cerca y cuándo podrían ser buena alternativa.
+Tu tarea es generar una respuesta estructurada en JSON para el frontend.
+Formato JSON esperado:
+{{
+  "overview": "Párrafo resumen de la recomendación (aprox 50-80 palabras). Empieza recomendando el barrio y explica por qué encaja con el perfil general.",
+  "top_5_variables": [
+    {{
+      "variable_name": "Nombre de la variable (ej: Alquiler asequible)",
+      "justification": "Descripción justificada (ej: El alquiler se encuentra en un nivel moderado, lo que lo hace más accesible para tu presupuesto estudiantil.)"
+    }},
+    ... (hasta 5 variables más importantes)
+  ]
+}}
 
-IMPORTANTE: Revisa el "Resumen de necesidades". Si el cliente ha dado feedback negativo sobre recomendaciones anteriores (ej: "No me gusta X"), menciona explícitamente que has tenido en cuenta ese cambio.
-Ejemplo: "Entiendo que X no te convenció por Y, así que he buscado opciones que prioricen Z..."
+Instrucciones para 'top_5_variables':
+- Selecciona las 5 variables que más han influido en la decisión o que son más relevantes para el usuario.
+- 'variable_name' debe ser legible (no snake_case).
+- 'justification' debe ser personalizada al perfil del usuario.
 
-Evita mencionar puntuaciones técnicas o porcentajes del algoritmo. Prioriza una explicación humana, comparativa y comprensible.
+Instrucciones para 'overview':
+- Tono humano, empático y profesional.
+- Menciona el barrio ganador.
+- Resume por qué es la mejor opción.
+
+IMPORTANTE: Devuelve SOLO el JSON válido, sin bloques de código markdown.
 """
 
 		try:
 			model = genai.GenerativeModel(self.model_name)
 			response = model.generate_content(prompt_text)
-			narrative = getattr(response, "text", "") or str(response)
+			raw_text = getattr(response, "text", "") or str(response)
+			
+			# Clean markdown if present
+			raw_text = raw_text.replace("```json", "").replace("```", "").strip()
+			
+			narrative_data = json.loads(raw_text)
 		except Exception as e:
-			narrative = f"Error generando narrativa: {e}"
+			narrative_data = {
+				"overview": f"Error generando narrativa: {e}",
+				"top_5_variables": []
+			}
 
-		return narrative, top_1.get("coords", {"lat": 0, "lon": 0})
+		return narrative_data, top_1.get("coords", {"lat": 0, "lon": 0})
 
  
