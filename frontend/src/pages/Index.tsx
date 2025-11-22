@@ -8,9 +8,30 @@ const Index = () => {
   const navigate = useNavigate();
   const [prompt, setPrompt] = useState("");
 
-  const handleSubmit = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
     if (prompt.trim()) {
-      navigate("/playground", { state: { prompt } });
+      setIsLoading(true);
+      try {
+      const response = await fetch('http://localhost:5001/api/start', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ prompt }),
+      });        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        navigate("/playground", { state: { prompt, initialData: data } });
+      } catch (error) {
+        console.error("Error starting session:", error);
+        alert("Error connecting to server: " + error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -58,11 +79,15 @@ const Index = () => {
               
               <Button
                 onClick={handleSubmit}
-                disabled={!prompt.trim()}
+                disabled={!prompt.trim() || isLoading}
                 size="icon"
                 className="absolute bottom-3 right-3 bg-white/20 hover:bg-white/30 text-white border-0 rounded-full h-10 w-10 backdrop-blur-sm transition-all"
               >
-                <ArrowRight className="h-5 w-5" />
+                {isLoading ? (
+                  <div className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <ArrowRight className="h-5 w-5" />
+                )}
               </Button>
             </div>
           </div>

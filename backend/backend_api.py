@@ -19,6 +19,7 @@ class BackendOrchestrator:
         self.scorer = self._init_scorer()
         self.recommender = self._init_recommender()
         self.negotiator = self._init_negotiator()
+        self.geometry_map = self._init_geometry_loader()
         
         # Session state (could be moved to a database or Redis for a real web app)
         self.session_state = {
@@ -49,6 +50,25 @@ class BackendOrchestrator:
         if self.gemini_key:
             return Agent4Negotiator(api_key=self.gemini_key)
         return None
+
+    def _init_geometry_loader(self):
+        """
+        Loads neighborhood geometries from CSV into a dictionary.
+        """
+        geometry_map = {}
+        try:
+            import csv
+            csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "neighborhoods_geometry.csv")
+            if os.path.exists(csv_path):
+                with open(csv_path, mode='r', encoding='utf-8') as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        geometry_map[row['name']] = row['geometry']
+            else:
+                print(f"⚠️ Geometry CSV not found at {csv_path}")
+        except Exception as e:
+            print(f"⚠️ Error loading geometries: {e}")
+        return geometry_map
 
     def start_session(self, user_text: str) -> dict:
         """
@@ -183,25 +203,6 @@ class BackendOrchestrator:
         custom_reqs = self.session_state["client_input"].get("osm_requirements", [])
         sorted_reqs = sorted([r for r in reqs if r.get('weight')], key=lambda x: x['weight'], reverse=True)[:3]
         
-        pois_top1 = get_important_locations(top_results[0]['name'], sorted_reqs, custom_osm_requirements=custom_reqs)
-
-        # --- Construct Map Actions ---
-        map_actions = [
-            {"label": "Distancia al Mar", "type": "default", "action": "show_distance_sea"},
-            {"label": "Distancia a Downtown", "type": "default", "action": "show_distance_downtown"}
-        ]
-        
-        # Add actions for POIs found
-        for key, data in pois_top1.items():
-             # Use the label from data if available, otherwise format the key
-             label = data.get("label", key.replace("_", " ").title())
-             map_actions.append({
-                 "label": label,
-                 "type": "layer",
-                 "data_key": key,
-                 "count": data["count"]
-             })
-
         # Construct Frontend-Friendly Response
         top_1_name = top_results[0]['name'] if top_results else "N/A"
         
@@ -223,11 +224,6 @@ class BackendOrchestrator:
             "chatbot_text": chatbot_text,
             "message_history": self.session_state.get("history", []),
             "process_log": process_log,
-            "map_actions": map_actions,
-            "map_data": {
-                "center": coords,
-                "pois": pois_top1
-            },
             "recommendations": []
         }
 
@@ -255,6 +251,62 @@ class BackendOrchestrator:
             
             # Get narrative data for this neighborhood
             n_data = narrative_map.get(neighborhood["name"], {})
+            
+            # --- Generate Map Actions & Data for this neighborhood ---
+            # 1. POIs
+            pois = get_important_locations(neighborhood['name'], sorted_reqs, custom_osm_requirements=custom_reqs)
+            
+            # 2. Distance Lines
+            # Get centroid
+            # Note: neighborhood dict from Scorer might not have centroid if not passed through. 
+            # But we have geometry_map. We need centroid for lines.
+            # Let's try to get it from the geometry string or just use a lookup if we had it.
+            # Ideally Scorer should return it. Assuming Scorer returns 'coords' key as [lat, lon] or similar.
+            # Checking Scorer output... it returns 'coords': {'lat': ..., 'lon': ...}
+            
+            center_lat = neighborhood.get('coords', {}).get('lat', 0)
+            center_lon = neighborhood.get('coords', {}).get('lon', 0)
+            
+            map_actions = []
+            
+            # Distance to Downtown (Fixed Coords)
+            downtown_coords = [34.0488, -118.2518]
+            map_actions.append({
+                "label": "Distancia a Downtown",
+                "type": "line",
+                "action": "show_line",
+                "data": {
+                    "start": [center_lon, center_lat], # GeoJSON uses [lon, lat]
+                    "end": [downtown_coords[1], downtown_coords[0]],
+                    "color": "#ff0000",
+                    "label": "Downtown"
+                }
+            })
+            
+            # Distance to Sea (Santa Monica Pier as proxy)
+            sea_coords = [34.0092, -118.4976]
+            map_actions.append({
+                "label": "Distancia a Playa",
+                "type": "line",
+                "action": "show_line",
+                "data": {
+                    "start": [center_lon, center_lat],
+                    "end": [sea_coords[1], sea_coords[0]],
+                    "color": "#0000ff",
+                    "label": "Playa"
+                }
+            })
+            
+            # Add POI actions
+            for key, data in pois.items():
+                 label = data.get("label", key.replace("_", " ").title())
+                 map_actions.append({
+                     "label": label,
+                     "type": "layer",
+                     "data_key": key,
+                     "count": data["count"],
+                     "locations": data["locations"] # Pass locations directly
+                 })
 
             response_data["recommendations"].append({
                 "name": neighborhood["name"],
@@ -262,8 +314,11 @@ class BackendOrchestrator:
                 "coords": neighborhood["coords"],
                 "overview": n_data.get("overview", "Sin descripción disponible."),
                 "top_5_variables": n_data.get("top_5_variables", []),
-                "key_factors": key_factors, # Explainability data (calculated)
-                "all_details": details # Full data if needed for deep dive
+                "key_factors": key_factors,
+                "all_details": details,
+                "map_polygon": self.geometry_map.get(neighborhood["name"], ""),
+                "map_actions": map_actions,
+                "map_pois": pois # Keep raw POI data if needed
             })
 
         # --- SAVE FRONTEND RESPONSE TO DISK ---

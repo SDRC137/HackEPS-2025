@@ -59,6 +59,7 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
 **Instrucciones:**
 1. **Análisis de Intención:** Identifica qué quiere cambiar el usuario.
    - **Quejas:** Si dice "es muy caro", busca `median_rent` o `median_home_price`, pon valor `Low` o `Extremely_Low` y peso 5. Si dice "muy ruidoso", `average_dB_level` -> `Low`.
+   - **Distancias:** Recuerda que `proximity_to_sea` y `dist_downtown_km` son distancias. "Cerca" = `Low`, "Lejos" = `High`. Si dice "No me gusta la playa", quiere estar LEJOS (`High` o `Extremely_High`).
    - **Nuevos Requisitos:** Si dice "quiero gimnasios", `gym_density` -> `High`.
    - **Descartes:** Si dice "no me importa X", pon valor y peso a `null`.
    - **Rechazo de Barrios:**
