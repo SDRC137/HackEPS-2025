@@ -1,2 +1,8 @@
 pandas
 requests
+scikit-learn
+langchain
+langchain-openai
+openai
+langchain-google-genai
+python-dotenv

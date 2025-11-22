@@ -1,1 +1,9 @@
 .venv
+backend/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+*.DS_Store
+backend/.env
