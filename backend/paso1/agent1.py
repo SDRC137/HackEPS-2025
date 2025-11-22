@@ -1,7 +1,12 @@
 import os
 import json
 import re
+import sys
 from typing import List, Dict, Any
+
+# Add backend to path to import shared_constants
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from shared_constants import COLUMNS, CATEGORY_SCALE, AIR_QUALITY_VALUES
 
 try:
 	import google.generativeai as genai
@@ -14,24 +19,6 @@ try:
 	load_dotenv()  # Carga valores de .env en el entorno
 except Exception:
 	pass  # Si no existe dotenv, se ignora
-
-CATEGORY_SCALE = ["Extremely_Low", "Low", "Moderate", "High", "Extremely_High"]
-
-# Column names from final.csv header
-COLUMNS = [
-	"median_household_income","surface_area","population_density","average_age","families_with_children_percentage",
-	"rent_vs_own_percentage","unemployment_rate","education_level_percentage","total_crimes","violent_ratio",
-	"property_ratio","violent_vs_property_ratio","crime_trend_slope","crimes_per_100_people","median_rent",
-	"median_home_price","average_housing_age","air_quality_index","average_dB_level","maximum_dB_level","gym_density",
-	"culture_density","local_businesses_density","restaurant_density","premium_stores_density","nightlife_density",
-	"hospital_density","dist_downtown_km","proximity_to_sea","green_space_percentage","charging_stations_number",
-	"walk_score","transit_score","bike_score","accessibility_score"
-]
-
-# Possible categorical values for air_quality_index (observed in dataset)
-AIR_QUALITY_VALUES = [
-	"Good", "Moderate", "Moderate/Poor", "Good/Moderate"
-]
 
 def call_gemini(text: str) -> Dict[str, Any]:
 	"""Call Gemini 2.0 Flash to extract requirements. Returns dict with 'requirements' or {} if unavailable."""

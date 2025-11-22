@@ -3,6 +3,11 @@ import json
 import os
 import sys
 from dotenv import load_dotenv
+
+# Add backend to path to import shared_constants
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from shared_constants import CATEGORY_SCALE
+
 from backend.ranges_parser import (
     parse_ranges,
     determine_category,
@@ -25,7 +30,7 @@ class Agent2Scorer:
         self.df = pd.read_csv(csv_path)
         ranges_path = os.path.join(os.path.dirname(__file__), "..", "ranges.md")
         self.ranges = parse_ranges(os.path.abspath(ranges_path))
-        self.category_order = ["Extremely_Low", "Low", "Moderate", "High", "Extremely_High"]
+        self.category_order = CATEGORY_SCALE
         # Direccionalidad (para futuras transformaciones específicas)
         self.directionality = {
             "crimes_per_100_people": "LOWER_BETTER",
@@ -42,7 +47,7 @@ class Agent2Scorer:
             return "Moderate"
         return target_cat if target_cat in self.category_order else "Moderate"
 
-    def calculate_score(self, requirements_json: dict):
+    def calculate_score(self, requirements_json: dict, excluded_neighborhoods: list = None):
         requirements = requirements_json.get("requirements", [])
         # Filtrar requisitos con peso válido (>0) y valor objetivo no nulo
         effective_requirements = []
@@ -62,11 +67,21 @@ class Agent2Scorer:
                 "weight": float(weight),
             })
 
-        if not effective_requirements:
-            # Si no hay requisitos efectivos, devolver Top 3 por orden alfabético con score 0
-            base = self.df.copy()
+        # Filtrar barrios excluidos antes de calcular
+        df_to_score = self.df.copy()
+        if excluded_neighborhoods:
+            # Normalizar nombres para comparación insensible a mayúsculas/espacios
+            excluded_norm = [n.lower().strip() for n in excluded_neighborhoods]
+            df_to_score = df_to_score[~df_to_score["name"].str.lower().str.strip().isin(excluded_norm)]
+
+        if not effective_requirements or df_to_score.empty:
+            # Si no hay requisitos efectivos o barrios, devolver Top 3 por orden alfabético con score 0 (o vacío)
+            if df_to_score.empty:
+                return []
+            
+            base = df_to_score.sort_values("name").head(3)
             results = []
-            for idx, row in base.sort_values("name").head(3).iterrows():
+            for idx, row in base.iterrows():
                 results.append({
                     "name": row["name"],
                     "total_score_raw": 0.0,
@@ -92,16 +107,16 @@ class Agent2Scorer:
             except Exception:
                 pass
 
-        score_accum = {idx: 0.0 for idx in self.df.index}
-        explanation_data = {idx: {} for idx in self.df.index}
+        score_accum = {idx: 0.0 for idx in df_to_score.index}
+        explanation_data = {idx: {} for idx in df_to_score.index}
 
         for req in effective_requirements:
             col = req["variable_name"]
             target_cat = self._sanitize_target(req["value"])
             weight = req["weight"]
-            if col not in self.df.columns:
+            if col not in df_to_score.columns:
                 continue
-            series = self.df[col]
+            series = df_to_score[col]
             thresholds = self.ranges.get(col)
 
             for idx, val in series.items():
@@ -137,9 +152,9 @@ class Agent2Scorer:
                 }
 
         # Volcar acumulados al DataFrame
-        self.df["final_score_raw"] = self.df.index.map(score_accum.get)
-        self.df["final_score_pct"] = (self.df["final_score_raw"] / sum_weights * 100.0).round(2)
-        top_3_df = self.df.sort_values(by="final_score_raw", ascending=False).head(3)
+        df_to_score["final_score_raw"] = df_to_score.index.map(score_accum.get)
+        df_to_score["final_score_pct"] = (df_to_score["final_score_raw"] / sum_weights * 100.0).round(2)
+        top_3_df = df_to_score.sort_values(by="final_score_raw", ascending=False).head(3)
         results = []
         for idx, row in top_3_df.iterrows():
             name = row["name"]
