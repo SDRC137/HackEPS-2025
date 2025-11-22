@@ -23,44 +23,47 @@ class Agent3Recommender:
 
 	def generate_narrative(self, client_profile, top_neighborhoods):
 		if not top_neighborhoods:
-			return {"overview": "No hay barrios para recomendar.", "top_5_variables": []}, {"lat": 0, "lon": 0}
-		top_1 = top_neighborhoods[0]
-		data_context = json.dumps(top_neighborhoods, indent=2)
+			return [], {"lat": 0, "lon": 0}
+		
+		# We want to generate narratives for all top neighborhoods (up to 3)
+		neighborhoods_to_process = top_neighborhoods[:3]
+		data_context = json.dumps(neighborhoods_to_process, indent=2)
 
 		prompt_text = f"""
 Eres un consultor inmobiliario empático y claro.
 Cliente: {client_profile.get('client_name', 'Cliente')}
 Resumen de necesidades: {client_profile.get('justification_summary', 'N/A')}
 
-Entre todos los barrios analizados, el mejor encaje es: {top_1['name']}.
-
-Datos del Top 3 (JSON para tu referencia):
+Datos de los mejores barrios (JSON para tu referencia):
 {data_context}
 
-Tu tarea es generar una respuesta estructurada en JSON para el frontend.
-Formato JSON esperado:
-{{
-  "overview": "Párrafo resumen de la recomendación (aprox 50-80 palabras). Empieza recomendando el barrio y explica por qué encaja con el perfil general.",
-  "top_5_variables": [
-    {{
-      "variable_name": "Nombre de la variable (ej: Alquiler asequible)",
-      "justification": "Descripción justificada (ej: El alquiler se encuentra en un nivel moderado, lo que lo hace más accesible para tu presupuesto estudiantil.)"
-    }},
-    ... (hasta 5 variables más importantes)
-  ]
-}}
+Tu tarea es generar una respuesta estructurada en JSON para el frontend, con detalles para CADA uno de los barrios proporcionados.
+Formato JSON esperado (una lista de objetos):
+[
+  {{
+    "neighborhood_name": "Nombre del barrio 1",
+    "overview": "Párrafo resumen de la recomendación para este barrio (aprox 50-80 palabras). Explica por qué encaja con el perfil.",
+    "top_5_variables": [
+      {{
+        "variable_name": "Nombre de la variable (ej: Alquiler asequible)",
+        "justification": "Descripción justificada (ej: El alquiler se encuentra en un nivel moderado...)"
+      }},
+      ... (hasta 5 variables más importantes)
+    ]
+  }},
+  ... (repetir para los otros barrios)
+]
 
 Instrucciones para 'top_5_variables':
-- Selecciona las 5 variables que más han influido en la decisión o que son más relevantes para el usuario.
+- Selecciona las 5 variables que más han influido en la decisión o que son más relevantes para el usuario en ESE barrio.
 - 'variable_name' debe ser legible (no snake_case).
 - 'justification' debe ser personalizada al perfil del usuario.
 
 Instrucciones para 'overview':
 - Tono humano, empático y profesional.
-- Menciona el barrio ganador.
-- Resume por qué es la mejor opción.
+- Resume por qué es una buena opción.
 
-IMPORTANTE: Devuelve SOLO el JSON válido, sin bloques de código markdown.
+IMPORTANTE: Devuelve SOLO el JSON válido (una lista), sin bloques de código markdown.
 """
 
 		try:
@@ -71,13 +74,13 @@ IMPORTANTE: Devuelve SOLO el JSON válido, sin bloques de código markdown.
 			# Clean markdown if present
 			raw_text = raw_text.replace("```json", "").replace("```", "").strip()
 			
-			narrative_data = json.loads(raw_text)
+			narrative_list = json.loads(raw_text)
 		except Exception as e:
-			narrative_data = {
-				"overview": f"Error generando narrativa: {e}",
-				"top_5_variables": []
-			}
+			print(f"Error generando narrativa: {e}")
+			narrative_list = []
 
-		return narrative_data, top_1.get("coords", {"lat": 0, "lon": 0})
+		# Return the list of narratives and the coords of the first one (as default center)
+		top_1_coords = neighborhoods_to_process[0].get("coords", {"lat": 0, "lon": 0})
+		return narrative_list, top_1_coords
 
  
