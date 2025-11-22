@@ -29,7 +29,7 @@ class Agent4Negotiator:
         """
         Analiza el feedback del usuario y el estado actual para generar:
         1. Un mensaje puente empático.
-        2. Una lista de requisitos actualizada.
+        2. Una lista de requisitos actualizada (fusionando cambios).
         """
         
         reqs_json_str = json.dumps(current_requirements.get("requirements", []), indent=2)
@@ -37,7 +37,7 @@ class Agent4Negotiator:
         
         prompt = f"""
 Eres el Agente 4, un "Negociador Empático" en un sistema de recomendación inmobiliaria.
-Tu objetivo es entender el feedback del usuario sobre una recomendación previa y ajustar los criterios de búsqueda.
+Tu objetivo es entender el feedback del usuario sobre una recomendación previa y determinar QUÉ CAMBIOS aplicar a los criterios actuales.
 
 **Entradas:**
 1. **Requisitos Actuales (JSON):**
@@ -61,22 +61,22 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
    - **Quejas:** Si dice "es muy caro", busca `median_rent` o `median_home_price`, pon valor `Low` o `Extremely_Low` y peso 5. Si dice "muy ruidoso", `average_dB_level` -> `Low`.
    - **Distancias:** Recuerda que `proximity_to_sea` y `dist_downtown_km` son distancias. "Cerca" = `Low`, "Lejos" = `High`. Si dice "No me gusta la playa", quiere estar LEJOS (`High` o `Extremely_High`).
    - **Nuevos Requisitos:** Si dice "quiero gimnasios", `gym_density` -> `High`.
-   - **Descartes:** Si dice "no me importa X", pon valor y peso a `null`.
+   - **Descartes:** Si dice "no me importa X", pon valor y peso a `null` para eliminarlo.
    - **Rechazo de Barrios:**
      - Si dice "No me gusta X" (donde X es un barrio), añádelo a `rejected_neighborhoods`.
      - Si dice "No me gusta ninguno" o "Ninguno de estos", añade TODOS los barrios de la lista "Barrios Recomendados Recientemente" a `rejected_neighborhoods`.
-   - **Reset:** Si pide "empezar de cero" o "borrar todo", devuelve requisitos vacíos (o por defecto) y `rejected_neighborhoods` vacío (o con comando especial).
 
 2. **Generación de Mensaje Puente:** Redacta una respuesta corta (1-2 frases).
    - Estructura: Validación + Reflejo + Acción.
    - Tono: Empático y profesional.
 
 **Salida Esperada (JSON Puro):**
+Devuelve SOLO los cambios (`modifications`) y el mensaje. NO devuelvas la lista completa de requisitos, yo me encargo de fusionarla.
 {{
   "bridge_message": "Texto del mensaje puente...",
-  "requirements": [
-    {{ "variable_name": "...", "value": "...", "weight": ... }},
-    ... (lista completa actualizada)
+  "modifications": [
+    {{ "variable_name": "...", "value": "...", "weight": ... }}, // Para añadir o modificar
+    {{ "variable_name": "...", "value": null, "weight": null }} // Para eliminar un requisito existente
   ],
   "rejected_neighborhoods": ["NombreBarrio1", "NombreBarrio2"]
 }}
@@ -89,7 +89,40 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
             match = re.search(r"\{\s*\"bridge_message\".*\}", raw_text, re.DOTALL)
             if match:
                 json_str = match.group(0)
-                return json.loads(json_str)
+                result_data = json.loads(json_str)
+                
+                # --- LOGIC TO MERGE REQUIREMENTS ---
+                existing_reqs = current_requirements.get("requirements", [])
+                modifications = result_data.get("modifications", [])
+                
+                # Convert existing to dict for easy update
+                reqs_dict = {r["variable_name"]: r for r in existing_reqs}
+                
+                for mod in modifications:
+                    var_name = mod.get("variable_name")
+                    if not var_name: continue
+                    
+                    # If value/weight are null, delete
+                    if mod.get("value") is None and mod.get("weight") is None:
+                        if var_name in reqs_dict:
+                            del reqs_dict[var_name]
+                    else:
+                        # Update or Add
+                        reqs_dict[var_name] = {
+                            "variable_name": var_name,
+                            "value": mod.get("value"),
+                            "weight": mod.get("weight")
+                        }
+                
+                # Convert back to list
+                final_reqs = list(reqs_dict.values())
+                
+                return {
+                    "bridge_message": result_data.get("bridge_message", ""),
+                    "requirements": final_reqs,
+                    "rejected_neighborhoods": result_data.get("rejected_neighborhoods", [])
+                }
+                
             else:
                 # Fallback si no hay JSON válido
                 print("Error: No se encontró JSON válido en la respuesta del Agente 4.")

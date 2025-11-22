@@ -1,0 +1,10 @@
+{
+  "requirements": [
+    {
+      "variable_name": "green_space_percentage",
+      "value": "High",
+      "weight": 5
+    }
+  ],
+  "justification_summary": ". User Feedback: quiero más zonas verdes en la zona"
+}

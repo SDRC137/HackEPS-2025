@@ -62,7 +62,7 @@ const MapView = ({ polygonCoordinates, activeAction }: MapViewProps) => {
       bounds.extend(end);
       map.current.fitBounds(bounds, { padding: 50 });
     } 
-    else if (activeAction.type === 'layer' && activeAction.locations) {
+    else if ((activeAction.type === 'layer' || activeAction.type === 'poi_layer') && activeAction.locations) {
       // Add Markers for POIs
       activeAction.locations.forEach((loc: any) => {
         const el = document.createElement('div');

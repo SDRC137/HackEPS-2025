@@ -12,6 +12,7 @@ from backend.paso2.step2 import Agent2Scorer
 from backend.paso3.step3 import Agent3Recommender
 from backend.paso4.agent4 import Agent4Negotiator
 from backend.posicionesmapa import get_important_locations
+from backend.shared_constants import VARIABLE_METADATA
 
 class BackendOrchestrator:
     def __init__(self):
@@ -129,6 +130,10 @@ class BackendOrchestrator:
         # Update State
         if result.get("requirements"):
             self.session_state["client_input"]["requirements"] = result["requirements"]
+            
+        # Update justification summary with feedback to keep Agent 3 informed
+        current_summary = self.session_state["client_input"].get("justification_summary", "")
+        self.session_state["client_input"]["justification_summary"] = f"{current_summary}. User Feedback: {feedback_text}"
         
         if result.get("rejected_neighborhoods"):
             self.session_state["excluded_neighborhoods"].extend(result["rejected_neighborhoods"])
@@ -201,7 +206,7 @@ class BackendOrchestrator:
         # 4. POI Search (Map Data) for Top 1
         reqs = self.session_state["client_input"].get("requirements", [])
         custom_reqs = self.session_state["client_input"].get("osm_requirements", [])
-        sorted_reqs = sorted([r for r in reqs if r.get('weight')], key=lambda x: x['weight'], reverse=True)[:3]
+        sorted_reqs = sorted([r for r in reqs if r.get('weight')], key=lambda x: x['weight'], reverse=True)
         
         # Construct Frontend-Friendly Response
         top_1_name = top_results[0]['name'] if top_results else "N/A"
@@ -253,72 +258,107 @@ class BackendOrchestrator:
             n_data = narrative_map.get(neighborhood["name"], {})
             
             # --- Generate Map Actions & Data for this neighborhood ---
-            # 1. POIs
-            pois = get_important_locations(neighborhood['name'], sorted_reqs, custom_osm_requirements=custom_reqs)
+            # 1. POIs - Pass top 5 requirements to increase chances of finding map layers
+            pois = get_important_locations(neighborhood['name'], sorted_reqs[:5], custom_osm_requirements=custom_reqs)
             
             # 2. Distance Lines
-            # Get centroid
-            # Note: neighborhood dict from Scorer might not have centroid if not passed through. 
-            # But we have geometry_map. We need centroid for lines.
-            # Let's try to get it from the geometry string or just use a lookup if we had it.
-            # Ideally Scorer should return it. Assuming Scorer returns 'coords' key as [lat, lon] or similar.
-            # Checking Scorer output... it returns 'coords': {'lat': ..., 'lon': ...}
-            
             center_lat = neighborhood.get('coords', {}).get('lat', 0)
             center_lon = neighborhood.get('coords', {}).get('lon', 0)
             
-            map_actions = []
-            
-            # Distance to Downtown (Fixed Coords)
             downtown_coords = [34.0488, -118.2518]
-            map_actions.append({
-                "label": "Distancia a Downtown",
-                "type": "line",
-                "action": "show_line",
-                "data": {
-                    "start": [center_lon, center_lat], # GeoJSON uses [lon, lat]
-                    "end": [downtown_coords[1], downtown_coords[0]],
-                    "color": "#ff0000",
-                    "label": "Downtown"
-                }
-            })
-            
-            # Distance to Sea (Santa Monica Pier as proxy)
             sea_coords = [34.0092, -118.4976]
-            map_actions.append({
-                "label": "Distancia a Playa",
-                "type": "line",
-                "action": "show_line",
-                "data": {
+            
+            map_lines = [
+                {
+                    "label": "Distancia a Downtown",
+                    "start": [center_lon, center_lat],
+                    "end": [downtown_coords[1], downtown_coords[0]],
+                    "color": "#ff0000"
+                },
+                {
+                    "label": "Distancia a Playa",
                     "start": [center_lon, center_lat],
                     "end": [sea_coords[1], sea_coords[0]],
-                    "color": "#0000ff",
-                    "label": "Playa"
+                    "color": "#0000ff"
                 }
-            })
+            ]
             
+            map_buttons = []
             # Add POI actions
             for key, data in pois.items():
                  label = data.get("label", key.replace("_", " ").title())
-                 map_actions.append({
+                 map_buttons.append({
                      "label": label,
-                     "type": "layer",
+                     "type": "poi_layer",
                      "data_key": key,
                      "count": data["count"],
                      "locations": data["locations"] # Pass locations directly
                  })
+
+            # Enrich Top 5 Variables with Chart Data
+            enriched_top_5 = []
+            for var_item in n_data.get("top_5_variables", []):
+                original_key = var_item.get("original_variable_key")
+                chart_data = None
+                
+                if original_key and original_key in details:
+                    info = details[original_key]
+                    
+                    # Format value to max 2 decimals if float
+                    raw_val = info.get("value")
+                    formatted_val = raw_val
+                    if isinstance(raw_val, (int, float)):
+                        formatted_val = f"{float(raw_val):.2f}".rstrip('0').rstrip('.')
+                    
+                    # Get metadata
+                    meta = VARIABLE_METADATA.get(original_key, {})
+                    unit = meta.get("unit", "")
+                    
+                    # Generate match explanation
+                    score_pct = 0
+                    if info.get("max_points", 0) > 0:
+                        score_pct = (info.get("points_awarded", 0) / info.get("max_points")) * 100
+                        
+                    match_text = "Coincidencia baja"
+                    if score_pct > 80:
+                        match_text = "¡Coincidencia perfecta!"
+                    elif score_pct > 50:
+                        match_text = "Buena coincidencia"
+                    
+                    category = info.get("actual_category_es", "")
+                    if category:
+                        match_text += f" - El barrio tiene un nivel {category} para esta variable."
+
+                    chart_data = {
+                        "user_weight": info.get("weight", 0),
+                        "neighborhood_value": formatted_val,
+                        "neighborhood_category": info.get("actual_category_es"),
+                        "match_score": info.get("points_awarded", 0),
+                        "max_score": info.get("max_points", 100),
+                        "unit": unit,
+                        "match_explanation": match_text
+                    }
+                
+                var_item["chart_data"] = chart_data
+                enriched_top_5.append(var_item)
+            
+            # Sort by user weight (descending)
+            enriched_top_5.sort(key=lambda x: x.get("chart_data", {}).get("user_weight", 0), reverse=True)
 
             response_data["recommendations"].append({
                 "name": neighborhood["name"],
                 "total_score": neighborhood["total_score_pct"],
                 "coords": neighborhood["coords"],
                 "overview": n_data.get("overview", "Sin descripción disponible."),
-                "top_5_variables": n_data.get("top_5_variables", []),
+                "top_5_variables": enriched_top_5,
                 "key_factors": key_factors,
                 "all_details": details,
-                "map_polygon": self.geometry_map.get(neighborhood["name"], ""),
-                "map_actions": map_actions,
-                "map_pois": pois # Keep raw POI data if needed
+                "map_context": {
+                    "center": {"lat": center_lat, "lon": center_lon},
+                    "polygon": self.geometry_map.get(neighborhood["name"], ""),
+                    "buttons": map_buttons,
+                    "lines": map_lines
+                }
             })
 
         # --- SAVE FRONTEND RESPONSE TO DISK ---

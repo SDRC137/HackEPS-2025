@@ -19,8 +19,14 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
     query_parts = []
     for tag in osm_tags:
         if '=' in tag:
-            key, value = tag.split('=')
-            selector = f'["{key}"="{value}"]'
+            parts = tag.split('=', 1)
+            if len(parts) == 2:
+                key, value = parts
+                selector = f'["{key}"="{value}"]'
+            else:
+                # Fallback if split fails unexpectedly
+                key = tag
+                selector = f'["{key}"]'
         else:
             key = tag
             selector = f'["{key}"]'
@@ -123,8 +129,9 @@ def get_important_locations(neighborhood_name, requirements_list, custom_osm_req
         variable = req.get('variable_name')
         value = req.get('value')
         
-        # Consideramos variables con valor definido (no null) y que estén mapeadas a OSM
-        if value is not None and variable in VARIABLE_TO_OSM:
+        # Consideramos variables que estén mapeadas a OSM, independientemente del valor explícito
+        # Si el usuario le da peso, le importa.
+        if variable in VARIABLE_TO_OSM:
             osm_tags = VARIABLE_TO_OSM.get(variable)
             
             if osm_tags:

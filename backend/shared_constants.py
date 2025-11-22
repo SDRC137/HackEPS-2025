@@ -33,3 +33,28 @@ VARIABLE_TO_OSM = {
     "proximity_to_sea": ["natural=beach"],
     "education_level_percentage": ["amenity=university", "amenity=college", "amenity=library"]
 }
+
+VARIABLE_METADATA = {
+    "median_rent": {"unit": "$", "label": "Alquiler Medio"},
+    "median_home_price": {"unit": "$", "label": "Precio Vivienda"},
+    "walk_score": {"unit": "/100", "label": "Puntuación Caminable"},
+    "transit_score": {"unit": "/100", "label": "Transporte Público"},
+    "bike_score": {"unit": "/100", "label": "Puntuación Bici"},
+    "total_crimes": {"unit": "incidentes", "label": "Crímenes Totales"},
+    "dist_downtown_km": {"unit": "km", "label": "Distancia al Centro"},
+    "green_space_percentage": {"unit": "%", "label": "Espacios Verdes"},
+    "air_quality_index": {"unit": "AQI", "label": "Calidad del Aire"},
+    "population_density": {"unit": "hab/km²", "label": "Densidad Población"},
+    "median_household_income": {"unit": "$", "label": "Ingresos Medios"},
+    "average_age": {"unit": "años", "label": "Edad Media"},
+    "unemployment_rate": {"unit": "%", "label": "Tasa Desempleo"},
+    "restaurant_density": {"unit": "lugares", "label": "Restaurantes"},
+    "nightlife_density": {"unit": "lugares", "label": "Vida Nocturna"},
+    "gym_density": {"unit": "lugares", "label": "Gimnasios"},
+    "hospital_density": {"unit": "lugares", "label": "Hospitales"},
+    "local_businesses_density": {"unit": "lugares", "label": "Comercio Local"},
+    "premium_stores_density": {"unit": "lugares", "label": "Tiendas Premium"},
+    "culture_density": {"unit": "lugares", "label": "Cultura"},
+    "average_dB_level": {"unit": "dB", "label": "Ruido Medio"},
+    "proximity_to_sea": {"unit": "m", "label": "Distancia al Mar"},
+}

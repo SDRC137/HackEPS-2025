@@ -1,6 +1,6 @@
 {
   "client_name": "User",
-  "justification_summary": "Soy un estudiante en la universidad de 25 años. De momento, no puedo pagar mucho pero me interesa encontrar una zona que sea segura, donde pueda sacar a pasear a mis perros por la tarde y cerca del mar para salir a surfear los fines de semana. Además, podría ser cerca del Downtown sin ser muy caro.",
+  "justification_summary": "Soy un estudiante en la universidad de 25 años. De momento, no puedo pagar mucho pero me interesa encontrar una zona que sea segura, donde pueda sacar a pasear a mis perros por la tarde y cerca del mar para salir a surfear los fines de semana. Además, podría ser cerca del Downtown sin ser muy caro.\"",
   "requirements": [
     {
       "variable_name": "median_household_income",
@@ -65,7 +65,7 @@
     {
       "variable_name": "crime_trend_slope",
       "value": "Low",
-      "weight": 5
+      "weight": 4
     },
     {
       "variable_name": "crimes_per_100_people",
@@ -140,7 +140,7 @@
     {
       "variable_name": "dist_downtown_km",
       "value": "Low",
-      "weight": 4
+      "weight": 5
     },
     {
       "variable_name": "proximity_to_sea",
@@ -149,7 +149,7 @@
     },
     {
       "variable_name": "green_space_percentage",
-      "value": "High",
+      "value": "Moderate",
       "weight": 4
     },
     {
@@ -159,8 +159,8 @@
     },
     {
       "variable_name": "walk_score",
-      "value": "High",
-      "weight": 4
+      "value": null,
+      "weight": 3
     },
     {
       "variable_name": "transit_score",
