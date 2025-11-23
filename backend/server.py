@@ -29,6 +29,10 @@ orchestrator = BackendOrchestrator()
 
 @app.route('/api/start', methods=['POST'])
 def start_session():
+    """
+    Starts a new session with the provided prompt.
+    Expects a JSON body with a 'prompt' key.
+    """
     data = request.json
     prompt = data.get('prompt', '')
     
@@ -42,8 +46,24 @@ def start_session():
         print(f"Error in start_session: {e}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/reset', methods=['POST'])
+def reset_session():
+    """
+    Resets the current session state.
+    """
+    try:
+        result = orchestrator.reset_session()
+        return jsonify(result)
+    except Exception as e:
+        print(f"Error in reset_session: {e}")
+        return jsonify({"error": str(e)}), 500
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    """
+    Processes a chat message from the user.
+    Expects a JSON body with a 'message' key.
+    """
     data = request.json
     message = data.get('message', '')
     
@@ -59,6 +79,11 @@ def chat():
 
 @app.route('/api/images', methods=['GET'])
 def get_images():
+    """
+    Fetches images for a given neighborhood.
+    Expects a 'neighborhood' query parameter.
+    Tries Google Custom Search first, then falls back to Unsplash.
+    """
     neighborhood = request.args.get('neighborhood')
     if not neighborhood:
         return jsonify({"error": "No neighborhood provided"}), 400
@@ -72,7 +97,7 @@ def get_images():
     
     if google_key and google_cx and google_key != "tu_api_key":
         try:
-            print(f"🔍 Searching Google Images for: {neighborhood}")
+            # print(f"Searching Google Images for: {neighborhood}")
             query = f"{neighborhood} Los Angeles neighborhood scenic"
             url = f"https://www.googleapis.com/customsearch/v1?q={query}&cx={google_cx}&key={google_key}&searchType=image&num=5&imgSize=large&safe=active"
             
@@ -89,20 +114,20 @@ def get_images():
                                 "link": item.get('contextLink', item['link'])
                             }
                         })
-                    print(f"✅ Found {len(images)} images via Google.")
+                    # print(f"Found {len(images)} images via Google.")
                     return jsonify({"images": images})
             else:
-                print(f"⚠️ Google API Error: {response.text}")
+                print(f"Google API Error: {response.text}")
         except Exception as e:
-            print(f"⚠️ Error fetching Google images: {e}")
+            print(f"Error fetching Google images: {e}")
 
     # 2. Fallback to Unsplash (if Google fails or keys missing)
-    print("⚠️ Falling back to Unsplash...")
+    # print("Falling back to Unsplash...")
     api_key = os.getenv("UNSPLASH_ACCESS_KEY")
     
     # If no key, return empty list (frontend will handle fallback/mock)
     if not api_key:
-        print("⚠️ No UNSPLASH_ACCESS_KEY found in environment variables")
+        print("No UNSPLASH_ACCESS_KEY found in environment variables")
         return jsonify({"images": []})
         
     try:
@@ -147,5 +172,5 @@ def health_check():
     return jsonify({"status": "ok"}), 200
 
 if __name__ == '__main__':
-    print("🚀 Server running on http://0.0.0.0:5001")
+    print("Server running on http://0.0.0.0:5001")
     app.run(debug=True, port=5001, host='0.0.0.0')

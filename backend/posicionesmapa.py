@@ -36,7 +36,25 @@ def save_to_cache(key, data):
         with open(cache_path, 'w') as f:
             json.dump(data, f)
     except Exception as e:
-        print(f"⚠️ Failed to save cache: {e}")
+        print(f"Failed to save cache: {e}")
+
+import random
+
+def generate_mock_points(lat, lon, count=3, radius=0.01):
+    """Generates mock points around a center for demo purposes if API fails."""
+    mock_points = []
+    for i in range(count):
+        # Random offset
+        d_lat = (random.random() - 0.5) * radius
+        d_lon = (random.random() - 0.5) * radius
+        mock_points.append({
+            "name": f"Ubicación Simulada {i+1}",
+            "lat": lat + d_lat,
+            "lon": lon + d_lon,
+            "type": "mock",
+            "id": 100000 + i
+        })
+    return mock_points
 
 def search_places_overpass(lat, lon, osm_tags, radius=3000, limit=10):
     """
@@ -46,13 +64,15 @@ def search_places_overpass(lat, lon, osm_tags, radius=3000, limit=10):
     cache_key = get_cache_key(lat, lon, osm_tags, radius)
     cached_data = load_from_cache(cache_key)
     if cached_data is not None:
-        # print(f"⚡ Loaded from cache: {osm_tags}")
+        # print(f"Loaded from cache: {osm_tags}")
         return cached_data
 
     overpass_servers = [
         "https://overpass-api.de/api/interpreter",
+        "https://api.openstreetmap.fr/oapi/interpreter",
+        "https://overpass.kumi.systems/api/interpreter",
         "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
-        "https://overpass.kumi.systems/api/interpreter"
+        "https://interpreter.lazus.de/"
     ]
     
     # Build the query union
@@ -86,15 +106,20 @@ def search_places_overpass(lat, lon, osm_tags, radius=3000, limit=10):
     out center {limit};
     """
     
+    headers = {
+        'User-Agent': 'HackEPS-2025-Agent/1.0'
+    }
+
     for attempt in range(3):
         for server in overpass_servers:
             try:
                 # Add a small delay to be nice to the public API
                 time.sleep(0.5 * (attempt + 1)) 
-                response = requests.get(server, params={'data': overpass_query}, timeout=30)
+                # print(f"Trying {server}...")
+                response = requests.get(server, params={'data': overpass_query}, headers=headers, timeout=30)
                 
                 if response.status_code == 429:
-                    print(f"⚠️ Rate limit hit on {server}, waiting...")
+                    print(f"Rate limit hit on {server}, waiting...")
                     time.sleep(2 * (attempt + 1))
                     continue
                     
@@ -139,14 +164,16 @@ def search_places_overpass(lat, lon, osm_tags, radius=3000, limit=10):
                 return results
                 
             except requests.exceptions.RequestException as e:
-                print(f"⚠️ Error fetching Overpass data from {server}: {e}")
+                print(f"Error fetching Overpass data from {server}: {e}")
                 continue
             except Exception as e:
-                print(f"⚠️ Unexpected error: {e}")
+                print(f"Unexpected error: {e}")
                 continue
     
-    print("❌ Failed to fetch data from all Overpass servers.")
-    return []
+    print("Failed to fetch data from all Overpass servers. Using MOCK data for demo.")
+    # Fallback to mock data so the demo doesn't fail completely
+    mock_results = generate_mock_points(lat, lon, count=3)
+    return mock_results
 
 def get_important_locations(neighborhood_name, requirements_list, custom_osm_requirements=None):
     """
@@ -212,7 +239,7 @@ def get_important_locations(neighborhood_name, requirements_list, custom_osm_req
 
     # 2. Process Custom/Secret Requirements (Dynamic OSM Tags)
     if custom_osm_requirements:
-        print(f"🕵️  Buscando requisitos especiales del Cliente Secreto: {len(custom_osm_requirements)}")
+        print(f"Buscando requisitos especiales del Cliente Secreto: {len(custom_osm_requirements)}")
         for custom in custom_osm_requirements:
             term = custom.get("search_term")
             tag = custom.get("osm_tag")
@@ -238,7 +265,7 @@ def get_important_locations(neighborhood_name, requirements_list, custom_osm_req
                         "count": len(found_places),
                         "locations": places_list,
                         "is_custom": True,
-                        "label": f"📍 {term.title()} (Especial)"
+                        "label": f"{term.title()} (Especial)"
                     }
                 else:
                     print(f"   - No se encontraron '{term}' cerca.")

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +10,19 @@ const Index = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [loadingStep, setLoadingStep] = useState("");
+
+  // Reset session on mount
+  useEffect(() => {
+    const resetSession = async () => {
+      try {
+        await fetch('http://localhost:5001/api/reset', { method: 'POST' });
+        console.log("Session reset successfully");
+      } catch (error) {
+        console.error("Failed to reset session:", error);
+      }
+    };
+    resetSession();
+  }, []);
 
   const handleSubmit = async () => {
     if (prompt.trim()) {

@@ -32,23 +32,35 @@ class BackendOrchestrator:
         }
 
     def _load_env(self):
+        """
+        Loads environment variables from .env file.
+        """
         load_dotenv(override=True)
         self.gemini_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if not self.gemini_key:
-            print("⚠️ Warning: GEMINI_API_KEY not found.")
+            print("Warning: GEMINI_API_KEY not found.")
 
     def _init_scorer(self):
+        """
+        Initializes the Scorer agent (Agent 2).
+        """
         csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "final.csv")
         if os.path.exists(csv_path):
             return Agent2Scorer(csv_path)
         return None
 
     def _init_recommender(self):
+        """
+        Initializes the Recommender agent (Agent 3).
+        """
         if self.gemini_key:
             return Agent3Recommender(gemini_api_key=self.gemini_key)
         return None
 
     def _init_negotiator(self):
+        """
+        Initializes the Negotiator agent (Agent 4).
+        """
         if self.gemini_key:
             return Agent4Negotiator(api_key=self.gemini_key)
         return None
@@ -67,17 +79,30 @@ class BackendOrchestrator:
                     for row in reader:
                         geometry_map[row['name']] = row['geometry']
             else:
-                print(f"⚠️ Geometry CSV not found at {csv_path}")
+                print(f"Geometry CSV not found at {csv_path}")
         except Exception as e:
-            print(f"⚠️ Error loading geometries: {e}")
+            print(f"Error loading geometries: {e}")
         return geometry_map
+
+    def reset_session(self):
+        """
+        Resets the session state to initial values.
+        """
+        print("Resetting session state...")
+        self.session_state = {
+            "client_input": {},
+            "excluded_neighborhoods": [],
+            "current_top_3": [],
+            "history": []
+        }
+        return {"status": "success", "message": "Session reset"}
 
     def start_session(self, user_text: str) -> dict:
         """
         Starts a new session with the initial user text.
         Returns a structured dictionary with results.
         """
-        print(f"🚀 Starting session with text: {user_text[:50]}...")
+        print(f"Starting session with text: {user_text[:50]}...")
         
         # Initialize history if not present
         if "history" not in self.session_state:
@@ -93,7 +118,7 @@ class BackendOrchestrator:
         # 1. Agent 1: Extraction
         t0 = time.time()
         agent1_output = infer_requirements(user_text)
-        print(f"⏱️ Agent 1 (Extraction) took: {time.time() - t0:.2f}s")
+        print(f"Agent 1 (Extraction) took: {time.time() - t0:.2f}s")
         
         self.session_state["client_input"] = {
             "client_name": "User",
@@ -113,7 +138,7 @@ class BackendOrchestrator:
         if not self.negotiator:
             return {"error": "Negotiator agent not available"}
 
-        print(f"🔄 Processing feedback: {feedback_text}")
+        print(f"Processing feedback: {feedback_text}")
         
         # Add user feedback to history
         self.session_state["history"].append({
@@ -184,7 +209,7 @@ class BackendOrchestrator:
             self.session_state["client_input"], 
             excluded_neighborhoods=self.session_state["excluded_neighborhoods"]
         )
-        print(f"⏱️ Agent 2 (Scoring) took: {time.time() - t1:.2f}s")
+        print(f"Agent 2 (Scoring) took: {time.time() - t1:.2f}s")
         
         self.session_state["current_top_3"] = top_3
         
@@ -197,9 +222,9 @@ class BackendOrchestrator:
             state_path = os.path.join(output_dir, state_filename)
             with open(state_path, "w", encoding="utf-8") as f:
                 json.dump(self.session_state["client_input"], f, ensure_ascii=False, indent=2)
-            print(f"💾 Estado guardado en: {state_filename}")
+            print(f"Estado guardado en: {state_filename}")
         except Exception as e:
-            print(f"⚠️  No se pudo guardar el estado: {e}")
+            print(f"No se pudo guardar el estado: {e}")
         # ---------------------------------------------
         
         if not top_3:
@@ -224,7 +249,7 @@ class BackendOrchestrator:
                     top_results
                 )
             except Exception as e:
-                print(f"⚠️ Error in Agent 3: {e}")
+                print(f"Error in Agent 3: {e}")
         
         # Create a map of narratives by neighborhood name for easy lookup
         narrative_map = {item["neighborhood_name"]: item for item in narrative_list}
@@ -250,7 +275,7 @@ class BackendOrchestrator:
                     name, pois = future.result()
                     pois_map[name] = pois
                 except Exception as e:
-                    print(f"⚠️ Error fetching POIs for a neighborhood: {e}")
+                    print(f"Error fetching POIs for a neighborhood: {e}")
 
         # 5. Construct Frontend-Friendly Response
         top_1_name = top_results[0]['name'] if top_results else "N/A"
@@ -510,9 +535,9 @@ class BackendOrchestrator:
             os.makedirs(output_dir, exist_ok=True)
             with open(os.path.join(output_dir, "frontend_response.json"), "w", encoding="utf-8") as f:
                 json.dump(response_data, f, ensure_ascii=False, indent=2)
-            print(f"💾 Respuesta frontend guardada en: frontend_response.json")
+            print(f"Respuesta frontend guardada en: frontend_response.json")
         except Exception as e:
-            print(f"⚠️  No se pudo guardar la respuesta frontend: {e}")
+            print(f"No se pudo guardar la respuesta frontend: {e}")
         # --------------------------------------
 
         return response_data

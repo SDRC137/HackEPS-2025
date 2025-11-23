@@ -27,10 +27,10 @@ class Agent4Negotiator:
 
     def process_feedback(self, current_requirements: Dict[str, Any], user_feedback: str, current_top_3_names: List[str] = None) -> Dict[str, Any]:
         """
-        Analiza el feedback del usuario y el estado actual para generar:
-        1. Un mensaje puente empático.
-        2. Una lista de requisitos actualizada (fusionando cambios).
-        3. Una lista de requisitos OSM actualizada (para lugares físicos específicos).
+        Analyzes user feedback and current state to generate:
+        1. An empathetic bridge message.
+        2. An updated list of requirements (merging changes).
+        3. An updated list of OSM requirements (for specific physical places).
         """
         
         reqs_json_str = json.dumps(current_requirements.get("requirements", []), indent=2)

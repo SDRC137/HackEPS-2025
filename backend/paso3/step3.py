@@ -9,7 +9,7 @@ except ImportError:
 
 
 class Agent3Recommender:
-	def __init__(self, gemini_api_key: str | None = None, model: str = "gemini-2.0-flash", temperature: float = 0.7):
+	def __init__(self, gemini_api_key: str | None = None, model: str = "gemini-2.0-flash", temperature: float = 0):
 		api_key = gemini_api_key or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 		if not api_key:
 			raise RuntimeError("GEMINI_API_KEY/GOOGLE_API_KEY no definido. Configúralo en .env o variables de entorno.")
@@ -22,6 +22,10 @@ class Agent3Recommender:
 		self.temperature = temperature
 
 	def generate_narrative(self, client_profile, top_neighborhoods):
+		"""
+		Generates a narrative explanation for the top recommended neighborhoods.
+		Returns a list of narratives and the coordinates of the top 1 neighborhood.
+		"""
 		if not top_neighborhoods:
 			return [], {"lat": 0, "lon": 0}
 		
@@ -69,7 +73,10 @@ IMPORTANTE: Devuelve SOLO el JSON válido (una lista), sin bloques de código ma
 
 		try:
 			model = genai.GenerativeModel(self.model_name)
-			response = model.generate_content(prompt_text)
+			response = model.generate_content(
+				prompt_text,
+				generation_config={"temperature": self.temperature}
+			)
 			raw_text = getattr(response, "text", "") or str(response)
 			
 			# Clean markdown if present

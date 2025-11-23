@@ -17,7 +17,7 @@ if REPO_ROOT not in sys.path:
 from backend.backend_api import BackendOrchestrator
 
 def main():
-    print("\n=== 🚀 INICIANDO SISTEMA DE RECOMENDACIÓN (CLI MODE) ===")
+    print("\n=== INICIANDO SISTEMA DE RECOMENDACIÓN (CLI MODE) ===")
     
     orchestrator = BackendOrchestrator()
     
@@ -26,14 +26,14 @@ def main():
     profile_text = ""
     
     if os.path.isfile(first_input_path):
-        print("📄 Leyendo perfil inicial...")
+        print("Leyendo perfil inicial...")
         with open(first_input_path, "r", encoding="utf-8") as f:
             profile_text = f.read().strip()
     else:
         profile_text = input("Escribe tu perfil aquí: ")
 
     if not profile_text:
-        print("❌ Error: No hay texto de entrada.")
+        print("Error: No hay texto de entrada.")
         return
 
     # 2. Start Session
@@ -42,7 +42,7 @@ def main():
     while True:
         # Display Results
         if result["status"] == "empty":
-            print("\n⚠️  ¡Nos hemos quedado sin opciones!")
+            print("\n¡Nos hemos quedado sin opciones!")
             print("¿Quieres reiniciar la lista de barrios descartados? (s/n)")
             if input(">> ").strip().lower() == 's':
                 orchestrator.session_state["excluded_neighborhoods"] = []
@@ -52,26 +52,26 @@ def main():
                 break
         
         # --- NEW DISPLAY LOGIC FOR FRONTEND-FRIENDLY JSON ---
-        print("\n>>> 🔄 PROCESO (CHATBOT) <<<")
+        print("\n>>> PROCESO (CHATBOT) <<<")
         for step in result.get("process_log", []):
             print(f"   [✓] {step}")
 
-        print("\n>>> 💬 RESPUESTA FINAL AL CLIENTE (CHATBOT) <<<\n")
+        print("\n>>> RESPUESTA FINAL AL CLIENTE (CHATBOT) <<<\n")
         print(result.get("chatbot_text", "No response available."))
         
-        print("\n--- 📜 HISTORIAL DE MENSAJES ---")
+        print("\n--- HISTORIAL DE MENSAJES ---")
         for msg in result.get("message_history", []):
             print(f"   [{msg['role'].upper()}]: {msg['content']}")
 
-        print("\n--- 🗺️  ACCIONES DEL MAPA ---")
+        print("\n--- ACCIONES DEL MAPA ---")
         for action in result.get("map_actions", []):
             print(f"   - {action['label']} ({action['type']})")
         
-        print("\n--- 📊 DATOS ESTRUCTURADOS PARA EL FRONTEND ---")
+        print("\n--- DATOS ESTRUCTURADOS PARA EL FRONTEND ---")
         for i, rec in enumerate(result["recommendations"]):
-            print(f"\n🏆 Opción {i+1}: {rec['name']} (Score: {rec['total_score']}%)")
-            print(f"   📝 Overview: {rec.get('overview', 'N/A')}")
-            print("   🔝 Top 5 Variables:")
+            print(f"\nOpción {i+1}: {rec['name']} (Score: {rec['total_score']}%)")
+            print(f"   Overview: {rec.get('overview', 'N/A')}")
+            print("   Top 5 Variables:")
             for var in rec.get("top_5_variables", []):
                 print(f"      - {var['variable_name']}: {var['justification']}")
             
@@ -82,10 +82,10 @@ def main():
         # Show POIs including Custom ones
         pois = result.get("map_data", {}).get("pois", {})
         if pois:
-            print("\n--- 🗺️  PUNTOS DE INTERÉS (MAPA) ---")
+            print("\n--- PUNTOS DE INTERÉS (MAPA) ---")
             for key, data in pois.items():
                 label = data.get("label", key)
-                print(f"\n🔹 {label} ({data['count']} encontrados):")
+                print(f"\n{label} ({data['count']} encontrados):")
                 for loc in data['locations']:
                     print(f"   - {loc['name']} ({loc['type']}): [{loc['lat']}, {loc['lon']}]")
         # ----------------------------------------------------
@@ -93,7 +93,7 @@ def main():
         # Feedback Loop
         print("\n" + "="*50)
         try:
-            user_feedback = input("👤 TU (Escribe 'salir' para terminar): ").strip()
+            user_feedback = input("TU (Escribe 'salir' para terminar): ").strip()
         except EOFError:
             break
             
@@ -106,7 +106,7 @@ def main():
         # Process Feedback
         result = orchestrator.process_feedback(user_feedback)
         if "bridge_message" in result:
-            print(f"\n💬 Agente 4 dice: \"{result['bridge_message']}\"")
+            print(f"\nAgente 4 dice: \"{result['bridge_message']}\"")
 
 if __name__ == "__main__":
     main()

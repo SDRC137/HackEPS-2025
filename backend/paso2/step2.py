@@ -22,7 +22,7 @@ if ROOT_PATH not in sys.path:
     sys.path.append(ROOT_PATH)
 
 # ==========================================
-# 📊 AGENTE 2: MOTOR DE ANÁLISIS Y SCORING
+# AGENTE 2: MOTOR DE ANÁLISIS Y SCORING
 # ==========================================
 
 class Agent2Scorer:
@@ -170,13 +170,13 @@ class Agent2Scorer:
         return results
 
 # ==========================================
-# 🎯 AGENTE 3: RECOMENDACIÓN Y JUSTIFICACIÓN (LLM)
+# AGENTE 3: RECOMENDACIÓN Y JUSTIFICACIÓN (LLM)
 # ==========================================
 
  
 
 # ==========================================
-# 🔄 EJECUCIÓN DEL FLUJO (MAIN)
+# EJECUCIÓN DEL FLUJO (MAIN)
 # ==========================================
 
 if __name__ == "__main__":

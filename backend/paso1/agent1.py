@@ -83,6 +83,10 @@ def call_gemini(text: str) -> Dict[str, Any]:
 		return {}
 
 def infer_requirements(text: str) -> Dict[str, Any]:
+	"""
+	Infers requirements from natural language text using Gemini.
+	Returns a dictionary with 'requirements' and 'osm_requirements'.
+	"""
 	g = call_gemini(text)
 	if g.get("requirements"):
 		return g
