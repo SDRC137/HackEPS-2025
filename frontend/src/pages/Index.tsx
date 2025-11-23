@@ -154,14 +154,23 @@ const Index = () => {
               {
                 name: "Tyrion Lannister",
                 text: "Tyrion Lannister: L'Estratega Urbà Un consultor brillant i molt social. El seu hàbitat és l'epicentre cultural i gastronòmic de la ciutat. Ho vol tot a peu: de la reunió al millor restaurant, i d'allà a un bar sense agafar cap taxi."
+              },
+              {
+                name: "Secret Client",
+                text: "Un amable investigador acadèmic i pare primerenc. En Samwell trasllada la seva jove família a Los Angeles amb un salari universitari modest. La seva cerca se centra únicament a trobar un barri tranquil, segur i assequible on el seu fill pugui créixer, amb bons parcs i una biblioteca a prop.",
+                className: "bg-amber-500/20 hover:bg-amber-500/30 border-amber-500/50 text-amber-200 font-medium"
               }
             ].map((example) => (
               <button
                 key={example.name}
                 onClick={() => setPrompt(example.text)}
-                className="backdrop-blur-md bg-white/10 hover:bg-white/20 border border-white/20 text-white/90 text-xs px-4 py-2 rounded-full transition-all"
+                className={`backdrop-blur-md border text-xs px-4 py-2 rounded-full transition-all ${
+                  // @ts-ignore
+                  example.className || "bg-white/10 hover:bg-white/20 border-white/20 text-white/90"
+                }`}
               >
                 {example.name}
+                {example.name === "Secret Client"}
               </button>
             ))}
           </div>

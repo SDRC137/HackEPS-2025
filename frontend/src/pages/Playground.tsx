@@ -278,10 +278,14 @@ const Playground = () => {
                           key={i}
                           variant="outline"
                           size="sm"
-                          className="bg-transparent hover:bg-white/10 text-white/80 hover:text-white border-white/20 text-xs h-7 rounded-full"
+                          className={`text-xs h-7 rounded-full transition-all ${
+                            currentRecIndex === (i + 1) && data.recommendations === msg.recommendations
+                              ? "bg-white text-black hover:bg-white/90 border-white"
+                              : "bg-transparent hover:bg-white/10 text-white/80 hover:text-white border-white/20"
+                          }`}
                           onClick={() => handleRecommendationClick(msg.recommendations!, i + 1)}
                         >
-                          Ver {rec.name}
+                          {rec.name}
                         </Button>
                       ))}
                     </div>
@@ -335,10 +339,21 @@ const Playground = () => {
         {/* Main Content - Right 75% */}
         <div className="w-3/4 h-full flex flex-col p-8 gap-6">
           {/* Neighborhood Title */}
-          <div className="w-full">
+          <div className="w-full flex items-center gap-4">
             <h1 className="text-4xl font-light tracking-tight text-white">
               {currentRec.name || "Cargando..."}
             </h1>
+            {currentRecIndex > 0 && data.recommendations && data.recommendations.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleRecommendationClick(data.recommendations, 0)}
+                className="text-white/60 hover:text-white hover:bg-white/10 text-xs"
+              >
+                <ArrowLeft className="h-3 w-3 mr-1" />
+                Volver a {data.recommendations[0].name}
+              </Button>
+            )}
           </div>
 
           {/* Bottom Section - Justification and Map */}
