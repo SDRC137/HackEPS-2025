@@ -30,9 +30,11 @@ class Agent4Negotiator:
         Analiza el feedback del usuario y el estado actual para generar:
         1. Un mensaje puente empático.
         2. Una lista de requisitos actualizada (fusionando cambios).
+        3. Una lista de requisitos OSM actualizada (para lugares físicos específicos).
         """
         
         reqs_json_str = json.dumps(current_requirements.get("requirements", []), indent=2)
+        osm_reqs_json_str = json.dumps(current_requirements.get("osm_requirements", []), indent=2)
         top_3_str = ", ".join(current_top_3_names) if current_top_3_names else "Ninguno"
         
         prompt = f"""
@@ -43,13 +45,16 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
 1. **Requisitos Actuales (JSON):**
 {reqs_json_str}
 
-2. **Barrios Recomendados Recientemente:**
+2. **Requisitos OSM Actuales (Lugares Físicos Específicos):**
+{osm_reqs_json_str}
+
+3. **Barrios Recomendados Recientemente:**
 {top_3_str}
 
-3. **Feedback del Usuario:**
+4. **Feedback del Usuario:**
 "{user_feedback}"
 
-**Variables Disponibles:**
+**Variables Disponibles (CSV):**
 {", ".join(COLUMNS)}
 
 **Escala de Valores:**
@@ -59,8 +64,12 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
 **Instrucciones:**
 1. **Análisis de Intención:** Identifica qué quiere cambiar el usuario.
    - **Quejas:** Si dice "es muy caro", busca `median_rent` o `median_home_price`, pon valor `Low` o `Extremely_Low` y peso 5. Si dice "muy ruidoso", `average_dB_level` -> `Low`.
-   - **Distancias:** Recuerda que `proximity_to_sea` y `dist_downtown_km` son distancias. "Cerca" = `Low`, "Lejos" = `High`. Si dice "No me gusta la playa", quiere estar LEJOS (`High` o `Extremely_High`).
-   - **Nuevos Requisitos:** Si dice "quiero gimnasios", `gym_density` -> `High`.
+   - **Distancias:** Recuerda que `proximity_to_sea` y `dist_downtown_km` son distancias. "Cerca" = `Low`, "Lejos" = `High`.
+     - Si dice "más cerca", "muy cerca" o "primera línea", usa `Extremely_Low`.
+     - Si dice "cerca" o "a poca distancia", usa `Low`.
+     - Si dice "lejos" o "no me gusta", usa `High` o `Extremely_High`.
+   - **Nuevos Requisitos (Variables CSV):** Si dice "quiero gimnasios", `gym_density` -> `High`.
+   - **Nuevos Requisitos (Lugares Físicos/OSM):** Si pide algo ESPECÍFICO que NO está en las variables CSV (ej: "bibliotecas", "tienda de cómics", "parque para perros", "cancha de baloncesto"), añádelo como `osm_modification`. Genera el `osm_tag` adecuado (ej: `amenity=library`, `shop=comics`, `leisure=dog_park`).
    - **Descartes:** Si dice "no me importa X", pon valor y peso a `null` para eliminarlo.
    - **Rechazo de Barrios:**
      - Si dice "No me gusta X" (donde X es un barrio), añádelo a `rejected_neighborhoods`.
@@ -71,12 +80,16 @@ Tu objetivo es entender el feedback del usuario sobre una recomendación previa 
    - Tono: Empático y profesional.
 
 **Salida Esperada (JSON Puro):**
-Devuelve SOLO los cambios (`modifications`) y el mensaje. NO devuelvas la lista completa de requisitos, yo me encargo de fusionarla.
+Devuelve SOLO los cambios (`modifications`, `osm_modifications`) y el mensaje. NO devuelvas la lista completa de requisitos, yo me encargo de fusionarla.
 {{
   "bridge_message": "Texto del mensaje puente...",
   "modifications": [
-    {{ "variable_name": "...", "value": "...", "weight": ... }}, // Para añadir o modificar
+    {{ "variable_name": "...", "value": "...", "weight": ... }}, // Para añadir o modificar variables CSV
     {{ "variable_name": "...", "value": null, "weight": null }} // Para eliminar un requisito existente
+  ],
+  "osm_modifications": [
+    {{ "search_term": "biblioteca", "osm_tag": "amenity=library" }}, // Para añadir lugares específicos
+    {{ "search_term": "...", "osm_tag": null }} // Para eliminar un lugar específico (si aplica)
   ],
   "rejected_neighborhoods": ["NombreBarrio1", "NombreBarrio2"]
 }}
@@ -116,10 +129,33 @@ Devuelve SOLO los cambios (`modifications`) y el mensaje. NO devuelvas la lista 
                 
                 # Convert back to list
                 final_reqs = list(reqs_dict.values())
+
+                # --- LOGIC TO MERGE OSM REQUIREMENTS ---
+                existing_osm_reqs = current_requirements.get("osm_requirements", []) or []
+                osm_modifications = result_data.get("osm_modifications", [])
+                
+                # Convert existing to dict for easy update (key by search_term)
+                osm_reqs_dict = {r["search_term"]: r for r in existing_osm_reqs}
+                
+                for mod in osm_modifications:
+                    term = mod.get("search_term")
+                    if not term: continue
+                    
+                    if mod.get("osm_tag") is None:
+                        if term in osm_reqs_dict:
+                            del osm_reqs_dict[term]
+                    else:
+                        osm_reqs_dict[term] = {
+                            "search_term": term,
+                            "osm_tag": mod.get("osm_tag")
+                        }
+                
+                final_osm_reqs = list(osm_reqs_dict.values())
                 
                 return {
                     "bridge_message": result_data.get("bridge_message", ""),
                     "requirements": final_reqs,
+                    "osm_requirements": final_osm_reqs,
                     "rejected_neighborhoods": result_data.get("rejected_neighborhoods", [])
                 }
                 
@@ -129,6 +165,7 @@ Devuelve SOLO los cambios (`modifications`) y el mensaje. NO devuelvas la lista 
                 return {
                     "bridge_message": "Entendido. Voy a intentar ajustar la búsqueda con tus comentarios.",
                     "requirements": current_requirements.get("requirements", []),
+                    "osm_requirements": current_requirements.get("osm_requirements", []),
                     "rejected_neighborhoods": []
                 }
                 
@@ -137,5 +174,6 @@ Devuelve SOLO los cambios (`modifications`) y el mensaje. NO devuelvas la lista 
             return {
                 "bridge_message": "He tenido un problema procesando tu solicitud, pero revisaré los criterios.",
                 "requirements": current_requirements.get("requirements", []),
+                "osm_requirements": current_requirements.get("osm_requirements", []),
                 "rejected_neighborhoods": []
             }

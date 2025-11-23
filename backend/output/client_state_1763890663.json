@@ -1,0 +1,16 @@
+{
+  "requirements": [
+    {
+      "variable_name": "green_space_percentage",
+      "value": "High",
+      "weight": 5
+    }
+  ],
+  "osm_requirements": [
+    {
+      "search_term": "biblioteca",
+      "osm_tag": "amenity=library"
+    }
+  ],
+  "justification_summary": ". User Feedback: muéstrame las bibliotecas, asegúrate de que hay puntos verdes"
+}

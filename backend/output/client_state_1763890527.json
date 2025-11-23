@@ -1,11 +1,11 @@
 {
   "client_name": "User",
-  "justification_summary": "Trabajo como enfermera en turnos rotativos en el UCLA Medical Center. Entro y salgo a horas absurdas: 5am, 11pm, 3am… según la semana. No puedo permitirme vivir lejos porque conducir después de 12 horas de turno es un peligro. Necesito un barrio donde pueda ir andando o en bus directo al hospital, donde me sienta segura volviendo de noche y donde haya servicios básicos cerca — supermercado, farmacia, lavandería — porque no tengo energía para nada más.\n\nNo busco vida social, no busco bares, no busco ‘barrio cool’. Solo necesito seguridad, proximidad real al trabajo y precio razonable. Nada más.",
+  "justification_summary": "Un amable investigador acadèmic i pare primerenc. En Samwell trasllada la seva jove família a Los Angeles amb un salari universitari modest. La seva cerca se centra únicament a trobar un barri tranquil, segur i assequible on el seu fill pugui créixer, amb bons parcs i una biblioteca a prop.\n",
   "requirements": [
     {
       "variable_name": "median_household_income",
-      "value": null,
-      "weight": 3
+      "value": "Low",
+      "weight": 5
     },
     {
       "variable_name": "surface_area",
@@ -14,8 +14,8 @@
     },
     {
       "variable_name": "population_density",
-      "value": null,
-      "weight": 1
+      "value": "Low",
+      "weight": 3
     },
     {
       "variable_name": "average_age",
@@ -24,13 +24,13 @@
     },
     {
       "variable_name": "families_with_children_percentage",
-      "value": null,
-      "weight": 1
+      "value": "High",
+      "weight": 4
     },
     {
       "variable_name": "rent_vs_own_percentage",
       "value": null,
-      "weight": 3
+      "weight": 1
     },
     {
       "variable_name": "unemployment_rate",
@@ -40,7 +40,7 @@
     {
       "variable_name": "education_level_percentage",
       "value": null,
-      "weight": 1
+      "weight": 2
     },
     {
       "variable_name": "total_crimes",
@@ -64,7 +64,7 @@
     },
     {
       "variable_name": "crime_trend_slope",
-      "value": "Low",
+      "value": "Negative",
       "weight": 4
     },
     {
@@ -85,22 +85,22 @@
     {
       "variable_name": "average_housing_age",
       "value": null,
-      "weight": 1
+      "weight": 2
     },
     {
       "variable_name": "air_quality_index",
-      "value": null,
-      "weight": 1
+      "value": "Low",
+      "weight": 3
     },
     {
       "variable_name": "average_dB_level",
       "value": "Low",
-      "weight": 3
+      "weight": 4
     },
     {
       "variable_name": "maximum_dB_level",
       "value": "Low",
-      "weight": 3
+      "weight": 4
     },
     {
       "variable_name": "gym_density",
@@ -114,8 +114,8 @@
     },
     {
       "variable_name": "local_businesses_density",
-      "value": "High",
-      "weight": 4
+      "value": null,
+      "weight": 1
     },
     {
       "variable_name": "restaurant_density",
@@ -124,18 +124,18 @@
     },
     {
       "variable_name": "premium_stores_density",
-      "value": "Low",
-      "weight": 2
+      "value": null,
+      "weight": 1
     },
     {
       "variable_name": "nightlife_density",
-      "value": "Extremely_Low",
-      "weight": 5
+      "value": "Low",
+      "weight": 3
     },
     {
       "variable_name": "hospital_density",
-      "value": "High",
-      "weight": 5
+      "value": null,
+      "weight": 2
     },
     {
       "variable_name": "dist_downtown_km",
@@ -149,8 +149,8 @@
     },
     {
       "variable_name": "green_space_percentage",
-      "value": null,
-      "weight": 1
+      "value": "High",
+      "weight": 4
     },
     {
       "variable_name": "charging_stations_number",
@@ -159,37 +159,29 @@
     },
     {
       "variable_name": "walk_score",
-      "value": "High",
-      "weight": 5
+      "value": null,
+      "weight": 2
     },
     {
       "variable_name": "transit_score",
-      "value": "High",
-      "weight": 5
+      "value": null,
+      "weight": 2
     },
     {
       "variable_name": "bike_score",
       "value": null,
-      "weight": 3
+      "weight": 2
     },
     {
       "variable_name": "accessibility_score",
-      "value": "High",
-      "weight": 5
+      "value": null,
+      "weight": 1
     }
   ],
   "osm_requirements": [
     {
-      "search_term": "Supermercado",
-      "osm_tag": "shop=supermarket"
-    },
-    {
-      "search_term": "Farmacia",
-      "osm_tag": "amenity=pharmacy"
-    },
-    {
-      "search_term": "Lavandería",
-      "osm_tag": "shop=laundry"
+      "search_term": "biblioteca",
+      "osm_tag": "amenity=library"
     }
   ]
 }

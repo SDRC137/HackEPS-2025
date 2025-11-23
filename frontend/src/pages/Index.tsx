@@ -9,10 +9,25 @@ const Index = () => {
   const [prompt, setPrompt] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState("");
 
   const handleSubmit = async () => {
     if (prompt.trim()) {
       setIsLoading(true);
+      setLoadingStep("Analizando perfil...");
+      
+      // Simulate progress steps
+      const steps = [
+        { time: 2000, text: "Buscando barrios candidatos..." },
+        { time: 5000, text: "Calculando puntuaciones..." },
+        { time: 8000, text: "Generando justificaciones..." },
+        { time: 12000, text: "Localizando puntos de interés..." }
+      ];
+      
+      const timeouts = steps.map(step => 
+        setTimeout(() => setLoadingStep(step.text), step.time)
+      );
+
       try {
       const response = await fetch('http://localhost:5001/api/start', {
         method: 'POST',
@@ -31,6 +46,8 @@ const Index = () => {
         alert("Error connecting to server: " + error);
       } finally {
         setIsLoading(false);
+        setLoadingStep("");
+        timeouts.forEach(clearTimeout);
       }
     }
   };
@@ -92,10 +109,19 @@ const Index = () => {
             </div>
           </div>
 
+          {/* Loading Step Indicator */}
+          {isLoading && (
+            <p className="mt-4 text-center text-sm text-white/80 animate-pulse font-medium">
+              {loadingStep}
+            </p>
+          )}
+
           {/* Helper text */}
-          <p className="mt-4 text-center text-sm text-white/70">
-            Prem ⌘ + Enter per enviar
-          </p>
+          {!isLoading && (
+            <p className="mt-4 text-center text-sm text-white/70">
+              Prem ⌘ + Enter per enviar
+            </p>
+          )}
         </div>
 
         {/* Example prompts */}
