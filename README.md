@@ -1,83 +1,83 @@
-# HackEPS 2025 – Sistema Inteligente de Recomendación de Barrios (Los Ángeles)
-## De Porks in Paris
+# HackEPS 2025 – Intelligent Neighborhood Recommendation System (Los Angeles)
+## By Porks in Paris
 
-Proyecto desarrollado durante el hackathon HackEPS 2025. El objetivo es ayudar a un usuario (potencial reubicación / mudanza / inversión) a descubrir y comparar barrios de Los Ángeles de forma explicable, iterativa y personalizada usando un pipeline multi‑agente y datos socio‑demográficos, vivienda, seguridad y calidad de vida.
+Project developed during the HackEPS 2025 hackathon. The goal is to help a user (potential relocation / move / investment) discover and compare Los Angeles neighborhoods in an explainable, iterative, and personalized way using a multi-agent pipeline and socio-demographic, housing, safety, and quality of life data.
 
-## 🧠 Idea Principal
-El sistema recibe un perfil inicial (texto libre) y genera recomendaciones de barrios con:
-- Puntuación agregada y factores clave (explicabilidad).
-- Top variables que motivan cada recomendación.
-- Acciones de mapa y puntos de interés cercanos.
-- Ciclo iterativo: el usuario puede dar feedback y refinar resultados (chat).
+## 🧠 Main Idea
+The system receives an initial profile (free text) and generates neighborhood recommendations with:
+- Aggregated score and key factors (explainability).
+- Top variables driving each recommendation.
+- Map actions and nearby points of interest.
+- Iterative cycle: the user can provide feedback and refine results (chat).
 
-## ⚙️ Arquitectura
+## ⚙️ Architecture
 **Frontend (React + Vite + Tailwind + Radix + Mapbox GL)**
-- Interfaz interactiva: mapa, panel de recomendaciones, feedback tipo chat, visualizaciones.
+- Interactive interface: map, recommendation panel, chat-like feedback, visualizations.
 
-**Backend (Flask + Orquestador de Agentes)**
-- Endpoint REST y modo CLI.
-- Orchestrator (`BackendOrchestrator`) coordina análisis, ranking y generación de texto.
-- Integraciones externas: Google Custom Search / Unsplash para imágenes, Mapbox para visualización.
-- Sesión mantiene: historial de mensajes, barrios descartados, últimas recomendaciones.
+**Backend (Flask + Agent Orchestrator)**
+- REST Endpoint and CLI mode.
+- Orchestrator (`BackendOrchestrator`) coordinates analysis, ranking, and text generation.
+- External integrations: Google Custom Search / Unsplash for images, Mapbox for visualization.
+- Session maintains: message history, discarded neighborhoods, latest recommendations.
 
-**Datos**
-- `final.csv`, `final_with_position.csv`: métricas agregadas por barrio (scores y variables crudas).
-- `neighborhoods.csv`, `neighborhoods_geometry.csv`: catálogos y geometrías para mapa.
-- Carpeta `demograficas_sociales_vivienda_costevida_seguridad_entorno/`: fuentes crudas y procesadas.
-- Cache JSON en `backend/cache/` para acelerar consultas intermedias de agentes.
+**Data**
+- `final.csv`, `final_with_position.csv`: aggregated metrics by neighborhood (scores and raw variables).
+- `neighborhoods.csv`, `neighborhoods_geometry.csv`: catalogs and geometries for the map.
+- Folder `demograficas_sociales_vivienda_costevida_seguridad_entorno/`: raw and processed sources.
+- JSON Cache in `backend/cache/` to speed up intermediate agent queries.
 
-## ✨ Características Clave
-- Recomendaciones explicables (factores + justificaciones).
-- Ciclo de retroalimentación conversacional (`/api/chat`).
-- Obtención dinámica de imágenes del barrio (Google / Unsplash).
-- CLI para depuración y demostraciones rápidas (`run_agents.py`).
-- Preparado para extender a nuevos conjuntos de datos o ciudades.
+## ✨ Key Features
+- Explainable recommendations (factors + justifications).
+- Conversational feedback cycle (`/api/chat`).
+- Dynamic neighborhood image fetching (Google / Unsplash).
+- CLI for debugging and quick demos (`run_agents.py`).
+- Ready to extend to new datasets or cities.
 
-## 📁 Estructura (resumen)
+## 📁 Structure (summary)
 ```
-backend/               → API Flask + orquestador + agentes (WIP)
-frontend/              → Cliente React (Vite) + Mapbox + UI components
-data/                  → CSV base LA
-demograficas_sociales_.../ → Datasets enriquecidos
-SDR/                   → Scripts de preparación y análisis (prototipos)
-final.csv              → Dataset principal consolidado
+backend/               → Flask API + orchestrator + agents (WIP)
+frontend/              → React Client (Vite) + Mapbox + UI components
+data/                  → Base LA CSV
+demograficas_sociales_.../ → Enriched datasets
+SDR/                   → Preparation and analysis scripts (prototypes)
+final.csv              → Consolidated main dataset
 ```
 
-## 🔌 Endpoints API
-| Método | Ruta | Descripción | Body Ejemplo |
+## 🔌 API Endpoints
+| Method | Route | Description | Body Example |
 |--------|------|-------------|--------------|
-| POST | `/api/start` | Inicia sesión con perfil inicial | `{ "prompt": "Busco barrio seguro con buena oferta cultural" }` |
-| POST | `/api/chat` | Feedback iterativo / refinamiento | `{ "message": "Prioriza acceso a parques y baja criminalidad" }` |
-| GET  | `/api/images?neighborhood=Echo%20Park` | Imágenes del barrio | – |
-| GET  | `/health` | Comprobación de estado | – |
+| POST | `/api/start` | Starts session with initial profile | `{ "prompt": "Looking for a safe neighborhood with good cultural offerings" }` |
+| POST | `/api/chat` | Iterative feedback / refinement | `{ "message": "Prioritize park access and low crime" }` |
+| GET  | `/api/images?neighborhood=Echo%20Park` | Neighborhood images | – |
+| GET  | `/health` | Health check | – |
 
-Respuesta típica (resumida) de `/api/start` / `/api/chat`:
+Typical response (summarized) from `/api/start` / `/api/chat`:
 ```json
 {
 	"recommendations": [
 		{
 			"name": "Echo Park",
 			"total_score": 87.4,
-			"overview": "Barrio con mezcla cultural y buena vida al aire libre",
+			"overview": "Neighborhood with cultural mix and good outdoor life",
 			"top_5_variables": [
-				{"variable_name": "green_areas", "justification": "Acceso destacado a zonas verdes"}
+				{"variable_name": "green_areas", "justification": "Outstanding access to green areas"}
 			],
 			"key_factors": [
 				{"variable": "crime_rate", "neighborhood_value": 0.21, "match_score": 9, "max_score": 10}
 			]
 		}
 	],
-	"chatbot_text": "Te recomiendo empezar por Echo Park y Silver Lake...",
-	"map_actions": [{"label": "Mostrar recomendados", "type": "layer"}],
-	"process_log": ["Normalización datos", "Cálculo scores", "Generación explicación"]
+	"chatbot_text": "I recommend starting with Echo Park and Silver Lake...",
+	"map_actions": [{"label": "Show recommended", "type": "layer"}],
+	"process_log": ["Data normalization", "Score calculation", "Explanation generation"]
 }
 ```
 
-## 🛠️ Instalación y Puesta en Marcha
-### Requisitos
-- Python 3.11+ (recomendado)
-- Node.js 18+ (o Bun) 
-- Acceso a claves API externas (opcional para imágenes): Google Custom Search / Unsplash.
+## 🛠️ Installation and Setup
+### Requirements
+- Python 3.11+ (recommended)
+- Node.js 18+ (or Bun)
+- Access to external API keys (optional for images): Google Custom Search / Unsplash.
 
 ### Backend
 ```pwsh
@@ -85,44 +85,44 @@ cd backend
 python -m venv .venv
 ./.venv/Scripts/Activate.ps1
 pip install -r ../requirements.txt
-# Copiar .env de ejemplo y rellenar claves
+# Copy example .env and fill in keys
 python server.py
 ```
-Servidor por defecto: `http://0.0.0.0:5001`
+Default server: `http://0.0.0.0:5001`
 
 ### Frontend
 ```pwsh
 cd frontend
-npm install       # o bun install
-npm run dev       # o bun run dev
+npm install       # or bun install
+npm run dev       # or bun run dev
 ```
-Interfaz: normalmente en `http://localhost:5173`
+Interface: usually at `http://localhost:5173`
 
-### Modo CLI (debug / demostración)
+### CLI Mode (debug / demo)
 ```pwsh
 python backend/run_agents.py
 ```
 
-## 🌱 Variables de Entorno (`backend/.env` ejemplo)
+## 🌱 Environment Variables (`backend/.env` example)
 ```
-GOOGLE_API_KEY=tu_api_key
-GOOGLE_CX=tu_cx_id
-GEMINI_API_KEY=opcional_si_coincide
-UNSPLASH_ACCESS_KEY=tu_unsplash_key
-MAPBOX_TOKEN=tu_token_mapbox
+GOOGLE_API_KEY=your_api_key
+GOOGLE_CX=your_cx_id
+GEMINI_API_KEY=optional_if_matches
+UNSPLASH_ACCESS_KEY=your_unsplash_key
+MAPBOX_TOKEN=your_mapbox_token
 ```
-Si faltan claves de imágenes: el endpoint `/api/images` devolverá lista vacía y el frontend puede mostrar placeholders.
+If image keys are missing: the `/api/images` endpoint will return an empty list and the frontend can show placeholders.
 
-## 📊 Datos y Calidad
-Los datos provienen de compilaciones múltiples (coste de vida, vivienda, seguridad, entorno social). Se aplican transformaciones y normalizaciones (ver algunos de los scripts en `SDR/` y archivos intermedios). Este repositorio no garantiza exactitud absoluta: usar para fines exploratorios en el hackathon.
+## 📊 Data and Quality
+Data comes from multiple compilations (cost of living, housing, safety, social environment). Transformations and normalizations are applied (see some scripts in `SDR/` and intermediate files). This repository does not guarantee absolute accuracy: use for exploratory purposes in the hackathon.
 
-## 🚀 Roadmap (Ideas Futuras)
-- Añadir autenticación y sesiones persistentes.
-- Mejorar motor de explicación (contrastar con medias ciudad).
-- Soporte multiciudad (parametrizar datasets).
-- Cacheo distribuido y jobs asíncronos para análisis pesado.
-- Panel de ajuste de pesos de variables por el usuario.
-- Test unitarios y validación de integridad de datos.
+## 🚀 Roadmap (Future Ideas)
+- Add authentication and persistent sessions.
+- Improve explanation engine (contrast with city averages).
+- Multi-city support (parameterize datasets).
+- Distributed caching and async jobs for heavy analysis.
+- User variable weight adjustment panel.
+- Unit tests and data integrity validation.
 
-## ⚖️ Licencia
-Pendiente de definir (por defecto: uso interno hackathon). Se puede migrar a MIT si el equipo lo aprueba.
+## ⚖️ License
+Pending definition (default: internal hackathon use). Can be migrated to MIT if the team approves.
