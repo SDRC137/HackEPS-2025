@@ -1,0 +1,187 @@
+{
+  "client_name": "User",
+  "justification_summary": "Un amable investigador acadèmic i pare primerenc. En Samwell trasllada la seva jove família a Los Angeles amb un salari universitari modest. La seva cerca se centra únicament a trobar un barri tranquil, segur i assequible on el seu fill pugui créixer, amb bons parcs i una biblioteca a prop.",
+  "requirements": [
+    {
+      "variable_name": "median_household_income",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "surface_area",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "population_density",
+      "value": "Low",
+      "weight": 3
+    },
+    {
+      "variable_name": "average_age",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "families_with_children_percentage",
+      "value": "High",
+      "weight": 4
+    },
+    {
+      "variable_name": "rent_vs_own_percentage",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "unemployment_rate",
+      "value": "Low",
+      "weight": 4
+    },
+    {
+      "variable_name": "education_level_percentage",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "total_crimes",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "violent_ratio",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "property_ratio",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "violent_vs_property_ratio",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "crime_trend_slope",
+      "value": "Negative",
+      "weight": 4
+    },
+    {
+      "variable_name": "crimes_per_100_people",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "median_rent",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "median_home_price",
+      "value": "Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "average_housing_age",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "air_quality_index",
+      "value": "Low",
+      "weight": 3
+    },
+    {
+      "variable_name": "average_dB_level",
+      "value": "Low",
+      "weight": 4
+    },
+    {
+      "variable_name": "maximum_dB_level",
+      "value": "Low",
+      "weight": 4
+    },
+    {
+      "variable_name": "gym_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "culture_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "local_businesses_density",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "restaurant_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "premium_stores_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "nightlife_density",
+      "value": "Low",
+      "weight": 4
+    },
+    {
+      "variable_name": "hospital_density",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "dist_downtown_km",
+      "value": "Moderate",
+      "weight": 3
+    },
+    {
+      "variable_name": "proximity_to_sea",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "green_space_percentage",
+      "value": "High",
+      "weight": 4
+    },
+    {
+      "variable_name": "charging_stations_number",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "walk_score",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "transit_score",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "bike_score",
+      "value": null,
+      "weight": 2
+    },
+    {
+      "variable_name": "accessibility_score",
+      "value": null,
+      "weight": 1
+    }
+  ],
+  "osm_requirements": [
+    {
+      "search_term": "biblioteca",
+      "osm_tag": "amenity=library"
+    }
+  ]
+}

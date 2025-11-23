@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Send, ChevronLeft, Bot, User } from "lucide-react";
+import { ArrowLeft, Send, ChevronLeft, ChevronRight, Bot, User } from "lucide-react";
 import MapView from "@/components/MapView";
 
 const Playground = () => {
@@ -169,6 +169,49 @@ const Playground = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // Default images
+  const defaultImages = [
+    { url: "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2940&auto=format&fit=crop", description: "Vistas panorámicas de la ciudad" },
+    { url: "https://images.unsplash.com/photo-1580655653885-65763b2597d0?q=80&w=2940&auto=format&fit=crop", description: "Zonas residenciales tranquilas" },
+    { url: "https://images.unsplash.com/photo-1513161455079-7dc1bad15a49?q=80&w=2940&auto=format&fit=crop", description: "Ambiente local y acogedor" }
+  ];
+
+  const [neighborhoodImages, setNeighborhoodImages] = useState(defaultImages);
+
+  // Fetch images when neighborhood changes
+  useEffect(() => {
+    const fetchImages = async () => {
+        if (!currentRec.name) return;
+        
+        try {
+            const res = await fetch(`http://localhost:5001/api/images?neighborhood=${encodeURIComponent(currentRec.name)}`);
+            const data = await res.json();
+            
+            if (data.images && data.images.length > 0) {
+                setNeighborhoodImages(data.images);
+                setCurrentImageIndex(0);
+            } else {
+                setNeighborhoodImages(defaultImages);
+            }
+        } catch (e) {
+            console.error("Failed to fetch images", e);
+            setNeighborhoodImages(defaultImages);
+        }
+    };
+    
+    fetchImages();
+  }, [currentRec.name]);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % neighborhoodImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + neighborhoodImages.length) % neighborhoodImages.length);
   };
 
   return (
@@ -455,12 +498,57 @@ const Playground = () => {
               </div>
             </div>
 
-            {/* Right - Map */}
-            <div className="w-1/3 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl overflow-hidden shadow-lg">
-              <MapView 
-                polygonCoordinates={atwaterVillagePolygon} 
-                activeAction={activeMapAction}
-              />
+            {/* Right Column - Slideshow and Map */}
+            <div className="w-1/3 flex flex-col gap-6">
+              {/* Slideshow Container */}
+              <div className="h-1/3 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl overflow-hidden shadow-lg flex flex-col relative group">
+                {/* Image Area */}
+                <div className="flex-1 relative overflow-hidden">
+                  <img 
+                    src={neighborhoodImages[currentImageIndex].url} 
+                    alt="Neighborhood view" 
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                  
+                  {/* Navigation Buttons */}
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+                  >
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-black/50 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/70"
+                  >
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+                
+                {/* Description Area */}
+                <div className="p-3 bg-black/40 border-t border-white/10">
+                  <p className="text-xs text-white/90 text-center font-medium">
+                    {neighborhoodImages[currentImageIndex].description}
+                  </p>
+                  {/* Dots indicator */}
+                  <div className="flex justify-center gap-1.5 mt-2">
+                    {neighborhoodImages.map((_, idx) => (
+                      <div 
+                        key={idx}
+                        className={`w-1.5 h-1.5 rounded-full transition-all ${idx === currentImageIndex ? 'bg-white scale-110' : 'bg-white/30'}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Map Container */}
+              <div className="flex-1 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl overflow-hidden shadow-lg">
+                <MapView 
+                  polygonCoordinates={atwaterVillagePolygon} 
+                  activeAction={activeMapAction}
+                />
+              </div>
             </div>
           </div>
         </div>

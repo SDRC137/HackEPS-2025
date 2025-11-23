@@ -1,0 +1,182 @@
+{
+  "client_name": "User",
+  "justification_summary": "Bran Stark: L'Analista Total Un científic de dades que treballa 100% des de casa. Es mou en cadira de rodes, així que necessita zero barreres arquitectòniques. Busca un lloc tranquil, silenciós i amb la millor fibra òptica per poder treballar sense límits.",
+  "requirements": [
+    {
+      "variable_name": "median_household_income",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "surface_area",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "population_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "average_age",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "families_with_children_percentage",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "rent_vs_own_percentage",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "unemployment_rate",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "education_level_percentage",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "total_crimes",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "violent_ratio",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "property_ratio",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "violent_vs_property_ratio",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "crime_trend_slope",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "crimes_per_100_people",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "median_rent",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "median_home_price",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "average_housing_age",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "air_quality_index",
+      "value": null,
+      "weight": 3
+    },
+    {
+      "variable_name": "average_dB_level",
+      "value": "Extremely_Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "maximum_dB_level",
+      "value": "Extremely_Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "gym_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "culture_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "local_businesses_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "restaurant_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "premium_stores_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "nightlife_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "hospital_density",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "dist_downtown_km",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "proximity_to_sea",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "green_space_percentage",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "charging_stations_number",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "walk_score",
+      "value": "Extremely_High",
+      "weight": 5
+    },
+    {
+      "variable_name": "transit_score",
+      "value": "Extremely_Low",
+      "weight": 5
+    },
+    {
+      "variable_name": "bike_score",
+      "value": null,
+      "weight": 1
+    },
+    {
+      "variable_name": "accessibility_score",
+      "value": "Extremely_High",
+      "weight": 5
+    }
+  ],
+  "osm_requirements": []
+}
