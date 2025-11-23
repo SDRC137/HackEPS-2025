@@ -70,6 +70,28 @@ const Playground = () => {
   const [input, setInput] = useState("");
   const [expandedButton, setExpandedButton] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
+
+  const loadingMessages = [
+    "Interpretando tus preferencias...",
+    "Escaneando barrios de Los Angeles...",
+    "Cruzando datos demográficos y criminalidad...",
+    "Calculando match scores...",
+    "Redactando justificación..."
+  ];
+
+  useEffect(() => {
+    if (!isLoading) {
+      setLoadingStep(0);
+      return;
+    }
+    
+    const interval = setInterval(() => {
+      setLoadingStep(prev => (prev < loadingMessages.length - 1 ? prev + 1 : prev));
+    }, 2000);
+    
+    return () => clearInterval(interval);
+  }, [isLoading]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -129,21 +151,12 @@ const Playground = () => {
       
       const newData = await response.json();
       
-      // Simulate process logs
-      if (newData.process_log && Array.isArray(newData.process_log)) {
-        for (const step of newData.process_log) {
-           setMessages(prev => [...prev, { role: 'assistant', content: `⚙️ ${step}` }]);
-           await new Promise(r => setTimeout(r, 800));
-        }
-      }
-      
       // Update full data state
       setData(newData);
       
-      // Update messages - Remove process logs and add final response
+      // Update messages - Add final response
       setMessages(prev => {
-        const filtered = prev.filter(m => !m.content.startsWith('⚙️'));
-        return [...filtered, { 
+        return [...prev, { 
           role: 'assistant', 
           content: newData.chatbot_text,
           recommendations: newData.recommendations 
@@ -197,27 +210,16 @@ const Playground = () => {
             {messages.map((msg, idx) => (
               <div
                 key={idx}
-                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
-                {/* Avatar */}
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                  msg.role === 'user' ? 'bg-white/20' : 'bg-transparent'
-                }`}>
-                  {msg.role === 'user' ? (
-                    <User className="h-4 w-4 text-white" />
-                  ) : (
-                    null
-                  )}
-                </div>
-
                 {/* Content Container */}
                 <div className={`flex flex-col gap-2 max-w-[85%] ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                   {/* Bubble */}
                   <div
-                    className={`rounded-2xl px-4 py-3 shadow-sm ${
+                    className={`rounded-2xl px-5 py-4 shadow-sm ${
                       msg.role === 'user'
-                        ? 'bg-white/20 backdrop-blur-md text-white rounded-tr-none'
-                        : 'bg-black/40 backdrop-blur-md text-gray-100 rounded-tl-none border border-white/10'
+                        ? 'bg-white/20 backdrop-blur-md text-white'
+                        : 'bg-black/40 backdrop-blur-md text-gray-100 border border-white/10'
                     }`}
                   >
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -244,6 +246,19 @@ const Playground = () => {
                 </div>
               </div>
             ))}
+            
+            {isLoading && (
+              <div className="flex gap-3 mt-2 animate-in fade-in duration-300">
+                <div className="w-8 h-8 flex-shrink-0 rounded-full bg-white/5 flex items-center justify-center">
+                   <Bot className="h-4 w-4 text-white/40 animate-pulse" />
+                </div>
+                <div className="flex flex-col justify-center">
+                   <span className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-300 to-blue-400 bg-[length:200%_auto] animate-shimmer tracking-wide">
+                      {loadingMessages[loadingStep]}
+                   </span>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
@@ -291,7 +306,7 @@ const Playground = () => {
               <div className="h-1/4 backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-6 shadow-lg overflow-y-auto flex flex-col gap-2">
                 <h3 className="text-xs uppercase tracking-wider text-white/60 font-semibold">Overview</h3>
                 <p className="text-sm text-white/90 leading-relaxed">
-                  {currentRec.overview || "Selecciona un barrio para ver los detalles."}
+                  {formatMessage(currentRec.overview || "Selecciona un barrio para ver los detalles.")}
                 </p>
               </div>
 

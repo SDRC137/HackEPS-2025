@@ -1,26 +1,11 @@
 {
   "status": "success",
-  "chatbot_text": "He actualizado la búsqueda. **Glassell Park** sigue siendo una gran opción, pero revisa cómo se ajusta a tus nuevos comentarios.",
+  "chatbot_text": "He analizado tu perfil y el mejor barrio para ti es **West Adams**. También he encontrado otras opciones interesantes.",
   "message_history": [
     {
       "role": "user",
-      "content": "Cersei Lannister: La Reina Corporativa Una executiva d'alt nivell que viu pel poder, el prestigi i la privacitat. Per a ella i els seus fills, vol viure aïllada en una bombolla de màxima seguretat, escoles d'elit i botigues de luxe.",
-      "timestamp": 1763854799
-    },
-    {
-      "role": "user",
-      "content": "quiero mas verde cerca de mi",
-      "timestamp": 1763855078
-    },
-    {
-      "role": "assistant",
-      "content": "Entiendo que buscas más áreas verdes cerca. Ajustaré la recomendación para priorizar barrios con mayor porcentaje de espacios verdes.",
-      "timestamp": 1763855079
-    },
-    {
-      "role": "user",
-      "content": "Jon Snow: El Guardià de la Comunitat Treballa als serveis d'emergència i té un sou públic. Busca un barri autèntic, on els veïns es coneguin. Valora allò pràctic, no el luxe, i necessita tenir la natura a prop per desconnectar.",
-      "timestamp": 1763855214
+      "content": "Trabajo como enfermera en turnos rotativos en el UCLA Medical Center. Entro y salgo a horas absurdas: 5am, 11pm, 3am… según la semana. No puedo permitirme vivir lejos porque conducir después de 12 horas de turno es un peligro. Necesito un barrio donde pueda ir andando o en bus directo al hospital, donde me sienta segura volviendo de noche y donde haya servicios básicos cerca — supermercado, farmacia, lavandería — porque no tengo energía para nada más.\n\nNo busco vida social, no busco bares, no busco ‘barrio cool’. Solo necesito seguridad, proximidad real al trabajo y precio razonable. Nada más.",
+      "timestamp": 1763859616
     }
   ],
   "process_log": [
@@ -31,558 +16,82 @@
   ],
   "recommendations": [
     {
-      "name": "Glassell Park",
-      "total_score": 78.08,
-      "coords": {
-        "lat": 34.11466786124112,
-        "lon": -118.23590897062827
-      },
-      "overview": "Glassell Park podría ser un buen ajuste para ti, Jon. Combina una sensación de comunidad auténtica con acceso a espacios verdes, ideal para desconectar después de tu trabajo en servicios de emergencia. Si bien algunos indicadores económicos están por encima de lo que buscas, la baja criminalidad y el ambiente tranquilo podrían compensar, ofreciendo un equilibrio interesante entre practicidad y bienestar.",
-      "top_5_variables": [
-        {
-          "variable_name": "Baja Tasa de Criminalidad",
-          "original_variable_key": "total_crimes",
-          "justification": "Considerando tu trabajo en servicios de emergencia, la seguridad es primordial. Glassell Park presenta un nivel de criminalidad bajo, brindándote mayor tranquilidad tanto en el trabajo como en tu hogar.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "3906",
-            "neighborhood_category": "Bajo",
-            "match_score": 5.0,
-            "max_score": 5.0,
-            "unit": "incidentes",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
-          }
-        },
-        {
-          "variable_name": "Bajo Ratio de Crímenes por 100 habitantes",
-          "original_variable_key": "crimes_per_100_people",
-          "justification": "Complementando la baja criminalidad general, la proporción de crímenes por cada 100 personas es también baja en Glassell Park. Esto refuerza la percepción de un entorno seguro y protegido para ti y la comunidad.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "82.77",
-            "neighborhood_category": "Bajo",
-            "match_score": 5.0,
-            "max_score": 5.0,
-            "unit": "",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
-          }
-        },
-        {
-          "variable_name": "Alto Porcentaje de Espacio Verde",
-          "original_variable_key": "green_space_percentage",
-          "justification": "Entendemos tu necesidad de estar cerca de la naturaleza para desconectar. Glassell Park ofrece un alto porcentaje de espacios verdes, lo que te permitirá relajarte y recargar energías en tu tiempo libre.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "28",
-            "neighborhood_category": "Alto",
-            "match_score": 5.0,
-            "max_score": 5.0,
-            "unit": "%",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
-          }
-        },
-        {
-          "variable_name": "Densidad Baja de Tiendas Premium",
-          "original_variable_key": "premium_stores_density",
-          "justification": "Priorizas lo práctico por encima del lujo, y en Glassell Park, la densidad de tiendas de lujo es muy baja, lo que significa que no estarás rodeado de opciones ostentosas y te enfocarás en lo esencial.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "0",
-            "neighborhood_category": "Muy Bajo",
-            "match_score": 4.0,
-            "max_score": 5.0,
-            "unit": "lugares",
-            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Muy Bajo para esta variable."
-          }
-        },
-        {
-          "variable_name": "Densidad Baja de Vida Nocturna",
-          "original_variable_key": "nightlife_density",
-          "justification": "Dado que valoras la tranquilidad, la baja densidad de vida nocturna en Glassell Park es un plus. Esto contribuirá a un ambiente más sereno y apacible, ideal para descansar después de largas jornadas laborales.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "1.43",
-            "neighborhood_category": "Moderado",
-            "match_score": 4.0,
-            "max_score": 5.0,
-            "unit": "lugares",
-            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Moderado para esta variable."
-          }
-        }
-      ],
-      "key_factors": [
-        {
-          "variable": "total_crimes",
-          "user_weight": 5.0,
-          "neighborhood_value": 3906,
-          "neighborhood_category": "Bajo",
-          "match_score": 5.0,
-          "max_score": 5.0
-        },
-        {
-          "variable": "crimes_per_100_people",
-          "user_weight": 5.0,
-          "neighborhood_value": 82.77177368086458,
-          "neighborhood_category": "Bajo",
-          "match_score": 5.0,
-          "max_score": 5.0
-        },
-        {
-          "variable": "green_space_percentage",
-          "user_weight": 5.0,
-          "neighborhood_value": 28,
-          "neighborhood_category": "Alto",
-          "match_score": 5.0,
-          "max_score": 5.0
-        },
-        {
-          "variable": "violent_ratio",
-          "user_weight": 5.0,
-          "neighborhood_value": 0.2555043522785458,
-          "neighborhood_category": "Moderado",
-          "match_score": 4.0,
-          "max_score": 5.0
-        },
-        {
-          "variable": "property_ratio",
-          "user_weight": 5.0,
-          "neighborhood_value": 0.6679467485919098,
-          "neighborhood_category": "Moderado",
-          "match_score": 4.0,
-          "max_score": 5.0
-        }
-      ],
-      "all_details": {
-        "median_household_income": {
-          "value": 89880.0,
-          "numeric_value": 89880.0,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 51100.0,
-            "Low": 61438.5,
-            "Moderate": 93521.0,
-            "High": 120937.5,
-            "Extremely_High": 168972.2
-          }
-        },
-        "unemployment_rate": {
-          "value": 6.4,
-          "numeric_value": 6.4,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 3.0,
-          "points_awarded": 2.0,
-          "max_points": 3.0,
-          "thresholds": {
-            "Extremely_Low": 3.4,
-            "Low": 5.75,
-            "Moderate": 7.9,
-            "High": 9.75,
-            "Extremely_High": 13.1
-          }
-        },
-        "total_crimes": {
-          "value": 3906,
-          "numeric_value": 3906.0,
-          "actual_category": "Low",
-          "actual_category_es": "Bajo",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 0,
-          "weight": 5.0,
-          "points_awarded": 5.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 2134.3,
-            "Low": 3908.0,
-            "Moderate": 6989.0,
-            "High": 11782.25,
-            "Extremely_High": 15244.7
-          }
-        },
-        "violent_ratio": {
-          "value": 0.2555043522785458,
-          "numeric_value": 0.2555043522785458,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 0.163,
-            "Low": 0.1912,
-            "Moderate": 0.2569,
-            "High": 0.3193,
-            "Extremely_High": 0.3825
-          }
-        },
-        "property_ratio": {
-          "value": 0.6679467485919098,
-          "numeric_value": 0.6679467485919098,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 0.5472,
-            "Low": 0.6186,
-            "Moderate": 0.671,
-            "High": 0.7465,
-            "Extremely_High": 0.7908
-          }
-        },
-        "violent_vs_property_ratio": {
-          "value": 0.3825220390954388,
-          "numeric_value": 0.3825220390954388,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 0.2061,
-            "Low": 0.2553,
-            "Moderate": 0.389,
-            "High": 0.5137,
-            "Extremely_High": 0.7007
-          }
-        },
-        "crime_trend_slope": {
-          "value": -1.653846153846154,
-          "numeric_value": -1.653846153846154,
-          "actual_category": "Extremely_High",
-          "actual_category_es": "Muy Alto",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 3,
-          "weight": 5.0,
-          "points_awarded": 2.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": -10.94,
-            "Low": -6.79,
-            "Moderate": -4.39,
-            "High": -2.31,
-            "Extremely_High": -1.39
-          }
-        },
-        "crimes_per_100_people": {
-          "value": 82.77177368086458,
-          "numeric_value": 82.77177368086458,
-          "actual_category": "Low",
-          "actual_category_es": "Bajo",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 0,
-          "weight": 5.0,
-          "points_awarded": 5.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 75.3,
-            "Low": 112.64,
-            "Moderate": 219.85,
-            "High": 373.91,
-            "Extremely_High": 545.89
-          }
-        },
-        "median_rent": {
-          "value": 1970.0,
-          "numeric_value": 1970.0,
-          "actual_category": "High",
-          "actual_category_es": "Alto",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 2,
-          "weight": 4.0,
-          "points_awarded": 2.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 1324.3,
-            "Low": 1517.5,
-            "Moderate": 1867.0,
-            "High": 2398.5,
-            "Extremely_High": 3268.0
-          }
-        },
-        "median_home_price": {
-          "value": 1128800.0,
-          "numeric_value": 1128800.0,
-          "actual_category": "High",
-          "actual_category_es": "Alto",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 2,
-          "weight": 4.0,
-          "points_awarded": 2.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 558840.0,
-            "Low": 667000.0,
-            "Moderate": 940800.0,
-            "High": 1506000.0,
-            "Extremely_High": 2000000.0
-          }
-        },
-        "air_quality_index": {
-          "value": "Moderate",
-          "numeric_value": null,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "High",
-          "target_category_es": "Alto",
-          "ordinal_distance": 1,
-          "weight": 3.0,
-          "points_awarded": 2.0,
-          "max_points": 3.0,
-          "thresholds": {}
-        },
-        "average_dB_level": {
-          "value": 60,
-          "numeric_value": 60.0,
-          "actual_category": "Low",
-          "actual_category_es": "Bajo",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 0,
-          "weight": 3.0,
-          "points_awarded": 3.0,
-          "max_points": 3.0,
-          "thresholds": {
-            "Extremely_Low": 50.0,
-            "Low": 60.0,
-            "Moderate": 60.0,
-            "High": 65.0,
-            "Extremely_High": 65.0
-          }
-        },
-        "maximum_dB_level": {
-          "value": 80,
-          "numeric_value": 80.0,
-          "actual_category": "Low",
-          "actual_category_es": "Bajo",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 0,
-          "weight": 3.0,
-          "points_awarded": 3.0,
-          "max_points": 3.0,
-          "thresholds": {
-            "Extremely_Low": 70.0,
-            "Low": 80.0,
-            "Moderate": 80.0,
-            "High": 85.0,
-            "Extremely_High": 90.0
-          }
-        },
-        "local_businesses_density": {
-          "value": 4.29,
-          "numeric_value": 4.29,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "High",
-          "target_category_es": "Alto",
-          "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 1.27,
-            "Low": 2.38,
-            "Moderate": 5.0,
-            "High": 11.81,
-            "Extremely_High": 18.0
-          }
-        },
-        "premium_stores_density": {
-          "value": 0.0,
-          "numeric_value": 0.0,
-          "actual_category": "Extremely_Low",
-          "actual_category_es": "Muy Bajo",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 0.0,
-            "Low": 0.0,
-            "Moderate": 0.0,
-            "High": 0.83,
-            "Extremely_High": 2.74
-          }
-        },
-        "nightlife_density": {
-          "value": 1.43,
-          "numeric_value": 1.43,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 0.39,
-            "Low": 1.0,
-            "Moderate": 1.78,
-            "High": 5.0,
-            "Extremely_High": 8.26
-          }
-        },
-        "green_space_percentage": {
-          "value": 28,
-          "numeric_value": 28.0,
-          "actual_category": "High",
-          "actual_category_es": "Alto",
-          "target_category": "High",
-          "target_category_es": "Alto",
-          "ordinal_distance": 0,
-          "weight": 5.0,
-          "points_awarded": 5.0,
-          "max_points": 5.0,
-          "thresholds": {
-            "Extremely_Low": 6.6,
-            "Low": 10.0,
-            "Moderate": 18.0,
-            "High": 30.0,
-            "Extremely_High": 53.5
-          }
-        }
-      },
-      "map_context": {
-        "center": {
-          "lat": 34.11466786124112,
-          "lon": -118.23590897062827
-        },
-        "polygon": "POLYGON ((-118.229669191283 34.1348808660726, -118.229657166172 34.1343124448303, -118.229637732918 34.1333938924321, -118.229628191436 34.132942865829, -118.22841219039 34.1263008646771, -118.228462190387 34.1252528653024, -118.227607189958 34.124800865288, -118.226811190195 34.123784864591, -118.226067189568 34.1235698646162, -118.225997189578 34.123030864954, -118.225222189897 34.1219078650004, -118.22438118947 34.1223158650695, -118.223638190023 34.1214718648264, -118.221993189549 34.1209238649211, -118.221945278781 34.1208697474056, -118.220951188389 34.1197468645626, -118.218387188792 34.1177878650533, -118.219075188144 34.1164598645124, -118.219544188423 34.1160488643028, -118.219585305004 34.1160616562648, -118.220891824504 34.1164681290193, -118.222485750282 34.1169640164783, -118.222559189402 34.1169868640117, -118.222649198456 34.1169277957449, -118.222774170421 34.1168457820922, -118.222847188928 34.116797864488, -118.222988807122 34.1162369469693, -118.223000188442 34.116191863805, -118.22357618868 34.1159148641721, -118.224016188558 34.1154298637197, -118.224007041982 34.1153273377446, -118.223998793903 34.1152348919336, -118.223992188543 34.1151608640764, -118.22102118872 34.1114578636953, -118.220922188179 34.11063086333, -118.221644129879 34.1088348137968, -118.221660188254 34.1087948636241, -118.222306212471 34.1084199884912, -118.223871188755 34.1075118634577, -118.224862955641 34.106818070443, -118.224908836815 34.1067859752792, -118.224986188799 34.106731862905, -118.2253721886 34.106220863241, -118.226127188722 34.1058848628729, -118.226560422052 34.1057282153543, -118.228496689321 34.1050281048884, -118.228688188798 34.1049588629113, -118.228794712488 34.1049540165783, -118.231128189573 34.1048478623975, -118.231458239074 34.1047879847104, -118.232054183225 34.1046798696179, -118.232495190136 34.1045998620348, -118.232646872946 34.1045209448208, -118.233211149755 34.1042273632881, -118.237081189862 34.102213862112, -118.227391187898 34.0906518615733, -118.22656818776 34.0894178611813, -118.226513067427 34.0892771751354, -118.225938186857 34.0878098612975, -118.22572518744 34.0862318608388, -118.225850187245 34.0848248603579, -118.226382186282 34.0826838602598, -118.22672518715 34.0827638607574, -118.226110951553 34.0851850029802, -118.226073186701 34.0853338605133, -118.226081130015 34.0855122189494, -118.226172186726 34.0875568604574, -118.226666035606 34.0889730443355, -118.226716187611 34.089116860734, -118.226864836245 34.0893462196906, -118.227442703075 34.0902378392186, -118.227624187824 34.0905178609888, -118.228423605322 34.0914315532965, -118.229044146924 34.0921407986002, -118.229219187938 34.0923408608026, -118.230704187982 34.093405861185, -118.227284187261 34.0896938606649, -118.226936186738 34.0828188600449, -118.227473151075 34.0829981130671, -118.22761318719 34.083044860536, -118.227615611944 34.0830639278529, -118.228271187603 34.0882188611276, -118.228802187369 34.0898448606588, -118.230023187896 34.091474860833, -118.230686188816 34.0921888608149, -118.232219188158 34.0932148615911, -118.233325189236 34.0936128610685, -118.236263189806 34.0940918609507, -118.23845019015 34.0948028613253, -118.240363190773 34.0965978606767, -118.242119191228 34.0993108615969, -118.242519191423 34.1022398618173, -118.242419190918 34.104633862079, -118.243183191681 34.1057448615109, -118.2442191919 34.106633861695, -118.246559192333 34.1079548623743, -118.249428849321 34.1086578975901, -118.249453192628 34.1086638614629, -118.24922119263 34.109285861809, -118.248761192849 34.1095088623706, -118.248045041557 34.1105269931394, -118.247995192804 34.1105978621138, -118.247477192485 34.1111118624454, -118.246450192909 34.1117578625081, -118.247452192511 34.1130668627358, -118.254138917215 34.1188576938402, -118.254143127577 34.118861340701, -118.254123639122 34.1188760045371, -118.254032163334 34.1189448332173, -118.252121446049 34.1202731701011, -118.251500485527 34.1207047400669, -118.251482713839 34.1207170883743, -118.251159707735 34.1209417106222, -118.251145517588 34.1209515785335, -118.251145553463 34.1209516127171, -118.25114519433 34.1209518631879, -118.253651999272 34.1233076789063, -118.253533427866 34.1236708134919, -118.253277195021 34.124453862983, -118.252876194404 34.1243028637854, -118.236676820797 34.1265288305084, -118.236498431591 34.1265532965715, -118.236179796074 34.1265970065345, -118.23601676181 34.1266193629483, -118.235759627047 34.1266546530938, -118.235570533102 34.1266806045571, -118.235381437877 34.1267065277793, -118.235250311253 34.126724534232, -118.235250337059 34.1267248443089, -118.235250191851 34.1267248644252, -118.235324191641 34.1276068652219, -118.235327496887 34.1276126042523, -118.235545502708 34.1279996879575, -118.235552708714 34.1280124242866, -118.235898528058 34.1286068576759, -118.235940067066 34.1286782762293, -118.236000830333 34.1287827146237, -118.236031145699 34.1288348649719, -118.236039462969 34.1288894211882, -118.236478476816 34.1317851190569, -118.23661442754 34.1327187126014, -118.236607489603 34.1327874743417, -118.236285629639 34.1345005395784, -118.236270664675 34.1345004624483, -118.236148090584 34.1344976250335, -118.236053912996 34.1344982480228, -118.235951969725 34.1344989419919, -118.235824184795 34.1344998233243, -118.235748678303 34.1345003005642, -118.235080121557 34.1345071532938, -118.234787573898 34.1345084944719, -118.234757404106 34.1345086324013, -118.23438677029 34.1345103045366, -118.234361887902 34.1345104158875, -118.234104169642 34.1345115751891, -118.23395358308 34.1345122787262, -118.233742261217 34.1345136494657, -118.233718966082 34.1345141615015, -118.233718965686 34.1345144076206, -118.233617191937 34.1345148657961, -118.233610204379 34.1356029315805, -118.232181655265 34.135605110463, -118.232095474126 34.1356052417024, -118.22957919177 34.1356058663394, -118.22957921802 34.1356055552608, -118.229669191283 34.1348808660726))",
-        "buttons": [],
-        "lines": [
-          {
-            "label": "Distancia a Downtown",
-            "start": [
-              -118.23590897062827,
-              34.11466786124112
-            ],
-            "end": [
-              -118.2518,
-              34.0488
-            ],
-            "color": "#ff0000"
-          },
-          {
-            "label": "Distancia a Playa",
-            "start": [
-              -118.23590897062827,
-              34.11466786124112
-            ],
-            "end": [
-              -118.4976,
-              34.0092
-            ],
-            "color": "#0000ff"
-          }
-        ]
-      }
-    },
-    {
       "name": "West Adams",
-      "total_score": 78.08,
+      "total_score": 81.25,
       "coords": {
         "lat": 34.029440530833604,
         "lon": -118.35282956586585
       },
-      "overview": "West Adams es un barrio con un fuerte sentido de comunidad y una rica historia. Podría ser una opción interesante para ti, Jon, ya que ofrece un precio de alquiler más asequible que otros barrios. Si bien tiene algunos aspectos a mejorar en cuanto a seguridad y espacios verdes, su autenticidad y vitalidad podrían ser atractivos, especialmente si buscas un lugar práctico y con carácter.",
+      "overview": "West Adams podría ser una opción interesante para ti. Si bien no es perfecto, destaca por su **alta densidad de hospitales** (muy conveniente para tu trabajo en UCLA Medical Center) y un **buen equilibrio entre seguridad y precio**. El barrio ofrece una **accesibilidad notable** tanto a pie como en transporte público, facilitando tus desplazamientos diarios. Aunque algunos indicadores de criminalidad no son ideales, el **alquiler medio es asequible** y la tendencia de criminalidad es a la baja.",
       "top_5_variables": [
         {
-          "variable_name": "Baja Tasa de Criminalidad",
-          "original_variable_key": "crime_trend_slope",
-          "justification": "Aunque la tasa de criminalidad actual es moderada, la tendencia muestra una disminución significativa, lo que indica una mejora en la seguridad del barrio a largo plazo.",
+          "variable_name": "Densidad de hospitales",
+          "original_variable_key": "hospital_density",
+          "justification": "Con una alta densidad de hospitales, West Adams ofrece proximidad a tu lugar de trabajo, algo crucial dados tus turnos rotativos.",
           "chart_data": {
             "user_weight": 5.0,
-            "neighborhood_value": "-6.87",
+            "neighborhood_value": "0.87",
+            "neighborhood_category": "Alto",
+            "match_score": 5.0,
+            "max_score": 5.0,
+            "unit": "lugares",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Alquiler asequible",
+          "original_variable_key": "median_rent",
+          "justification": "El alquiler medio en West Adams es relativamente bajo, lo que te permite vivir cerca del hospital sin comprometer tu presupuesto.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "1477",
             "neighborhood_category": "Bajo",
             "match_score": 5.0,
             "max_score": 5.0,
+            "unit": "$",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
+          }
+        },
+        {
+          "variable_name": "Accesibilidad",
+          "original_variable_key": "accessibility_score",
+          "justification": "Con una alta puntuación de accesibilidad, West Adams ofrece buenas opciones de transporte público y a pie, facilitando tus desplazamientos al trabajo y a otros servicios.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "70",
+            "neighborhood_category": "Alto",
+            "match_score": 5.0,
+            "max_score": 5.0,
+            "unit": "",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Tendencia de criminalidad a la baja",
+          "original_variable_key": "crime_trend_slope",
+          "justification": "La criminalidad en West Adams muestra una tendencia a la baja, lo que sugiere una mejora en la seguridad del barrio.",
+          "chart_data": {
+            "user_weight": 4.0,
+            "neighborhood_value": "-6.87",
+            "neighborhood_category": "Bajo",
+            "match_score": 4.0,
+            "max_score": 4.0,
             "unit": "",
             "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
           }
         },
         {
-          "variable_name": "Densidad Baja de Vida Nocturna",
-          "original_variable_key": "nightlife_density",
-          "justification": "Al igual que Glassell Park, la baja densidad de opciones nocturnas ayuda a mantener la paz y la tranquilidad del vecindario. Perfecto para descansar después de tu trabajo.",
-          "chart_data": {
-            "user_weight": 5.0,
-            "neighborhood_value": "4.35",
-            "neighborhood_category": "Alto",
-            "match_score": 3.0,
-            "max_score": 5.0,
-            "unit": "lugares",
-            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Alto para esta variable."
-          }
-        },
-        {
-          "variable_name": "Alquiler Asequible",
-          "original_variable_key": "median_rent",
-          "justification": "Como empleado público, el presupuesto es importante. West Adams ofrece un alquiler medio más bajo en comparación con otros barrios, lo que te permitirá vivir cómodamente sin excederte en gastos.",
+          "variable_name": "Tasa de desempleo baja",
+          "original_variable_key": "unemployment_rate",
+          "justification": "La tasa de desempleo moderada indica cierta estabilidad económica en la zona.",
           "chart_data": {
             "user_weight": 4.0,
-            "neighborhood_value": "1477",
-            "neighborhood_category": "Bajo",
-            "match_score": 4.0,
-            "max_score": 4.0,
-            "unit": "$",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
-          }
-        },
-        {
-          "variable_name": "Precios de Vivienda Asequibles",
-          "original_variable_key": "median_home_price",
-          "justification": "Si bien no es tu prioridad ahora, en caso de que desees comprar una propiedad en el futuro, West Adams presenta precios de vivienda más accesibles que otros barrios de la zona.",
-          "chart_data": {
-            "user_weight": 4.0,
-            "neighborhood_value": "721700",
+            "neighborhood_value": "6.7",
             "neighborhood_category": "Moderado",
             "match_score": 3.0,
             "max_score": 4.0,
-            "unit": "$",
+            "unit": "%",
             "match_explanation": "Buena coincidencia - El barrio tiene un nivel Moderado para esta variable."
-          }
-        },
-        {
-          "variable_name": "Alta Densidad de Negocios Locales",
-          "original_variable_key": "local_businesses_density",
-          "justification": "Valoramos tu interés en la comunidad y en conocer a tus vecinos. West Adams tiene una alta densidad de negocios locales, lo que fomenta la interacción y fortalece los lazos entre los residentes.",
-          "chart_data": {
-            "user_weight": 4.0,
-            "neighborhood_value": "8.7",
-            "neighborhood_category": "Alto",
-            "match_score": 4.0,
-            "max_score": 4.0,
-            "unit": "lugares",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
           }
         }
       ],
@@ -596,58 +105,39 @@
           "max_score": 5.0
         },
         {
-          "variable": "crime_trend_slope",
+          "variable": "median_rent",
           "user_weight": 5.0,
-          "neighborhood_value": -6.868131868131869,
+          "neighborhood_value": 1477.0,
           "neighborhood_category": "Bajo",
           "match_score": 5.0,
           "max_score": 5.0
         },
         {
-          "variable": "total_crimes",
+          "variable": "hospital_density",
           "user_weight": 5.0,
-          "neighborhood_value": 6783,
-          "neighborhood_category": "Moderado",
-          "match_score": 4.0,
+          "neighborhood_value": 0.87,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
           "max_score": 5.0
         },
         {
-          "variable": "green_space_percentage",
+          "variable": "walk_score",
           "user_weight": 5.0,
-          "neighborhood_value": 12,
-          "neighborhood_category": "Moderado",
-          "match_score": 4.0,
+          "neighborhood_value": 76,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
           "max_score": 5.0
         },
         {
-          "variable": "median_rent",
-          "user_weight": 4.0,
-          "neighborhood_value": 1477.0,
-          "neighborhood_category": "Bajo",
-          "match_score": 4.0,
-          "max_score": 4.0
+          "variable": "accessibility_score",
+          "user_weight": 5.0,
+          "neighborhood_value": 70,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
+          "max_score": 5.0
         }
       ],
       "all_details": {
-        "median_household_income": {
-          "value": 69536.0,
-          "numeric_value": 69536.0,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 51100.0,
-            "Low": 61438.5,
-            "Moderate": 93521.0,
-            "High": 120937.5,
-            "Extremely_High": 168972.2
-          }
-        },
         "unemployment_rate": {
           "value": 6.7,
           "numeric_value": 6.7,
@@ -656,9 +146,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 1,
-          "weight": 3.0,
-          "points_awarded": 2.0,
-          "max_points": 3.0,
+          "weight": 4.0,
+          "points_awarded": 3.0,
+          "max_points": 4.0,
           "thresholds": {
             "Extremely_Low": 3.4,
             "Low": 5.75,
@@ -751,9 +241,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 0,
-          "weight": 5.0,
-          "points_awarded": 5.0,
-          "max_points": 5.0,
+          "weight": 4.0,
+          "points_awarded": 4.0,
+          "max_points": 4.0,
           "thresholds": {
             "Extremely_Low": -10.94,
             "Low": -6.79,
@@ -789,9 +279,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 0,
-          "weight": 4.0,
-          "points_awarded": 4.0,
-          "max_points": 4.0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 1324.3,
             "Low": 1517.5,
@@ -808,9 +298,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 558840.0,
             "Low": 667000.0,
@@ -818,19 +308,6 @@
             "High": 1506000.0,
             "Extremely_High": 2000000.0
           }
-        },
-        "air_quality_index": {
-          "value": "Moderate",
-          "numeric_value": null,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "High",
-          "target_category_es": "Alto",
-          "ordinal_distance": 1,
-          "weight": 3.0,
-          "points_awarded": 2.0,
-          "max_points": 3.0,
-          "thresholds": {}
         },
         "average_dB_level": {
           "value": 60,
@@ -897,9 +374,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 2,
-          "weight": 5.0,
-          "points_awarded": 3.0,
-          "max_points": 5.0,
+          "weight": 2.0,
+          "points_awarded": 0.0,
+          "max_points": 2.0,
           "thresholds": {
             "Extremely_Low": 0.0,
             "Low": 0.0,
@@ -913,11 +390,11 @@
           "numeric_value": 4.35,
           "actual_category": "High",
           "actual_category_es": "Alto",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 2,
+          "target_category": "Extremely_Low",
+          "target_category_es": "Muy Bajo",
+          "ordinal_distance": 3,
           "weight": 5.0,
-          "points_awarded": 3.0,
+          "points_awarded": 2.0,
           "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 0.39,
@@ -927,11 +404,49 @@
             "Extremely_High": 8.26
           }
         },
-        "green_space_percentage": {
-          "value": 12,
-          "numeric_value": 12.0,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
+        "hospital_density": {
+          "value": 0.87,
+          "numeric_value": 0.87,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.2,
+            "Low": 0.39,
+            "Moderate": 0.81,
+            "High": 1.13,
+            "Extremely_High": 2.0
+          }
+        },
+        "walk_score": {
+          "value": 76,
+          "numeric_value": 76.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 44.3,
+            "Low": 55.0,
+            "Moderate": 69.0,
+            "High": 76.75,
+            "Extremely_High": 85.0
+          }
+        },
+        "transit_score": {
+          "value": 61,
+          "numeric_value": 61.0,
+          "actual_category": "Extremely_High",
+          "actual_category_es": "Muy Alto",
           "target_category": "High",
           "target_category_es": "Alto",
           "ordinal_distance": 1,
@@ -939,11 +454,30 @@
           "points_awarded": 4.0,
           "max_points": 5.0,
           "thresholds": {
-            "Extremely_Low": 6.6,
-            "Low": 10.0,
-            "Moderate": 18.0,
-            "High": 30.0,
-            "Extremely_High": 53.5
+            "Extremely_Low": 31.5,
+            "Low": 44.0,
+            "Moderate": 50.0,
+            "High": 60.0,
+            "Extremely_High": 70.0
+          }
+        },
+        "accessibility_score": {
+          "value": 70,
+          "numeric_value": 70.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 50.0,
+            "Low": 60.0,
+            "Moderate": 65.0,
+            "High": 75.0,
+            "Extremely_High": 85.0
           }
         }
       },
@@ -953,7 +487,86 @@
           "lon": -118.35282956586585
         },
         "polygon": "POLYGON ((-118.369553206794 34.0351688465849, -118.368601206286 34.0349668473553, -118.369034207088 34.0347318474082, -118.368574818805 34.0349612293234, -118.368297206437 34.0350998468806, -118.363726206255 34.034154847299, -118.360739205849 34.0339098472241, -118.353360204175 34.0343798475915, -118.350103203928 34.0345228482959, -118.350159203885 34.034381847668, -118.349982203748 34.0343908478935, -118.349926203634 34.0345308477385, -118.348389203313 34.0346308477407, -118.345542202375 34.0345998486645, -118.339949201596 34.0348648488869, -118.34010120217 34.0346658485424, -118.333791200537 34.0349638488196, -118.335113201441 34.0325838488926, -118.335110199735 34.0225288471214, -118.340488201296 34.0233598474705, -118.346046202072 34.0239618475431, -118.346046202047 34.024110847237, -118.355097204097 34.0249488466036, -118.355171203712 34.0247618468781, -118.359258204274 34.0251388466195, -118.359122204818 34.0254948469697, -118.360166204633 34.0254898463185, -118.360262204257 34.0252398463658, -118.376249207557 34.0266048455585, -118.376163207233 34.0268168456653, -118.376453702055 34.0268652612171, -118.376487207707 34.0268708454033, -118.3764252076 34.0271288454744, -118.375578207879 34.0291038463735, -118.373655207288 34.0304258462039, -118.37308594921 34.0302650684779, -118.373069370821 34.030260361419, -118.372944257815 34.0302249706466, -118.372892679192 34.0302104827659, -118.372724533192 34.0301629926785, -118.372694364563 34.030154435608, -118.372569285317 34.0301190163964, -118.372444172734 34.0300836251059, -118.37238872234 34.0300679679471, -118.372319061829 34.030048343668, -118.37213684677 34.0299968058982, -118.372119332233 34.029991941122, -118.371963083087 34.0299476525141, -118.371912890965 34.0299334430256, -118.371685071677 34.0304390532932, -118.371454906751 34.0309498667866, -118.371263250196 34.0313747905324, -118.370780390143 34.0324464377096, -118.370177272818 34.0337845309861, -118.370158737346 34.0338256463145, -118.369873337077 34.0344587270343, -118.369597115668 34.0350695706345, -118.369594803632 34.0350747011221, -118.369595847747 34.035074259781, -118.369591511058 34.0350838797882, -118.369553206794 34.0351688465849))",
-        "buttons": [],
+        "buttons": [
+          {
+            "label": "📍 Supermercado (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Supermercado",
+            "count": 5,
+            "locations": [
+              {
+                "name": "Whole Foods Market",
+                "lat": 34.0270753,
+                "lon": -118.3726066,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Superior Grocers",
+                "lat": 34.0227025,
+                "lon": -118.3546055,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Ralphs",
+                "lat": 34.0204448,
+                "lon": -118.3547348,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Smart & Final",
+                "lat": 34.0283717,
+                "lon": -118.3354674,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Advance Food Market",
+                "lat": 34.0327434,
+                "lon": -118.3620288,
+                "type": "Supermercado"
+              }
+            ]
+          },
+          {
+            "label": "📍 Farmacia (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Farmacia",
+            "count": 3,
+            "locations": [
+              {
+                "name": "Crenshaw Pharmacy",
+                "lat": 34.0233281,
+                "lon": -118.335471,
+                "type": "Farmacia"
+              },
+              {
+                "name": "CVS Pharmacy",
+                "lat": 34.0223024,
+                "lon": -118.3559842,
+                "type": "Farmacia"
+              },
+              {
+                "name": "CVS Pharmacy",
+                "lat": 34.0186872,
+                "lon": -118.3358653,
+                "type": "Farmacia"
+              }
+            ]
+          },
+          {
+            "label": "📍 Lavandería (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Lavandería",
+            "count": 1,
+            "locations": [
+              {
+                "name": "Launderland Coin-Op Laundry",
+                "lat": 34.0319753,
+                "lon": -118.3568475,
+                "type": "Lavandería"
+              }
+            ]
+          }
+        ],
         "lines": [
           {
             "label": "Distancia a Downtown",
@@ -983,21 +596,21 @@
       }
     },
     {
-      "name": "Windsor Square",
-      "total_score": 76.71,
+      "name": "Rancho Park",
+      "total_score": 80.0,
       "coords": {
-        "lat": 34.06909679237397,
-        "lon": -118.31990859895228
+        "lat": 34.034333899613124,
+        "lon": -118.42590902637755
       },
-      "overview": "Windsor Square es un barrio residencial tranquilo y con un fuerte sentido de comunidad. Aunque el precio de la vivienda es elevado, podría ser una opción a considerar si priorizas la seguridad y la tranquilidad. Su baja tasa de desempleo y sus bajos niveles de ruido también son puntos a favor. Sin embargo, es importante tener en cuenta que la disponibilidad de espacios verdes es moderada y podría requerir desplazamientos para disfrutar de la naturaleza.",
+      "overview": "Rancho Park es una opción atractiva por su **seguridad** y **baja tasa de desempleo**, lo que contribuye a un ambiente tranquilo y estable. Destaca por su excelente **accesibilidad** tanto a pie como en transporte público. Si bien el **precio de la vivienda es más elevado**, la seguridad y la calidad de vida podrían compensar el gasto adicional. Además, cuenta con una buena cantidad de **negocios locales** que facilitan el acceso a servicios básicos.",
       "top_5_variables": [
         {
-          "variable_name": "Baja Tasa de Criminalidad",
+          "variable_name": "Bajo índice de criminalidad",
           "original_variable_key": "total_crimes",
-          "justification": "Similar a Glassell Park, Windsor Square se destaca por su bajo nivel de criminalidad general, proporcionando una mayor sensación de seguridad y protección.",
+          "justification": "Rancho Park tiene un bajo número total de crímenes, lo que ofrece un entorno más seguro para vivir.",
           "chart_data": {
             "user_weight": 5.0,
-            "neighborhood_value": "3797",
+            "neighborhood_value": "3497",
             "neighborhood_category": "Bajo",
             "match_score": 5.0,
             "max_score": 5.0,
@@ -1006,12 +619,26 @@
           }
         },
         {
-          "variable_name": "Bajo Ratio de Crímenes Violentos",
-          "original_variable_key": "violent_ratio",
-          "justification": "Más allá de la baja criminalidad general, el bajo ratio de crímenes violentos en Windsor Square es un factor importante a considerar, ya que reduce el riesgo de incidentes graves.",
+          "variable_name": "Accesibilidad",
+          "original_variable_key": "accessibility_score",
+          "justification": "La alta puntuación de accesibilidad facilita el acceso al transporte público y a servicios a pie, algo importante para alguien con horarios laborales irregulares.",
           "chart_data": {
             "user_weight": 5.0,
-            "neighborhood_value": "0.18",
+            "neighborhood_value": "75",
+            "neighborhood_category": "Alto",
+            "match_score": 5.0,
+            "max_score": 5.0,
+            "unit": "",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Proporción baja de crímenes violentos",
+          "original_variable_key": "violent_vs_property_ratio",
+          "justification": "La proporción de crimenes violentos es baja, lo que refuerza la percepción de seguridad.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "0.22",
             "neighborhood_category": "Bajo",
             "match_score": 5.0,
             "max_score": 5.0,
@@ -1020,44 +647,30 @@
           }
         },
         {
-          "variable_name": "Densidad Baja de Tiendas Premium",
-          "original_variable_key": "premium_stores_density",
-          "justification": "De nuevo, se alinea con tu preferencia por lo práctico y esencial. Windsor Square no está enfocado en el lujo.",
+          "variable_name": "Cercanía a hospitales",
+          "original_variable_key": "hospital_density",
+          "justification": "Si bien no es tan alta como en West Adams, Rancho Park tiene una densidad de hospitales moderada, asegurando cercanía a centros médicos.",
           "chart_data": {
             "user_weight": 5.0,
-            "neighborhood_value": "0",
-            "neighborhood_category": "Muy Bajo",
+            "neighborhood_value": "0.62",
+            "neighborhood_category": "Moderado",
             "match_score": 4.0,
             "max_score": 5.0,
             "unit": "lugares",
-            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Muy Bajo para esta variable."
+            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Moderado para esta variable."
           }
         },
         {
-          "variable_name": "Baja Tasa de Desempleo",
+          "variable_name": "Tasa de desempleo baja",
           "original_variable_key": "unemployment_rate",
-          "justification": "La baja tasa de desempleo en Windsor Square sugiere una comunidad estable y próspera, lo que contribuye a un entorno seguro y tranquilo.",
+          "justification": "La baja tasa de desempleo en Rancho Park indica una estabilidad económica que puede traducirse en una mayor seguridad.",
           "chart_data": {
-            "user_weight": 3.0,
-            "neighborhood_value": "4.7",
+            "user_weight": 4.0,
+            "neighborhood_value": "5.5",
             "neighborhood_category": "Bajo",
-            "match_score": 3.0,
-            "max_score": 3.0,
+            "match_score": 4.0,
+            "max_score": 4.0,
             "unit": "%",
-            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
-          }
-        },
-        {
-          "variable_name": "Bajos Niveles de Ruido",
-          "original_variable_key": "average_dB_level",
-          "justification": "Entendemos tu necesidad de desconectar del estrés del trabajo. Windsor Square ofrece niveles de ruido bajos, lo que te permitirá descansar y relajarte en un ambiente tranquilo.",
-          "chart_data": {
-            "user_weight": 3.0,
-            "neighborhood_value": "55",
-            "neighborhood_category": "Bajo",
-            "match_score": 3.0,
-            "max_score": 3.0,
-            "unit": "dB",
             "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
           }
         }
@@ -1066,7 +679,7 @@
         {
           "variable": "total_crimes",
           "user_weight": 5.0,
-          "neighborhood_value": 3797,
+          "neighborhood_value": 3497,
           "neighborhood_category": "Bajo",
           "match_score": 5.0,
           "max_score": 5.0
@@ -1074,7 +687,7 @@
         {
           "variable": "violent_ratio",
           "user_weight": 5.0,
-          "neighborhood_value": 0.179878851725046,
+          "neighborhood_value": 0.174721189591078,
           "neighborhood_category": "Bajo",
           "match_score": 5.0,
           "max_score": 5.0
@@ -1082,59 +695,40 @@
         {
           "variable": "violent_vs_property_ratio",
           "user_weight": 5.0,
-          "neighborhood_value": 0.2317611129962674,
+          "neighborhood_value": 0.2231555880204528,
           "neighborhood_category": "Bajo",
           "match_score": 5.0,
           "max_score": 5.0
         },
         {
-          "variable": "crimes_per_100_people",
+          "variable": "walk_score",
           "user_weight": 5.0,
-          "neighborhood_value": 98.44438682914182,
-          "neighborhood_category": "Bajo",
+          "neighborhood_value": 75,
+          "neighborhood_category": "Alto",
           "match_score": 5.0,
           "max_score": 5.0
         },
         {
-          "variable": "premium_stores_density",
+          "variable": "transit_score",
           "user_weight": 5.0,
-          "neighborhood_value": 0.0,
-          "neighborhood_category": "Muy Bajo",
-          "match_score": 4.0,
+          "neighborhood_value": 60,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
           "max_score": 5.0
         }
       ],
       "all_details": {
-        "median_household_income": {
-          "value": 89688.0,
-          "numeric_value": 89688.0,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
-          "thresholds": {
-            "Extremely_Low": 51100.0,
-            "Low": 61438.5,
-            "Moderate": 93521.0,
-            "High": 120937.5,
-            "Extremely_High": 168972.2
-          }
-        },
         "unemployment_rate": {
-          "value": 4.7,
-          "numeric_value": 4.7,
+          "value": 5.5,
+          "numeric_value": 5.5,
           "actual_category": "Low",
           "actual_category_es": "Bajo",
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 0,
-          "weight": 3.0,
-          "points_awarded": 3.0,
-          "max_points": 3.0,
+          "weight": 4.0,
+          "points_awarded": 4.0,
+          "max_points": 4.0,
           "thresholds": {
             "Extremely_Low": 3.4,
             "Low": 5.75,
@@ -1144,8 +738,8 @@
           }
         },
         "total_crimes": {
-          "value": 3797,
-          "numeric_value": 3797.0,
+          "value": 3497,
+          "numeric_value": 3497.0,
           "actual_category": "Low",
           "actual_category_es": "Bajo",
           "target_category": "Low",
@@ -1163,8 +757,8 @@
           }
         },
         "violent_ratio": {
-          "value": 0.179878851725046,
-          "numeric_value": 0.179878851725046,
+          "value": 0.174721189591078,
+          "numeric_value": 0.174721189591078,
           "actual_category": "Low",
           "actual_category_es": "Bajo",
           "target_category": "Low",
@@ -1182,8 +776,8 @@
           }
         },
         "property_ratio": {
-          "value": 0.7761390571503819,
-          "numeric_value": 0.7761390571503819,
+          "value": 0.7829568201315413,
+          "numeric_value": 0.7829568201315413,
           "actual_category": "Extremely_High",
           "actual_category_es": "Muy Alto",
           "target_category": "Low",
@@ -1201,8 +795,8 @@
           }
         },
         "violent_vs_property_ratio": {
-          "value": 0.2317611129962674,
-          "numeric_value": 0.2317611129962674,
+          "value": 0.2231555880204528,
+          "numeric_value": 0.2231555880204528,
           "actual_category": "Low",
           "actual_category_es": "Bajo",
           "target_category": "Low",
@@ -1220,16 +814,16 @@
           }
         },
         "crime_trend_slope": {
-          "value": -2.2087912087912085,
-          "numeric_value": -2.2087912087912085,
-          "actual_category": "Extremely_High",
-          "actual_category_es": "Muy Alto",
+          "value": -2.626373626373627,
+          "numeric_value": -2.626373626373627,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
           "target_category": "Low",
           "target_category_es": "Bajo",
-          "ordinal_distance": 3,
-          "weight": 5.0,
+          "ordinal_distance": 2,
+          "weight": 4.0,
           "points_awarded": 2.0,
-          "max_points": 5.0,
+          "max_points": 4.0,
           "thresholds": {
             "Extremely_Low": -10.94,
             "Low": -6.79,
@@ -1239,15 +833,15 @@
           }
         },
         "crimes_per_100_people": {
-          "value": 98.44438682914182,
-          "numeric_value": 98.44438682914182,
-          "actual_category": "Low",
-          "actual_category_es": "Bajo",
+          "value": 150.9279240397065,
+          "numeric_value": 150.9279240397065,
+          "actual_category": "Moderate",
+          "actual_category_es": "Moderado",
           "target_category": "Low",
           "target_category_es": "Bajo",
-          "ordinal_distance": 0,
+          "ordinal_distance": 1,
           "weight": 5.0,
-          "points_awarded": 5.0,
+          "points_awarded": 4.0,
           "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 75.3,
@@ -1258,16 +852,16 @@
           }
         },
         "median_rent": {
-          "value": 1774.0,
-          "numeric_value": 1774.0,
+          "value": 1754.0,
+          "numeric_value": 1754.0,
           "actual_category": "Moderate",
           "actual_category_es": "Moderado",
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 1,
-          "weight": 4.0,
-          "points_awarded": 3.0,
-          "max_points": 4.0,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 1324.3,
             "Low": 1517.5,
@@ -1277,16 +871,16 @@
           }
         },
         "median_home_price": {
-          "value": 2000000.0,
-          "numeric_value": 2000000.0,
+          "value": 1640800.0,
+          "numeric_value": 1640800.0,
           "actual_category": "Extremely_High",
           "actual_category_es": "Muy Alto",
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 3,
-          "weight": 4.0,
-          "points_awarded": 1.0,
-          "max_points": 4.0,
+          "weight": 5.0,
+          "points_awarded": 2.0,
+          "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 558840.0,
             "Low": 667000.0,
@@ -1294,19 +888,6 @@
             "High": 1506000.0,
             "Extremely_High": 2000000.0
           }
-        },
-        "air_quality_index": {
-          "value": "Moderate",
-          "numeric_value": null,
-          "actual_category": "Moderate",
-          "actual_category_es": "Moderado",
-          "target_category": "High",
-          "target_category_es": "Alto",
-          "ordinal_distance": 1,
-          "weight": 3.0,
-          "points_awarded": 2.0,
-          "max_points": 3.0,
-          "thresholds": {}
         },
         "average_dB_level": {
           "value": 55,
@@ -1373,9 +954,9 @@
           "target_category": "Low",
           "target_category_es": "Bajo",
           "ordinal_distance": 1,
-          "weight": 5.0,
-          "points_awarded": 4.0,
-          "max_points": 5.0,
+          "weight": 2.0,
+          "points_awarded": 1.0,
+          "max_points": 2.0,
           "thresholds": {
             "Extremely_Low": 0.0,
             "Low": 0.0,
@@ -1385,15 +966,15 @@
           }
         },
         "nightlife_density": {
-          "value": 3.0,
-          "numeric_value": 3.0,
+          "value": 1.88,
+          "numeric_value": 1.88,
           "actual_category": "High",
           "actual_category_es": "Alto",
-          "target_category": "Low",
-          "target_category_es": "Bajo",
-          "ordinal_distance": 2,
+          "target_category": "Extremely_Low",
+          "target_category_es": "Muy Bajo",
+          "ordinal_distance": 3,
           "weight": 5.0,
-          "points_awarded": 3.0,
+          "points_awarded": 2.0,
           "max_points": 5.0,
           "thresholds": {
             "Extremely_Low": 0.39,
@@ -1403,9 +984,9 @@
             "Extremely_High": 8.26
           }
         },
-        "green_space_percentage": {
-          "value": 15,
-          "numeric_value": 15.0,
+        "hospital_density": {
+          "value": 0.62,
+          "numeric_value": 0.62,
           "actual_category": "Moderate",
           "actual_category_es": "Moderado",
           "target_category": "High",
@@ -1415,27 +996,123 @@
           "points_awarded": 4.0,
           "max_points": 5.0,
           "thresholds": {
-            "Extremely_Low": 6.6,
-            "Low": 10.0,
-            "Moderate": 18.0,
-            "High": 30.0,
-            "Extremely_High": 53.5
+            "Extremely_Low": 0.2,
+            "Low": 0.39,
+            "Moderate": 0.81,
+            "High": 1.13,
+            "Extremely_High": 2.0
+          }
+        },
+        "walk_score": {
+          "value": 75,
+          "numeric_value": 75.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 44.3,
+            "Low": 55.0,
+            "Moderate": 69.0,
+            "High": 76.75,
+            "Extremely_High": 85.0
+          }
+        },
+        "transit_score": {
+          "value": 60,
+          "numeric_value": 60.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 31.5,
+            "Low": 44.0,
+            "Moderate": 50.0,
+            "High": 60.0,
+            "Extremely_High": 70.0
+          }
+        },
+        "accessibility_score": {
+          "value": 75,
+          "numeric_value": 75.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 50.0,
+            "Low": 60.0,
+            "Moderate": 65.0,
+            "High": 75.0,
+            "Extremely_High": 85.0
           }
         }
       },
       "map_context": {
         "center": {
-          "lat": 34.06909679237397,
-          "lon": -118.31990859895228
+          "lat": 34.034333899613124,
+          "lon": -118.42590902637755
         },
-        "polygon": "POLYGON ((-118.314039199804 34.0625448530531, -118.314204199574 34.0616998532581, -118.325811201264 34.0618838526252, -118.325997202781 34.0762268543747, -118.32595574716 34.076226884205, -118.313601201037 34.0762358549032, -118.313601198593 34.0762352031014, -118.313588200637 34.0729098543923, -118.313447200118 34.0727248544465, -118.313446200191 34.0717878546025, -118.31398720034 34.0715328538309, -118.314217200793 34.0711378541915, -118.314039199804 34.0625448530531))",
-        "buttons": [],
+        "polygon": "POLYGON ((-118.414844214734 34.0323158443301, -118.412346633063 34.0312622643147, -118.412170213825 34.0311878437753, -118.414690214194 34.0318368437948, -118.418577214709 34.0319108438937, -118.42219521542 34.0299278437661, -118.429930215847 34.0268658426036, -118.429930293223 34.0268659396938, -118.43160321717 34.0289788425288, -118.430224216148 34.0276348426871, -118.431638216557 34.0298788429018, -118.430941216454 34.0310648431464, -118.434180218138 34.0351528437879, -118.434445217814 34.0360948438698, -118.434519193139 34.0361841749238, -118.435157425968 34.036954887681, -118.435158218212 34.0369558431575, -118.424666216583 34.0419448444613, -118.424223216853 34.041083844639, -118.421185216137 34.0371448439858, -118.418286215653 34.0362318444158, -118.416123214031 34.0332148441224, -118.414844214734 34.0323158443301))",
+        "buttons": [
+          {
+            "label": "📍 Supermercado (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Supermercado",
+            "count": 5,
+            "locations": [
+              {
+                "name": "Trader Joe's",
+                "lat": 34.0203234,
+                "lon": -118.422068,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Trader Joe's",
+                "lat": 34.0299222,
+                "lon": -118.4214045,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Ralphs",
+                "lat": 34.0260176,
+                "lon": -118.433347,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Whole Foods Market",
+                "lat": 34.0224397,
+                "lon": -118.4379298,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Nijiya Market",
+                "lat": 34.0391052,
+                "lon": -118.441523,
+                "type": "Supermercado"
+              }
+            ]
+          }
+        ],
         "lines": [
           {
             "label": "Distancia a Downtown",
             "start": [
-              -118.31990859895228,
-              34.06909679237397
+              -118.42590902637755,
+              34.034333899613124
             ],
             "end": [
               -118.2518,
@@ -1446,8 +1123,618 @@
           {
             "label": "Distancia a Playa",
             "start": [
-              -118.31990859895228,
-              34.06909679237397
+              -118.42590902637755,
+              34.034333899613124
+            ],
+            "end": [
+              -118.4976,
+              34.0092
+            ],
+            "color": "#0000ff"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Palms",
+      "total_score": 78.75,
+      "coords": {
+        "lat": 34.02499335271433,
+        "lon": -118.40965080223258
+      },
+      "overview": "Palms podría ser una buena opción si priorizas la **accesibilidad** y la posibilidad de desplazarte a pie. La **tasa de desempleo es baja** y los **índices de crimen violento son bajos**, aunque la criminalidad general es moderada. Si bien el alquiler es más elevado, la **alta densidad de hospitales** y la proximidad a servicios básicos podrían compensar el gasto. Sin embargo, es importante tener en cuenta que la delincuencia contra la propiedad es alta.",
+      "top_5_variables": [
+        {
+          "variable_name": "Accesibilidad",
+          "original_variable_key": "accessibility_score",
+          "justification": "La alta puntuación de accesibilidad en Palms facilita el acceso al transporte público y a servicios a pie, algo fundamental para alguien con horarios irregulares.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "80",
+            "neighborhood_category": "Muy Alto",
+            "match_score": 4.0,
+            "max_score": 5.0,
+            "unit": "",
+            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Muy Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Densidad de hospitales",
+          "original_variable_key": "hospital_density",
+          "justification": "Con una alta densidad de hospitales, Palms asegura proximidad a centros médicos, algo crucial para una enfermera.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "0.88",
+            "neighborhood_category": "Alto",
+            "match_score": 5.0,
+            "max_score": 5.0,
+            "unit": "lugares",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Proporción baja de crímenes violentos",
+          "original_variable_key": "violent_vs_property_ratio",
+          "justification": "La proporción de crímenes violentos es baja, lo que contribuye a una mayor sensación de seguridad personal.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "0.22",
+            "neighborhood_category": "Bajo",
+            "match_score": 5.0,
+            "max_score": 5.0,
+            "unit": "",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
+          }
+        },
+        {
+          "variable_name": "Facilidad para caminar",
+          "original_variable_key": "walk_score",
+          "justification": "La puntuación de 'walk score' es muy alta, lo que significa que podrás hacer muchos recados a pie.",
+          "chart_data": {
+            "user_weight": 5.0,
+            "neighborhood_value": "90",
+            "neighborhood_category": "Muy Alto",
+            "match_score": 4.0,
+            "max_score": 5.0,
+            "unit": "/100",
+            "match_explanation": "Buena coincidencia - El barrio tiene un nivel Muy Alto para esta variable."
+          }
+        },
+        {
+          "variable_name": "Tasa de desempleo baja",
+          "original_variable_key": "unemployment_rate",
+          "justification": "La baja tasa de desempleo en Palms indica una estabilidad económica que puede influir positivamente en la seguridad del barrio.",
+          "chart_data": {
+            "user_weight": 4.0,
+            "neighborhood_value": "4.6",
+            "neighborhood_category": "Bajo",
+            "match_score": 4.0,
+            "max_score": 4.0,
+            "unit": "%",
+            "match_explanation": "¡Coincidencia perfecta! - El barrio tiene un nivel Bajo para esta variable."
+          }
+        }
+      ],
+      "key_factors": [
+        {
+          "variable": "violent_ratio",
+          "user_weight": 5.0,
+          "neighborhood_value": 0.1695377548090726,
+          "neighborhood_category": "Bajo",
+          "match_score": 5.0,
+          "max_score": 5.0
+        },
+        {
+          "variable": "violent_vs_property_ratio",
+          "user_weight": 5.0,
+          "neighborhood_value": 0.2166574940377912,
+          "neighborhood_category": "Bajo",
+          "match_score": 5.0,
+          "max_score": 5.0
+        },
+        {
+          "variable": "hospital_density",
+          "user_weight": 5.0,
+          "neighborhood_value": 0.88,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
+          "max_score": 5.0
+        },
+        {
+          "variable": "transit_score",
+          "user_weight": 5.0,
+          "neighborhood_value": 58,
+          "neighborhood_category": "Alto",
+          "match_score": 5.0,
+          "max_score": 5.0
+        },
+        {
+          "variable": "total_crimes",
+          "user_weight": 5.0,
+          "neighborhood_value": 6966,
+          "neighborhood_category": "Moderado",
+          "match_score": 4.0,
+          "max_score": 5.0
+        }
+      ],
+      "all_details": {
+        "unemployment_rate": {
+          "value": 4.6,
+          "numeric_value": 4.6,
+          "actual_category": "Low",
+          "actual_category_es": "Bajo",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 0,
+          "weight": 4.0,
+          "points_awarded": 4.0,
+          "max_points": 4.0,
+          "thresholds": {
+            "Extremely_Low": 3.4,
+            "Low": 5.75,
+            "Moderate": 7.9,
+            "High": 9.75,
+            "Extremely_High": 13.1
+          }
+        },
+        "total_crimes": {
+          "value": 6966,
+          "numeric_value": 6966.0,
+          "actual_category": "Moderate",
+          "actual_category_es": "Moderado",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 1,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 2134.3,
+            "Low": 3908.0,
+            "Moderate": 6989.0,
+            "High": 11782.25,
+            "Extremely_High": 15244.7
+          }
+        },
+        "violent_ratio": {
+          "value": 0.1695377548090726,
+          "numeric_value": 0.1695377548090726,
+          "actual_category": "Low",
+          "actual_category_es": "Bajo",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.163,
+            "Low": 0.1912,
+            "Moderate": 0.2569,
+            "High": 0.3193,
+            "Extremely_High": 0.3825
+          }
+        },
+        "property_ratio": {
+          "value": 0.7825150732127476,
+          "numeric_value": 0.7825150732127476,
+          "actual_category": "Extremely_High",
+          "actual_category_es": "Muy Alto",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 3,
+          "weight": 5.0,
+          "points_awarded": 2.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.5472,
+            "Low": 0.6186,
+            "Moderate": 0.671,
+            "High": 0.7465,
+            "Extremely_High": 0.7908
+          }
+        },
+        "violent_vs_property_ratio": {
+          "value": 0.2166574940377912,
+          "numeric_value": 0.2166574940377912,
+          "actual_category": "Low",
+          "actual_category_es": "Bajo",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.2061,
+            "Low": 0.2553,
+            "Moderate": 0.389,
+            "High": 0.5137,
+            "Extremely_High": 0.7007
+          }
+        },
+        "crime_trend_slope": {
+          "value": -4.4835164835164845,
+          "numeric_value": -4.4835164835164845,
+          "actual_category": "Moderate",
+          "actual_category_es": "Moderado",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 1,
+          "weight": 4.0,
+          "points_awarded": 3.0,
+          "max_points": 4.0,
+          "thresholds": {
+            "Extremely_Low": -10.94,
+            "Low": -6.79,
+            "Moderate": -4.39,
+            "High": -2.31,
+            "Extremely_High": -1.39
+          }
+        },
+        "crimes_per_100_people": {
+          "value": 333.62068965517244,
+          "numeric_value": 333.62068965517244,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 2,
+          "weight": 5.0,
+          "points_awarded": 3.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 75.3,
+            "Low": 112.64,
+            "Moderate": 219.85,
+            "High": 373.91,
+            "Extremely_High": 545.89
+          }
+        },
+        "median_rent": {
+          "value": 1881.0,
+          "numeric_value": 1881.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 2,
+          "weight": 5.0,
+          "points_awarded": 3.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 1324.3,
+            "Low": 1517.5,
+            "Moderate": 1867.0,
+            "High": 2398.5,
+            "Extremely_High": 3268.0
+          }
+        },
+        "median_home_price": {
+          "value": 896200.0,
+          "numeric_value": 896200.0,
+          "actual_category": "Moderate",
+          "actual_category_es": "Moderado",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 1,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 558840.0,
+            "Low": 667000.0,
+            "Moderate": 940800.0,
+            "High": 1506000.0,
+            "Extremely_High": 2000000.0
+          }
+        },
+        "average_dB_level": {
+          "value": 60,
+          "numeric_value": 60.0,
+          "actual_category": "Low",
+          "actual_category_es": "Bajo",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 0,
+          "weight": 3.0,
+          "points_awarded": 3.0,
+          "max_points": 3.0,
+          "thresholds": {
+            "Extremely_Low": 50.0,
+            "Low": 60.0,
+            "Moderate": 60.0,
+            "High": 65.0,
+            "Extremely_High": 65.0
+          }
+        },
+        "maximum_dB_level": {
+          "value": 80,
+          "numeric_value": 80.0,
+          "actual_category": "Low",
+          "actual_category_es": "Bajo",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 0,
+          "weight": 3.0,
+          "points_awarded": 3.0,
+          "max_points": 3.0,
+          "thresholds": {
+            "Extremely_Low": 70.0,
+            "Low": 80.0,
+            "Moderate": 80.0,
+            "High": 85.0,
+            "Extremely_High": 90.0
+          }
+        },
+        "local_businesses_density": {
+          "value": 7.35,
+          "numeric_value": 7.35,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 4.0,
+          "points_awarded": 4.0,
+          "max_points": 4.0,
+          "thresholds": {
+            "Extremely_Low": 1.27,
+            "Low": 2.38,
+            "Moderate": 5.0,
+            "High": 11.81,
+            "Extremely_High": 18.0
+          }
+        },
+        "premium_stores_density": {
+          "value": 0.29,
+          "numeric_value": 0.29,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "Low",
+          "target_category_es": "Bajo",
+          "ordinal_distance": 2,
+          "weight": 2.0,
+          "points_awarded": 0.0,
+          "max_points": 2.0,
+          "thresholds": {
+            "Extremely_Low": 0.0,
+            "Low": 0.0,
+            "Moderate": 0.0,
+            "High": 0.83,
+            "Extremely_High": 2.74
+          }
+        },
+        "nightlife_density": {
+          "value": 2.94,
+          "numeric_value": 2.94,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "Extremely_Low",
+          "target_category_es": "Muy Bajo",
+          "ordinal_distance": 3,
+          "weight": 5.0,
+          "points_awarded": 2.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.39,
+            "Low": 1.0,
+            "Moderate": 1.78,
+            "High": 5.0,
+            "Extremely_High": 8.26
+          }
+        },
+        "hospital_density": {
+          "value": 0.88,
+          "numeric_value": 0.88,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 0.2,
+            "Low": 0.39,
+            "Moderate": 0.81,
+            "High": 1.13,
+            "Extremely_High": 2.0
+          }
+        },
+        "walk_score": {
+          "value": 90,
+          "numeric_value": 90.0,
+          "actual_category": "Extremely_High",
+          "actual_category_es": "Muy Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 1,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 44.3,
+            "Low": 55.0,
+            "Moderate": 69.0,
+            "High": 76.75,
+            "Extremely_High": 85.0
+          }
+        },
+        "transit_score": {
+          "value": 58,
+          "numeric_value": 58.0,
+          "actual_category": "High",
+          "actual_category_es": "Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 0,
+          "weight": 5.0,
+          "points_awarded": 5.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 31.5,
+            "Low": 44.0,
+            "Moderate": 50.0,
+            "High": 60.0,
+            "Extremely_High": 70.0
+          }
+        },
+        "accessibility_score": {
+          "value": 80,
+          "numeric_value": 80.0,
+          "actual_category": "Extremely_High",
+          "actual_category_es": "Muy Alto",
+          "target_category": "High",
+          "target_category_es": "Alto",
+          "ordinal_distance": 1,
+          "weight": 5.0,
+          "points_awarded": 4.0,
+          "max_points": 5.0,
+          "thresholds": {
+            "Extremely_Low": 50.0,
+            "Low": 60.0,
+            "Moderate": 65.0,
+            "High": 75.0,
+            "Extremely_High": 85.0
+          }
+        }
+      },
+      "map_context": {
+        "center": {
+          "lat": 34.02499335271433,
+          "lon": -118.40965080223258
+        },
+        "polygon": "POLYGON ((-118.388352209493 34.0294898450871, -118.387775493228 34.0290712283617, -118.38777561093 34.0290711585657, -118.387886245447 34.0290054988177, -118.387919316425 34.0289858671591, -118.388166424678 34.0288442408378, -118.388998479276 34.0283671138813, -118.389037584349 34.028344027632, -118.389037813714 34.0283439872255, -118.389204664316 34.0282488398684, -118.389412495091 34.0281297361929, -118.389449595506 34.0281084719634, -118.389827892264 34.0278916386058, -118.389846941684 34.0278799923948, -118.39013366093 34.0277156975961, -118.390183610508 34.0276877166667, -118.390186770274 34.0276858997823, -118.390243252043 34.0276534576662, -118.390346456834 34.0275942602242, -118.39034683696 34.0275940426272, -118.390366535288 34.0275827269016, -118.390414807555 34.0275549956153, -118.390442740154 34.0275389742921, -118.390450750826 34.0275343803168, -118.390512763015 34.0274988694001, -118.390516913012 34.0274964804366, -118.390534223564 34.027486516593, -118.390561184009 34.0274712412502, -118.391028247343 34.0272032830797, -118.391486122803 34.0269407161108, -118.392634210399 34.0262828443212, -118.392634464102 34.0262822232414, -118.392646461353 34.0262753343743, -118.392900550252 34.0261306581974, -118.393458459775 34.0253760151408, -118.393948868537 34.0257106119067, -118.393949470978 34.0257113924714, -118.394171240818 34.0255853122188, -118.394209210649 34.0255638444445, -118.394096210667 34.0253148448394, -118.394300918203 34.0252000143806, -118.394333623292 34.0252423950042, -118.394606450492 34.0250873197438, -118.394713851758 34.0250105592037, -118.394821165299 34.0249338358176, -118.395148759673 34.0247476395875, -118.395230583481 34.0247011798873, -118.395558175989 34.0245152025228, -118.395766352535 34.0244799518508, -118.396093941947 34.0242937530641, -118.396175434422 34.024247265861, -118.396502990834 34.0240613410367, -118.396584787063 34.024014844445, -118.396666602899 34.0239683919083, -118.397007716262 34.0237744795595, -118.397062318581 34.0237434143601, -118.397017855279 34.0236857452821, -118.397144208633 34.0236139120316, -118.397266644407 34.0235441253989, -118.397413075048 34.0234610143296, -118.397494890242 34.0234144088728, -118.397576683494 34.0233677619621, -118.397702707233 34.0232962600733, -118.397825407172 34.0232266640284, -118.397961664899 34.0231491095081, -118.397972230625 34.0231430569441, -118.398092624837 34.0230745671966, -118.398215323177 34.0230049987069, -118.398309349216 34.0229514962575, -118.398362210808 34.0229218444062, -118.398361993898 34.0229215404038, -118.398362112679 34.0229214732984, -118.398359880386 34.0229185768268, -118.397529825679 34.0217546455241, -118.397565136369 34.0217248336458, -118.397623413311 34.0216756127386, -118.398984646132 34.0208678861876, -118.398988721944 34.0208654989802, -118.399112755056 34.0207919557127, -118.39911295155 34.0207918387653, -118.399113210336 34.0207918433189, -118.399154258097 34.0208450693361, -118.39917168069 34.0208677276525, -118.399504043644 34.0212989520121, -118.399504210949 34.021298844176, -118.399504742186 34.0212985395028, -118.400261210504 34.0208648439501, -118.400507876003 34.0212853419609, -118.400482849096 34.0212984296047, -118.400606411612 34.0214585502, -118.400609069261 34.0214620862084, -118.400619577438 34.021475762752, -118.400620210581 34.021476843392, -118.400862545897 34.0213390311428, -118.40128296288 34.0211001227611, -118.40129945096 34.0210907803577, -118.401279628951 34.0210655113684, -118.401276951035 34.0210620421556, -118.400514675809 34.0199407730902, -118.400524617776 34.0199348161309, -118.402093026398 34.0190238517296, -118.402496816157 34.0187839072366, -118.402712513246 34.0186557417346, -118.403058089665 34.0184503929487, -118.403064703784 34.0184589561627, -118.403075954669 34.0184735261341, -118.403219160822 34.0183884398997, -118.403367070419 34.0183005637612, -118.403528406315 34.0182047009553, -118.404389240508 34.0176931599883, -118.4043896 34.0176929460222, -118.404537181075 34.0176052543602, -118.405022306592 34.0173169761786, -118.405216807758 34.0172013950891, -118.405455991781 34.0170592613139, -118.405554214315 34.0169716945164, -118.405560068895 34.0169664748044, -118.4068762119 34.0185788434194, -118.406930051549 34.0185482369964, -118.40693009077 34.0185482873501, -118.406975756039 34.0186076003301, -118.407057927649 34.0185608771827, -118.40833362001 34.0178350131069, -118.409405797857 34.0172250328369, -118.40968412088 34.0170666493154, -118.411318793603 34.0161365734515, -118.411327829077 34.0161479822171, -118.411637819825 34.0159715881246, -118.411676357811 34.015949664839, -118.412719601034 34.0153560227827, -118.412816922287 34.0153005810705, -118.412896684854 34.0152551333361, -118.413956508453 34.0146522940119, -118.414286483247 34.0144645707214, -118.414675314194 34.0142432272171, -118.414684418482 34.0142547076172, -118.414847811656 34.0141615524095, -118.414838744115 34.0141500619786, -118.415253210687 34.0139143455109, -118.415244063207 34.0139028959545, -118.415657115831 34.0136674236688, -118.417119087332 34.0128342609107, -118.41714639592 34.0128268920666, -118.417525906246 34.0126125899958, -118.418211621085 34.012222317034, -118.41839685114 34.0121168754867, -118.418470779605 34.0120747943766, -118.430140118411 34.0267827190078, -118.430140216498 34.0267828430701, -118.429930293223 34.0268659396938, -118.42219521542 34.0299278437661, -118.418577214709 34.0319108438937, -118.414690214194 34.0318368437948, -118.413410213735 34.0315938444776, -118.412346633063 34.0312622643147, -118.409395995042 34.0303423818033, -118.409285213616 34.0303078446128, -118.398446211184 34.0293298446073, -118.400588212104 34.0296448444478, -118.398075212107 34.0357468451972, -118.398317211982 34.0368328459541, -118.398617212428 34.0374238453222, -118.398526434497 34.037398500857, -118.389344209972 34.034834845992, -118.389685437606 34.0333814705758, -118.38969521043 34.0333398458943, -118.390925209673 34.0312128453291, -118.388352209493 34.0294898450871))",
+        "buttons": [
+          {
+            "label": "📍 Supermercado (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Supermercado",
+            "count": 5,
+            "locations": [
+              {
+                "name": "Ralphs",
+                "lat": 34.0172999,
+                "lon": -118.4076922,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Trader Joe's",
+                "lat": 34.0203234,
+                "lon": -118.422068,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Trader Joe's",
+                "lat": 34.0252586,
+                "lon": -118.3930604,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Trader Joe's",
+                "lat": 34.0299222,
+                "lon": -118.4214045,
+                "type": "Supermercado"
+              },
+              {
+                "name": "Sprouts Farmers Market",
+                "lat": 34.0277643,
+                "lon": -118.3936984,
+                "type": "Supermercado"
+              }
+            ]
+          },
+          {
+            "label": "📍 Farmacia (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Farmacia",
+            "count": 5,
+            "locations": [
+              {
+                "name": "VFP Pharmacy",
+                "lat": 34.0298877,
+                "lon": -118.420847,
+                "type": "Farmacia"
+              },
+              {
+                "name": "The Medicine Shoppe",
+                "lat": 34.019323,
+                "lon": -118.4211935,
+                "type": "Farmacia"
+              },
+              {
+                "name": "CVS Pharmacy",
+                "lat": 34.0203723,
+                "lon": -118.4224555,
+                "type": "Farmacia"
+              },
+              {
+                "name": "CVS Pharmacy",
+                "lat": 34.0279352,
+                "lon": -118.391765,
+                "type": "Farmacia"
+              },
+              {
+                "name": "Rite Aid",
+                "lat": 34.0181568,
+                "lon": -118.4074163,
+                "type": "Farmacia"
+              }
+            ]
+          },
+          {
+            "label": "📍 Lavandería (Especial)",
+            "type": "poi_layer",
+            "data_key": "custom_Lavandería",
+            "count": 4,
+            "locations": [
+              {
+                "name": "18 Minute Wash",
+                "lat": 34.0309105,
+                "lon": -118.4009484,
+                "type": "Lavandería"
+              },
+              {
+                "name": "The Laundry Room",
+                "lat": 34.0247735,
+                "lon": -118.407866,
+                "type": "Lavandería"
+              },
+              {
+                "name": "Tiffany's Laundry",
+                "lat": 34.0251517,
+                "lon": -118.396523,
+                "type": "Lavandería"
+              },
+              {
+                "name": "Local Coin Laundry",
+                "lat": 34.0256434,
+                "lon": -118.4127372,
+                "type": "Lavandería"
+              }
+            ]
+          }
+        ],
+        "lines": [
+          {
+            "label": "Distancia a Downtown",
+            "start": [
+              -118.40965080223258,
+              34.02499335271433
+            ],
+            "end": [
+              -118.2518,
+              34.0488
+            ],
+            "color": "#ff0000"
+          },
+          {
+            "label": "Distancia a Playa",
+            "start": [
+              -118.40965080223258,
+              34.02499335271433
             ],
             "end": [
               -118.4976,

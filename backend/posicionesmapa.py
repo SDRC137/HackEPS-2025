@@ -4,15 +4,51 @@ import os
 import requests
 import time
 import sys
+import hashlib
 
 # Add backend to path to import shared_constants
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from shared_constants import VARIABLE_TO_OSM
 
+CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "cache")
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+def get_cache_key(lat, lon, osm_tags, radius):
+    """Generates a unique hash for the query."""
+    query_str = f"{lat}_{lon}_{sorted(osm_tags)}_{radius}"
+    return hashlib.md5(query_str.encode()).hexdigest()
+
+def load_from_cache(key):
+    """Loads data from cache if exists."""
+    cache_path = os.path.join(CACHE_DIR, f"{key}.json")
+    if os.path.exists(cache_path):
+        try:
+            with open(cache_path, 'r') as f:
+                return json.load(f)
+        except:
+            return None
+    return None
+
+def save_to_cache(key, data):
+    """Saves data to cache."""
+    cache_path = os.path.join(CACHE_DIR, f"{key}.json")
+    try:
+        with open(cache_path, 'w') as f:
+            json.dump(data, f)
+    except Exception as e:
+        print(f"⚠️ Failed to save cache: {e}")
+
 def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
     """
-    Fetches POIs from OpenStreetMap using Overpass API.
+    Fetches POIs from OpenStreetMap using Overpass API with Caching.
     """
+    # Check Cache
+    cache_key = get_cache_key(lat, lon, osm_tags, radius)
+    cached_data = load_from_cache(cache_key)
+    if cached_data is not None:
+        # print(f"⚡ Loaded from cache: {osm_tags}")
+        return cached_data
+
     overpass_url = "https://overpass-api.de/api/interpreter"
     
     # Build the query union
@@ -86,6 +122,8 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
                 "id": element['id']
             })
             
+        # Save to Cache
+        save_to_cache(cache_key, results)
         return results
         
     except Exception as e:

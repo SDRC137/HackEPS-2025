@@ -78,6 +78,7 @@ Instrucciones para 'top_5_variables':
 Instrucciones para 'overview':
 - Tono humano, empático y profesional.
 - Resume por qué es una buena opción.
+- USA NEGRILLAS (markdown **) para resaltar las palabras clave o conceptos más importantes (ej: **seguridad**, **parques**, **precio asequible**).
 
 IMPORTANTE: Devuelve SOLO el JSON válido (una lista), sin bloques de código markdown.
 """

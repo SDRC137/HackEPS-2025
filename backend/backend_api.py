@@ -2,6 +2,7 @@ import os
 import json
 import time
 import sys
+import math
 from dotenv import load_dotenv
 
 # Ensure backend is in path
@@ -152,6 +153,19 @@ class BackendOrchestrator:
         analysis_result["bridge_message"] = bridge_message
         return analysis_result
 
+    def _sanitize_details(self, details):
+        """
+        Recursively sanitize dictionary to remove NaN/Infinity values.
+        """
+        if isinstance(details, dict):
+            return {k: self._sanitize_details(v) for k, v in details.items()}
+        elif isinstance(details, list):
+            return [self._sanitize_details(v) for v in details]
+        elif isinstance(details, float):
+            if math.isnan(details) or math.isinf(details):
+                return None
+        return details
+
     def _run_analysis_cycle(self) -> dict:
         """
         Internal method to run Scorer -> Recommender -> POI Search
@@ -245,10 +259,15 @@ class BackendOrchestrator:
             )[:5] # Top 5 factors
 
             for var_name, info in sorted_details:
+                # Sanitize value to avoid NaN in JSON
+                raw_val = info.get("value")
+                if isinstance(raw_val, float) and (math.isnan(raw_val) or math.isinf(raw_val)):
+                    raw_val = None
+
                 key_factors.append({
                     "variable": var_name,
                     "user_weight": info.get("weight"),
-                    "neighborhood_value": info.get("value"), # Raw value (e.g. "1200$")
+                    "neighborhood_value": raw_val, # Raw value (e.g. "1200$")
                     "neighborhood_category": info.get("actual_category_es"), # e.g. "Bajo"
                     "match_score": info.get("points_awarded"), # How well it matched
                     "max_score": info.get("max_points")
@@ -308,7 +327,10 @@ class BackendOrchestrator:
                     raw_val = info.get("value")
                     formatted_val = raw_val
                     if isinstance(raw_val, (int, float)):
-                        formatted_val = f"{float(raw_val):.2f}".rstrip('0').rstrip('.')
+                        if isinstance(raw_val, float) and (math.isnan(raw_val) or math.isinf(raw_val)):
+                             formatted_val = "N/A"
+                        else:
+                             formatted_val = f"{float(raw_val):.2f}".rstrip('0').rstrip('.')
                     
                     # Get metadata
                     meta = VARIABLE_METADATA.get(original_key, {})
@@ -352,7 +374,7 @@ class BackendOrchestrator:
                 "overview": n_data.get("overview", "Sin descripción disponible."),
                 "top_5_variables": enriched_top_5,
                 "key_factors": key_factors,
-                "all_details": details,
+                "all_details": self._sanitize_details(details),
                 "map_context": {
                     "center": {"lat": center_lat, "lon": center_lon},
                     "polygon": self.geometry_map.get(neighborhood["name"], ""),
