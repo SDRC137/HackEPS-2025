@@ -54,31 +54,15 @@ Formato JSON esperado (una lista de objetos):
 [
   {{
     "neighborhood_name": "Nombre del barrio 1",
-    "overview": "Párrafo resumen de la recomendación para este barrio (aprox 50-80 palabras). Explica por qué encaja con el perfil.",
-    "top_5_variables": [
-      {{
-        "variable_name": "Nombre de la variable (ej: Alquiler asequible)",
-        "original_variable_key": "Clave original del JSON (ej: median_rent)",
-        "justification": "Descripción justificada (ej: El alquiler se encuentra en un nivel moderado...)"
-      }},
-      ... (hasta 5 variables más importantes)
-    ]
+    "overview": "Párrafo resumen de la recomendación para este barrio (aprox 50-80 palabras). Explica por qué encaja con el perfil. USA NEGRILLAS (markdown **) para resaltar conceptos clave."
   }},
   ... (repetir para los otros barrios)
 ]
 
-Instrucciones para 'top_5_variables':
-- DEBES seleccionar las 5 variables más relevantes de la 'LISTA COMPLETA DE REQUISITOS ACTIVOS'.
-- NO te limites solo a lo mencionado en el último feedback. Si el usuario pidió "seguridad" al principio y tiene peso alto, DEBE aparecer.
-- Prioriza las variables con mayor 'weight' (peso) y mejor puntuación en el barrio.
-- 'variable_name' debe ser legible (no snake_case).
-- 'original_variable_key' DEBE ser exactamente la clave que aparece en el JSON de datos (ej: 'walk_score', 'total_crimes').
-- 'justification' debe ser personalizada al perfil del usuario.
-
 Instrucciones para 'overview':
 - Tono humano, empático y profesional.
-- Resume por qué es una buena opción.
-- USA NEGRILLAS (markdown **) para resaltar las palabras clave o conceptos más importantes (ej: **seguridad**, **parques**, **precio asequible**).
+- Resume por qué es una buena opción basándote en los datos.
+- Menciona las fortalezas principales del barrio en relación con los requisitos del cliente.
 
 IMPORTANTE: Devuelve SOLO el JSON válido (una lista), sin bloques de código markdown.
 """

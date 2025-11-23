@@ -1,6 +1,6 @@
 {
   "client_name": "User",
-  "justification_summary": "Un amable investigador acadèmic i pare primerenc. En Samwell trasllada la seva jove família a Los Angeles amb un salari universitari modest. La seva cerca se centra únicament a trobar un barri tranquil, segur i assequible on el seu fill pugui créixer, amb bons parcs i una biblioteca a prop.. User Feedback: No tengo claro que Glasses Park sea para mi. Es muy caro?",
+  "justification_summary": "Un amable investigador acadèmic i pare primerenc. En Samwell trasllada la seva jove família a Los Angeles amb un salari universitari modest. La seva cerca se centra únicament a trobar un barri tranquil, segur i assequible on el seu fill pugui créixer, amb bons parcs i una biblioteca a prop.",
   "requirements": [
     {
       "variable_name": "median_household_income",
@@ -89,8 +89,8 @@
     },
     {
       "variable_name": "air_quality_index",
-      "value": "Low",
-      "weight": 3
+      "value": null,
+      "weight": 2
     },
     {
       "variable_name": "average_dB_level",
@@ -139,8 +139,8 @@
     },
     {
       "variable_name": "dist_downtown_km",
-      "value": "Moderate",
-      "weight": 3
+      "value": null,
+      "weight": 2
     },
     {
       "variable_name": "proximity_to_sea",
@@ -150,7 +150,7 @@
     {
       "variable_name": "green_space_percentage",
       "value": "High",
-      "weight": 4
+      "weight": 5
     },
     {
       "variable_name": "charging_stations_number",
@@ -160,7 +160,7 @@
     {
       "variable_name": "walk_score",
       "value": null,
-      "weight": 2
+      "weight": 3
     },
     {
       "variable_name": "transit_score",

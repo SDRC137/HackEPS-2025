@@ -204,11 +204,11 @@ High: 23.44
 Extremely_High: 31.78
 
 ## proximity_to_sea
-Extremely_Low: 29.21
-Low: 24.20
+Extremely_Low: 7.40
+Low: 13.90
 Moderate: 18.46
-High: 13.90
-Extremely_High: 7.40
+High: 24.20
+Extremely_High: 29.21
 
 ## green_space_percentage
 Extremely_Low: 6.60

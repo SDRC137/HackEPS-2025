@@ -38,7 +38,7 @@ def save_to_cache(key, data):
     except Exception as e:
         print(f"⚠️ Failed to save cache: {e}")
 
-def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
+def search_places_overpass(lat, lon, osm_tags, radius=3000, limit=10):
     """
     Fetches POIs from OpenStreetMap using Overpass API with Caching.
     """
@@ -49,7 +49,11 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
         # print(f"⚡ Loaded from cache: {osm_tags}")
         return cached_data
 
-    overpass_url = "https://overpass-api.de/api/interpreter"
+    overpass_servers = [
+        "https://overpass-api.de/api/interpreter",
+        "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+        "https://overpass.kumi.systems/api/interpreter"
+    ]
     
     # Build the query union
     query_parts = []
@@ -82,53 +86,67 @@ def search_places_overpass(lat, lon, osm_tags, radius=2000, limit=10):
     out center {limit};
     """
     
-    try:
-        # Add a small delay to be nice to the public API
-        time.sleep(1) 
-        response = requests.get(overpass_url, params={'data': overpass_query})
-        response.raise_for_status()
-        data = response.json()
-        
-        results = []
-        for element in data.get('elements', []):
-            # Get coordinates (center for ways/relations)
-            if 'lat' in element and 'lon' in element:
-                e_lat, e_lon = element['lat'], element['lon']
-            elif 'center' in element:
-                e_lat, e_lon = element['center']['lat'], element['center']['lon']
-            else:
-                continue
+    for attempt in range(3):
+        for server in overpass_servers:
+            try:
+                # Add a small delay to be nice to the public API
+                time.sleep(0.5 * (attempt + 1)) 
+                response = requests.get(server, params={'data': overpass_query}, timeout=30)
                 
-            tags = element.get('tags', {})
-            name = tags.get('name', 'Unknown Location')
-            
-            # Skip locations without a name
-            if name == 'Unknown Location':
+                if response.status_code == 429:
+                    print(f"⚠️ Rate limit hit on {server}, waiting...")
+                    time.sleep(2 * (attempt + 1))
+                    continue
+                    
+                response.raise_for_status()
+                data = response.json()
+                
+                results = []
+                for element in data.get('elements', []):
+                    # Get coordinates (center for ways/relations)
+                    if 'lat' in element and 'lon' in element:
+                        e_lat, e_lon = element['lat'], element['lon']
+                    elif 'center' in element:
+                        e_lat, e_lon = element['center']['lat'], element['center']['lon']
+                    else:
+                        continue
+                        
+                    tags = element.get('tags', {})
+                    name = tags.get('name', 'Unknown Location')
+                    
+                    # Skip locations without a name
+                    if name == 'Unknown Location':
+                        continue
+                    
+                    # Determine a friendly type name
+                    place_type = "poi"
+                    for tag in osm_tags:
+                        key = tag.split('=')[0]
+                        if key in tags:
+                            place_type = tags[key]
+                            break
+                    
+                    results.append({
+                        "name": name,
+                        "lat": e_lat,
+                        "lon": e_lon,
+                        "type": place_type,
+                        "id": element['id']
+                    })
+                    
+                # Save to Cache
+                save_to_cache(cache_key, results)
+                return results
+                
+            except requests.exceptions.RequestException as e:
+                print(f"⚠️ Error fetching Overpass data from {server}: {e}")
                 continue
-            
-            # Determine a friendly type name
-            place_type = "poi"
-            for tag in osm_tags:
-                key = tag.split('=')[0]
-                if key in tags:
-                    place_type = tags[key]
-                    break
-            
-            results.append({
-                "name": name,
-                "lat": e_lat,
-                "lon": e_lon,
-                "type": place_type,
-                "id": element['id']
-            })
-            
-        # Save to Cache
-        save_to_cache(cache_key, results)
-        return results
-        
-    except Exception as e:
-        print(f"Error fetching Overpass data: {e}")
-        return []
+            except Exception as e:
+                print(f"⚠️ Unexpected error: {e}")
+                continue
+    
+    print("❌ Failed to fetch data from all Overpass servers.")
+    return []
 
 def get_important_locations(neighborhood_name, requirements_list, custom_osm_requirements=None):
     """
@@ -205,9 +223,6 @@ def get_important_locations(neighborhood_name, requirements_list, custom_osm_req
                 # Try searching with the specific tag first
                 found_places = search_places_overpass(center_lat, center_lon, [tag], limit=5)
                 
-                # REMOVED FALLBACK: It was causing generic results (e.g. any shop for 'shop=gun')
-                # If specific tag fails, we accept 0 results rather than misleading ones.
-
                 if found_places:
                     places_list = []
                     for place in found_places:
