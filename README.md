@@ -3,6 +3,9 @@
 
 Project developed during the HackEPS 2025 hackathon. The goal is to help a user (potential relocation / move / investment) discover and compare Los Angeles neighborhoods in an explainable, iterative, and personalized way using a multi-agent pipeline and socio-demographic, housing, safety, and quality of life data.
 
+## 🎥 Demo
+[Watch the Demo Video](https://youtu.be/iVmeVIwP2Tk)
+
 ## 🧠 Main Idea
 The system receives an initial profile (free text) and generates neighborhood recommendations with:
 - Aggregated score and key factors (explainability).
